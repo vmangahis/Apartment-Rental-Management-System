@@ -1,0 +1,113 @@
+*{
+    overflow:hidden;
+}
+table{
+
+    border-collapse:separate;
+    border-spacing: 0;
+
+
+    word-wrap:break-word;
+    table-layout: fixed;
+
+}
+
+.add-tenant{
+    display:block;
+   margin-left:auto;
+    margin-right:10px;
+}
+
+.tenant-table{
+        position:relative;
+        display:block;
+    overflow: auto;
+    height:500px;
+    table-layout: fixed;
+    width:100%;
+    word-break: break-word;
+}
+
+.navigation{
+    color:white !important;
+}
+
+.navigation:hover{
+    color:black !important;
+    background-color:white !important;
+
+}
+
+
+.expensebutton{
+    display:block;
+    margin-left:auto;
+    margin-right:50px;
+}
+
+.tenant-table-header > th{
+    position:sticky;
+    top:0;
+    background:white;
+    width:10000px;
+}
+
+.nav-link{
+    display:block;
+    margin-right:auto;
+    margin-left:auto;
+}
+
+
+a {
+    width: 100%;
+    color: white;
+    text-decoration: none;
+}
+
+.box{
+    padding:100px;
+    background-color: green;
+    margin:30px;
+
+    font-size:24px;
+    position:relative;
+}
+
+.dashboard-container{
+    display:flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.main-container{
+    background-color:#cccdf0;
+}
+
+.direct-button{
+    background-color: #023b19;
+    width:100%;
+
+    position:absolute;
+    bottom:0;
+    left:0;
+    text-align: center;
+}
+
+span, .tenant-count,.amount-pay,.amount-expenses{
+    font-size:48px;
+}
+
+.sidebar{
+    position:relative;
+}
+
+.logout{
+    position:absolute;
+    bottom:0;
+
+}
+
+.last-box{
+
+}
