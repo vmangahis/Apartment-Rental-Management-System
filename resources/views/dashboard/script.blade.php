@@ -1,9 +1,5 @@
 <script type = "text/javascript">
-
-
     $('#tenantRegistration').on('submit',(e) => {
-
-
         e.preventDefault();
 
         /*  $.ajaxSetup({
@@ -40,7 +36,7 @@
     }); // POST
 
 
-
+// DELETE
     $('.deleteEntry').on('click', (e) => {
         var data = {!! json_encode($tenant->toArray(), JSON_HEX_TAG) !!}
         data.forEach((tenants) => {
@@ -77,7 +73,6 @@
 
 
                 }
-
             },
             error: (data) => {
                 console.log(data);
@@ -85,5 +80,30 @@
         })
 
     })
+
+
+// PUT Tenant
+$('.editEntry').on('click', (e) =>{
+
+    var data = {!! json_encode($tenant->toArray(), JSON_HEX_TAG) !!}
+
+    data.forEach(dat => {
+        if(e.target.id == dat.id){
+            console.log('no error in PUT TENANT');
+            $('#tenantSurname').val(dat.surname);
+            $('#tenantfirstname').val(dat.firstname);
+            $('#email').val(dat.email);
+            $('#agecounter').val(parseInt(dat.age));
+            $('#mobile').val(dat.mobile);
+            $('#rent-date').val(dat.rent_date)
+        }
+    })
+
+
+})
+
+$('.confirmEdit').on('click', (ev) => {
+    alert('edit?');
+})
 
 </script>

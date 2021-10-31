@@ -120,7 +120,7 @@
                         <td>{{$ten->mobile}}</td>
                         <td>{{$ten->rent_date}}</td>
                         <td>
-                            <button type="button" class="btn btn-primary" data-bs-target="#editModal" data-bs-toggle="modal">Edit</button>
+                            <button type="button" class="btn btn-primary editEntry" data-bs-target="#editModal" data-bs-toggle="modal" id="{{$ten->id}}">Edit</button>
                             <button type="button" class="btn btn-danger deleteEntry" id="{{$ten->id}}"
                                     data-bs-target="#deleteModal" data-bs-toggle="modal">Delete
                             </button>
@@ -174,24 +174,24 @@
 
                         <div class="mb-3 text-center">
                             <label for="inputTenant" class="form-label mr-3 text-center">Tenant Surname: </label>
-
                             <!--- Surname Input --->
-
                             <input type="text"
                                    class="form-control ml-5 @error('tenantSurname')border border-danger @enderror "
-                                   id="tenant-surname" aria-describedby="emailHelp" name="tenantSurname"
-                                   value="{{old('tenantSurname')}}" id="tenantSurname">
+                                   aria-describedby="emailHelp" name="tenantSurname"
+                                    id="tenantSurname" value="">
                         </div>
+
+
                         @error('tenantSurname')
                         <div class='text-danger align-self-center mb-2 error-surname'>{{$message}}</div>
                         @enderror
+
+
                         <div class="mb-3 text-center">
                             <label for="" class="mr-3 text-center">Tenant First Name: </label>
                             <!--- Firstname Input --->
                             <input type="text"
-                                   class="form-control @error('tenantFirstname')border border-danger @enderror"
-                                   id="tenant-firstname" name="tenantFirstname" value="{{old('tenantFirstname')}}">
-
+                                   class="form-control @error('tenantFirstname')border border-danger @enderror"  id="tenantfirstname" name="tenantFirstname">
                         </div>
 
 
@@ -202,8 +202,8 @@
 
                             <!--- Email Input --->
                             <input type="email"
-                                   class="ml-3 form-control align-self-center @error('tenantEmail')border border-danger @enderror"
-                                   id="age" name="tenantEmail" value="{{old('tenantEmail')}}">
+                                   class="ml-3 form-control align-self-center  @error('tenantEmail')border border-danger @enderror"
+                                   id="email" name="tenantEmail" value="{{old('tenantEmail')}}">
 
                         </div>
                         @error('tenantEmail')
@@ -215,25 +215,22 @@
                             <!--- Age Input --->
                             <input type="number"
                                    class="ml-3 form-control align-self-center @error('tenantAge')border border-danger @enderror"
-                                   id="age" name="tenantAge" value="{{old('tenantAge')}}">
+                                   id="agecounter" name="tenantAge">
                         </div>
                         @error('tenantAge')
                         <div class='text-danger align-self-center mb-2 error-age'>{{$message}}</div>
                         @enderror
                         <div class="mb-3 text-center">
                             <label for="mobile" class="">Mobile Number: </label>
-                            <input type="text" class="ml-3 form-control align-self-center" id="" name="tenantMobile"
+                            <input type="text" class="ml-3 form-control align-self-center" id="mobile" name="tenantMobile"
                                    value="{{old('tenantMobile')}}">
                         </div>
                         <div class="mb-3 text-center">
-                            <label for="age" class="">Rent Date: </label>
-                            <input type="date" class="ml-3 form-control align-self-center" id=""
+                            <label for="rent-date" class="">Rent Date: </label>
+                            <input type="date" class="ml-3 form-control align-self-center" id="rent-date"
                                    name="tenantRentdate" value="{{now()->toDateString('Y-m-d')}}"
                                    max="{{now()->toDateString('Y-m-d')}}">
                         </div>
-
-
-
                     </form>
 
 
@@ -242,7 +239,7 @@
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="cancelDelete">Cancel</button>
 
 
-                    <button type="button" class="btn btn-primary confirmDelete">Update</button>
+                    <button type="button" class="btn btn-primary confirmEdit">Update</button>
                 </div>
             </div>
         </div>

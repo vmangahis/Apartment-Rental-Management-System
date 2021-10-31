@@ -60,12 +60,18 @@ class TenantController extends Controller
 
     }
 
+    public function edit($id)
+    {
+        $tenant = Tenants::find($id);
+
+    }
+
     public function destroy(Request $req)
     {
        Tenants::destroy($req->id);
-
-
     }
+
+
 
 
 

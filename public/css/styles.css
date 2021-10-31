@@ -1,6 +1,10 @@
 *{
     overflow:hidden;
+    box-sizing:border-box;
 }
+
+
+
 table{
 
     border-collapse:separate;
@@ -66,10 +70,10 @@ a {
 }
 
 .box{
-    padding:100px;
+    padding:50px;
     background-color: green;
     margin:30px;
-
+    width:400px;
     font-size:24px;
     position:relative;
 }
@@ -87,7 +91,6 @@ a {
 .direct-button{
     background-color: #023b19;
     width:100%;
-
     position:absolute;
     bottom:0;
     left:0;
@@ -105,9 +108,6 @@ span, .tenant-count,.amount-pay,.amount-expenses{
 .logout{
     position:absolute;
     bottom:0;
-
 }
 
-.last-box{
 
-}

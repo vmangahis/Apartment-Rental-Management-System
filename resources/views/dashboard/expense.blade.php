@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <h1 class = 'text-center'>PAYMENTS</h1>
+    <h1 class = 'text-center p-5'>Payments</h1>
     <ul class="nav nav-pills bg-gray">
         <li class="nav-item nav-link">
             <a class="nav-link active" aria-current="page" href="{{route('payment')}}">Expenses</a>
@@ -32,10 +32,5 @@
         </tr>
         </tbody>
     </table>
-
-
-
-
-
 
 @endsection
