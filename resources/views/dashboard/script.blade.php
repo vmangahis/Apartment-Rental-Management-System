@@ -1,4 +1,7 @@
 <script type = "text/javascript">
+
+
+    // Adding Tenant
     $('#tenantRegistration').on('submit',(e) => {
         e.preventDefault();
 
@@ -95,7 +98,8 @@ $('.editEntry').on('click', (e) =>{
             $('#email').val(dat.email);
             $('#agecounter').val(parseInt(dat.age));
             $('#mobile').val(dat.mobile);
-            $('#rent-date').val(dat.rent_date)
+            $('#rent-date').val(dat.rent_date);
+            $('.editform').attr('id',dat.id);
         }
     })
 
@@ -103,7 +107,49 @@ $('.editEntry').on('click', (e) =>{
 })
 
 $('.confirmEdit').on('click', (ev) => {
-    alert('edit?');
+    ev.preventDefault();
+    var id = $('.editform').attr('id');
+    var surname = $('#tenantSurname').val();
+    var firstname = $('#tenantfirstname').val();
+    var email = $('#email').val();
+    var age = $('#agecounter').val();
+    var mobile = $('#mobile').val();
+    var rent_date = $('#rent-date').val();
+
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+
+    $.ajax({
+        url:  "{{url('/tenants')}}",
+        method: "PUT",
+        data:{"id" : id, "surname": surname, "firstname" : firstname,
+            "email": email, "age": age, "mobileNum" : mobile,
+            "rent_date": rent_date},
+        success: (resp) => {
+            if (resp.errors)
+            {
+                console.log('Error in confirmEdit');
+            }
+
+            else{
+                window.location = "/tenants";
+            }
+        },
+        errors: (data) =>{
+            console.log(data);
+        }
+    })
+
+
+
+
+
+
 })
 
 </script>

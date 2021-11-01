@@ -60,9 +60,17 @@ class TenantController extends Controller
 
     }
 
-    public function edit($id)
+    public function edit(Request $rq)
     {
-        $tenant = Tenants::find($id);
+
+
+        Tenants::where('id', $rq->id)
+            ->update(['surname' => $rq->surname,
+                'firstname' => $rq->firstname,
+                'email'=>$rq->email,
+                'age' => $rq->age,
+                'mobile' => $rq->mobileNum,
+                'rent_date' => $rq->rent_date]);
 
     }
 

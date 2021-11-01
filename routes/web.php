@@ -8,6 +8,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\ReportsController;
 use App\Http\Controllers\SummaryController;
+use App\Http\Controllers\MailController;
 
 
 //GET Request
@@ -25,12 +26,14 @@ Route::get('/report',[ReportsController::class, 'index'])->name('report');
 
 Route::get('/summary',[SummaryController::class, 'index'])->name('summary');
 
+Route::get('/send', [MailController::class, 'send']);
+
 //POST
 Route::post('/tenants', [TenantController::class, 'register']);
 
 //PUT
 
-//Route::put('/tenants', [TenantController::class, 'edit']);
+Route::put('/tenants', [TenantController::class, 'edit']);
 
 //DELETE
 Route::delete('/tenants', [TenantController::class, 'destroy']);

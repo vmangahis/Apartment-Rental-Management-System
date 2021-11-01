@@ -169,16 +169,14 @@
                 </div>
                 <div class="modal-body">
 
-                    <form class="d-flex flex-column align-items-center mt-5" id="tenantRegistration" method="POST">
-                        @csrf
+                    <form class="d-flex flex-column align-items-center mt-5 editform"  method="POST">
 
-                        <div class="mb-3 text-center">
+                            <div class="mb-3 text-center">
                             <label for="inputTenant" class="form-label mr-3 text-center">Tenant Surname: </label>
                             <!--- Surname Input --->
                             <input type="text"
                                    class="form-control ml-5 @error('tenantSurname')border border-danger @enderror "
-                                   aria-describedby="emailHelp" name="tenantSurname"
-                                    id="tenantSurname" value="">
+                                   aria-describedby="emailHelp" name="surname" id="tenantSurname" value="">
                         </div>
 
 
@@ -247,8 +245,6 @@
 
 
     @include('dashboard.script')
-
-
 
 
 @endsection
