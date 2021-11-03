@@ -4,6 +4,7 @@
 
 
     <div class="mt-5">
+
         <h1 class="text-center">Tenant List</h1>
         <table class="table tenant-table text-center">
             <!----- Modal Form Start ---->
@@ -20,7 +21,6 @@
                             <h5 class="modal-title" id="tenantReglabel">Register Tenant</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-
 
                         <form class="d-flex flex-column align-items-center mt-5" id="tenantRegistration" method="POST">
                         @csrf

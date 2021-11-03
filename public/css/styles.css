@@ -6,14 +6,10 @@
 
 
 table{
-
     border-collapse:separate;
     border-spacing: 0;
-
-
     word-wrap:break-word;
     table-layout: fixed;
-
 }
 
 .add-tenant{
@@ -23,8 +19,8 @@ table{
 }
 
 .tenant-table{
-        position:relative;
-        display:block;
+    position:relative;
+    display:block;
     overflow: auto;
     height:500px;
     table-layout: fixed;
@@ -108,6 +104,10 @@ span, .tenant-count,.amount-pay,.amount-expenses{
 .logout{
     position:absolute;
     bottom:0;
+}
+
+.sidebar-heading{
+    background-color: #EAAA00 !important;
 }
 
 

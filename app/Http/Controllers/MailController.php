@@ -15,7 +15,7 @@ class MailController extends Controller
             'body' => 'Test Body '
         ];
 
-        Mail::to("just.monika092299@gmail.com")->send(new TestMail($detail));
+        Mail::to("raphchris08@gmail.com")->send(new TestMail($detail));
         return "Email sent!";
     }
 }
