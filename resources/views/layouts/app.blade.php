@@ -30,7 +30,6 @@
             <a class="list-group-item list-group-item-action list-group-item-light p-3 bg-dark border-bottom border-white navigation sidebar-heading" href="{{route('report')}}">Reports</a>
             <a class="list-group-item list-group-item-action list-group-item-light p-3 bg-dark border-bottom border-top border-white navigation logout sidebar-heading" href="#!">Log Out</a>
         </div>
-
     </div>
     <!-- Page content wrapper-->
     <div id="page-content-wrapper" class="main-container">
