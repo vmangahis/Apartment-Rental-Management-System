@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class MakeRentDateDefaultValue extends Migration
+class CreatePaymentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,10 @@ class MakeRentDateDefaultValue extends Migration
      */
     public function up()
     {
-        Schema::table('tenants', function (Blueprint $table) {
-            $table->date('rent_date')->default(now()->toDateString('Y-m-d'));
+        Schema::create('payments', function (Blueprint $table) {
+            $table->id('transaction_id');
+            $table->integer('tenant_id');
+            $table->decimal('amount_paid');
         });
     }
 
@@ -25,6 +27,6 @@ class MakeRentDateDefaultValue extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('payments');
     }
 }

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddRentDateToTenantsTable extends Migration
+class CreateExpensesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,11 @@ class AddRentDateToTenantsTable extends Migration
      */
     public function up()
     {
-        Schema::table('tenants', function (Blueprint $table) {
-            $table->date('rent_date');
+        Schema::create('expenses', function (Blueprint $table) {
+            $table->id('transaction_id');
+            $table->text('description');
+            $table->decimal('amount');
+            $table->date('transaction_date');
         });
     }
 
@@ -25,8 +28,6 @@ class AddRentDateToTenantsTable extends Migration
      */
     public function down()
     {
-        Schema::table('tenants', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('expenses');
     }
 }
