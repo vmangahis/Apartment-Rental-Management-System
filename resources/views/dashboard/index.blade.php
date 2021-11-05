@@ -1,9 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
-    <h1 class="text-center mt-5">Dashboard</h1>
+    <h1 class="text-center m-4 main-header">Apartment Rental Management System (Dashboard)</h1>
 
-    <div class="container mt-5 dashboard-container">
+
+    <div class="parent-container">
+    <div class="container m-5 dashboard-container">
 
         <div class="box">
            <a href="{{route('tenantpayment')}}" class="box-header"> <span>P</span> <span class="amount-pay">{{number_format($totalpayments,2)}}</span>
@@ -21,16 +23,17 @@
 
 
         <div class="box last-box">
-            <a href="{{route('tenants')}}"> <span class ="tenant-count">{{$numbertenant}}</span>
+            <a href="{{route('tenants')}}" class="box-header"> <span class ="tenant-count">{{$numbertenant}}</span>
                 <p>Total Tenants</p> </a>
                 <a href="{{route('tenants')}}" class="direct-button">To Tenants</a>
         </div>
 
         <div class="box last-box">
-            <a href="{{route('tenants')}}"> <span class ="tenant-count">0</span>
+            <a href="{{route('tenants')}}" class="box-header"> <span class ="tenant-count">0</span>
                 <p>Vacant Rooms</p> </a>
             <a href="{{route('tenants')}}" class="direct-button">To Rooms</a>
         </div>
 
+    </div>
     </div>
 @endsection

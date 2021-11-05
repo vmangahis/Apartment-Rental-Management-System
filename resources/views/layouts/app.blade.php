@@ -20,15 +20,15 @@
 <div class="d-flex " id="wrapper">
     <!-- Sidebar-->
     <div class="border-end bg-dark sidebar sidebar-heading" id="sidebar-wrapper">
-        <div class="sidebar-heading border-bottom  text-center text-white ">Apartment Rental Management System</div>
-        <div class=" list-group-flush ">
-            <a class="list-group-item list-group-item-action list-group-item-light p-3 bg-dark border-bottom border-white navigation sidebar-heading " href="/">Profile</a>
-            <a class="list-group-item list-group-item-action list-group-item-light p-3 bg-dark border-bottom border-white navigation sidebar-heading" href="{{route('summary')}}">Summary</a>
-            <a class="list-group-item list-group-item-action list-group-item-light p-3 bg-dark border-bottom border-white navigation sidebar-heading" href="{{route('tenants')}}">Tenants</a>
-            <a class="list-group-item list-group-item-action list-group-item-light p-3 bg-dark border-bottom border-white navigation sidebar-heading" href="{{route('room')}}">Rooms</a>
-            <a class="list-group-item list-group-item-action list-group-item-light p-3 bg-dark border-bottom border-white navigation sidebar-heading" href="{{route('payment')}}">Payments</a>
-            <a class="list-group-item list-group-item-action list-group-item-light p-3 bg-dark border-bottom border-white navigation sidebar-heading" href="{{route('report')}}">Reports</a>
-            <a class="list-group-item list-group-item-action list-group-item-light p-3 bg-dark border-bottom border-top border-white navigation logout sidebar-heading" href="#!">Log Out</a>
+        <div class="sidebar-heading border-bottom  text-center text-white sidebar-heading "><span class="sideheading">Apartment Rental Management System</span></div>
+        <div class=" list-group-flush side-nav">
+            <a class="list-group-item list-group-item-action list-group-item-light p-3 bg-dark border-bottom border-white navigation sidebar-heading " href="/"><span class="sideheading">Dashboard</span></a>
+            <a class="list-group-item list-group-item-action list-group-item-light p-3 bg-dark border-bottom border-white navigation sidebar-heading" href="{{route('summary')}}"><span class="sideheading">Summary</span></a>
+            <a class="list-group-item list-group-item-action list-group-item-light p-3 bg-dark border-bottom border-white navigation sidebar-heading" href="{{route('tenants')}}"><span class="sideheading">Tenants</span></a>
+            <a class="list-group-item list-group-item-action list-group-item-light p-3 bg-dark border-bottom border-white navigation sidebar-heading" href="{{route('room')}}"><span class="sideheading">Rooms</span></a>
+            <a class="list-group-item list-group-item-action list-group-item-light p-3 bg-dark border-bottom border-white navigation sidebar-heading" href="{{route('payment')}}"><span class="sideheading">Payments</span></a>
+            <a class="list-group-item list-group-item-action list-group-item-light p-3 bg-dark border-bottom border-white navigation sidebar-heading" href="{{route('report')}}"><span class="sideheading">Reports</span></a>
+            <a class="list-group-item list-group-item-action list-group-item-light p-3 bg-dark border-bottom border-top border-white navigation logout sidebar-heading" href="#!"><span class="sideheading">Log Out</span></a>
         </div>
     </div>
     <!-- Page content wrapper-->

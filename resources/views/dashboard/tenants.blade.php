@@ -3,9 +3,9 @@
 @section('content')
 
 
-    <div class="mt-5">
 
-        <h1 class="text-center">Tenant List</h1>
+
+        <h1 class="text-center main-header m-4">Tenants</h1>
         <table class="table tenant-table text-center">
             <!----- Modal Form Start ---->
             <button type="button" class="btn btn-primary add-tenant mb-5" data-bs-toggle="modal"
@@ -241,7 +241,7 @@
                 </div>
             </div>
         </div>
-    </div>
+
 
 
     @include('dashboard.script')

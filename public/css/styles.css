@@ -12,6 +12,10 @@ table{
     table-layout: fixed;
 }
 
+.main-header{
+    font-size:64px !important;
+}
+
 .add-tenant{
     display:block;
    margin-left:auto;
@@ -30,6 +34,7 @@ table{
 
 .navigation{
     color:white !important;
+
 }
 
 .navigation:hover{
@@ -58,6 +63,14 @@ table{
     margin-left:auto;
 }
 
+.parent-container{
+    height:auto;
+    display: flex;
+    flex-direction:column;
+    justify-content: center;
+    align-items: center;
+}
+
 
 a {
     width: 100%;
@@ -67,30 +80,40 @@ a {
 
 .box{
     padding:50px;
-    background-color: green;
+    background-color: #14E2FF;
     margin:30px;
     width:400px;
     font-size:24px;
     position:relative;
 }
 
+.box > .box-header{
+    font-size:36px !important;
+}
+
+
+
 .dashboard-container{
     display:flex;
     justify-content: center;
     flex-wrap: wrap;
+
 }
 
 .main-container{
-    background-color:#cccdf0;
+    background-color:#FFFFCC;
 }
 
 .direct-button{
-    background-color: #023b19;
+    background-color: #03004E;
     width:100%;
     position:absolute;
     bottom:0;
     left:0;
     text-align: center;
+    font-size:36px !important;
+    margin:auto;
+
 }
 
 span, .tenant-count,.amount-pay,.amount-expenses{
@@ -104,10 +127,19 @@ span, .tenant-count,.amount-pay,.amount-expenses{
 .logout{
     position:absolute;
     bottom:0;
+    border-top: 3px solid white !important;
 }
 
 .sidebar-heading{
     background-color: #EAAA00 !important;
+    border-bottom: 3px solid white !important;
 }
+
+
+.sideheading{
+    font-size:24px;
+
+}
+
 
 
