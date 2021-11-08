@@ -26,7 +26,7 @@
             <a class="list-group-item list-group-item-action list-group-item-light p-3 bg-dark border-bottom border-white navigation sidebar-heading" href="{{route('summary')}}"><span class="sideheading">Summary</span></a>
             <a class="list-group-item list-group-item-action list-group-item-light p-3 bg-dark border-bottom border-white navigation sidebar-heading" href="{{route('tenants')}}"><span class="sideheading">Tenants</span></a>
             <a class="list-group-item list-group-item-action list-group-item-light p-3 bg-dark border-bottom border-white navigation sidebar-heading" href="{{route('room')}}"><span class="sideheading">Rooms</span></a>
-            <a class="list-group-item list-group-item-action list-group-item-light p-3 bg-dark border-bottom border-white navigation sidebar-heading" href="{{route('payment')}}"><span class="sideheading">Payments</span></a>
+            <a class="list-group-item list-group-item-action list-group-item-light p-3 bg-dark border-bottom border-white navigation sidebar-heading" href="{{route('payment')}}"><span class="sideheading">Expenses & Payments</span></a>
             <a class="list-group-item list-group-item-action list-group-item-light p-3 bg-dark border-bottom border-white navigation sidebar-heading" href="{{route('report')}}"><span class="sideheading">Reports</span></a>
             <a class="list-group-item list-group-item-action list-group-item-light p-3 bg-dark border-bottom border-top border-white navigation logout sidebar-heading" href="#!"><span class="sideheading">Log Out</span></a>
         </div>

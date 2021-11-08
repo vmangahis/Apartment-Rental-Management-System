@@ -26,7 +26,7 @@
             <a class="list-group-item list-group-item-action list-group-item-light p-3 bg-dark border-bottom border-white navigation" href="{{route('summary')}}">Summary</a>
             <a class="list-group-item list-group-item-action list-group-item-light p-3 bg-dark border-bottom border-white navigation" href="{{route('tenants')}}">Tenants</a>
             <a class="list-group-item list-group-item-action list-group-item-light p-3 bg-dark border-bottom border-white navigation" href="{{route('room')}}">Rooms</a>
-            <a class="list-group-item list-group-item-action list-group-item-light p-3 bg-dark border-bottom border-white navigation" href="{{route('payment')}}">Payments</a>
+            <a class="list-group-item list-group-item-action list-group-item-light p-3 bg-dark border-bottom border-white navigation" href="{{route('payment')}}">Expenses & Payments</a>
             <a class="list-group-item list-group-item-action list-group-item-light p-3 bg-dark border-bottom border-white navigation" href="{{route('report')}}">Reports</a>
             <a class="list-group-item list-group-item-action list-group-item-light p-3 bg-dark border-bottom border-top border-white navigation logout" href="#!">Log Out</a>
         </div>

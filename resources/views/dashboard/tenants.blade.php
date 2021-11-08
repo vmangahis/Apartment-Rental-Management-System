@@ -3,8 +3,6 @@
 @section('content')
 
 
-
-
         <h1 class="text-center main-header m-4">Tenants</h1>
         <table class="table tenant-table text-center">
             <!----- Modal Form Start ---->
