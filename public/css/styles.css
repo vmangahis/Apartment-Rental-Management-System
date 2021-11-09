@@ -3,9 +3,7 @@
     box-sizing:border-box;
 }
 
-button{
-    
-}
+
 
 table{
     border-collapse:separate;
@@ -146,6 +144,13 @@ span, .tenant-count,.amount-pay,.amount-expenses{
     font-size:24px;
 
 }
+
+.room-settings{
+    display:flex;
+    justify-content: space-between;
+}
+
+
 
 
 

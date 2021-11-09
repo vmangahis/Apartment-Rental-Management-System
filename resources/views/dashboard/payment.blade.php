@@ -2,8 +2,6 @@
 
 @section('content')
 
-
-
 <h1 class = 'text-center p-5 main-header'>Payments</h1>
 <ul class="nav nav-pills bg-gray">
     <li class="nav-item nav-link">
