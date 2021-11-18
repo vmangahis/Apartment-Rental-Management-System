@@ -37,6 +37,9 @@ class TenantController extends Controller
 
         ]);
 
+
+
+        // IF form validation failed
         if($validator->fails())
         {
             return response()->json(array(
@@ -45,13 +48,15 @@ class TenantController extends Controller
                 'errors' =>$validator->getMessageBag()->toArray()
             ),422);
         }
+
         //storing tenants to database
         Tenants::create([
             'surname' => $req->tenantSurname,
             'firstname'=>$req->tenantFirstname,
             'email'=>$req->tenantEmail,
             'age'=>$req->tenantAge,
-            'mobile'=>$req->tenantMobile
+            'mobile'=>$req->tenantMobile,
+            'rental_status'=>$req->get('rent_status')
         ]);
 
         return redirect()->route('tenants');
@@ -70,7 +75,13 @@ class TenantController extends Controller
                 'email'=>$rq->email,
                 'age' => $rq->age,
                 'mobile' => $rq->mobileNum,
-                'rent_date' => $rq->rent_date]);
+                'rent_date' => $rq->rent_date,
+                'rental_status' => $rq->rental_status
+                
+                ]
+            
+            
+            );
 
     }
 

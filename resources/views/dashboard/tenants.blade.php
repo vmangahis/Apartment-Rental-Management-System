@@ -5,14 +5,92 @@
 
         <h1 class="text-center main-header m-4">Tenants</h1>
         <table class="table tenant-table text-center">
-            <!----- Modal Form Start ---->
+            
             <button type="button" class="btn btn-primary add-tenant mb-5" data-bs-toggle="modal"
                     data-bs-target="#tenantForm">Add Tenant
             </button>
+            
+            <thead>
+                <tr class="tenant-table-header">
+                    <th scope="col">Tenant ID</th>
+                    <th scope="col">Surname</th>
+                    <th scope="col">First Name</th>
+                    <th scope="col">Email Address</th>
+                    <th scope="col">Age</th>
+                    <th scope="col">Mobile Number</th>
+                    <th scope="col">Initial Rent Date</th>
+                    <th scope="col">Rent Status</th>
+                    <th scope="col">Balance Due</th>
+                    <th scope="col">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                    
+                @if($tenant->count())
+                    @foreach($tenant as $ten)
+                    
+                        <tr class="clickable-row" id="{{$ten->id}}" href="#info-modal" data-bs-target="#info-modal" data-bs-toggle="modal" > 
+                           <th scope="row" id="{{$ten->id}}">{{$ten->id}}</th>
+                            <td id="{{$ten->id}}">{{$ten->surname}}</td>
+                            <td id="{{$ten->id}}">{{$ten->firstname}}</td>
+                            <td id="{{$ten->id}}">{{$ten->email}}</td>
+                            <td id="{{$ten->id}}">{{$ten->age}}</td>
+                            <td id="{{$ten->id}}">{{$ten->mobile}}</td>
+                            <td id="{{$ten->id}}">{{$ten->rent_date}}</td>
+                            <td id="{{$ten->id}}">{{$ten->rental_status}}</td>
+                            <td id="{{$ten->id}}">{{$ten->balance_due}}</td>
+                            <td>
+                                <button type="button" class="btn btn-primary editEntry fs-5" data-bs-target="#editModal" data-bs-toggle="modal" id="{{$ten->id}}">Edit</button>
+                                <button type="button" class="btn btn-primary deleteEntry fs-5" id="{{$ten->id}}"
+                                        data-bs-target="#deleteModal" data-bs-toggle="modal">Delete
+                                </button>
+                            </td>
+                        </tr>
+                    @endforeach
+                @else
+                
+                    <tr>
+                        <td colspan="42">
+                            <h1 class='text-center no-tenant'>No Tenants</h1>
+                        </td>
+                    </tr>
+                @endif
+                
+            
+                </tbody>
+            </table>
+        </div>
+  
+  <!--- view info modal ---->
+  <div class="modal fade" id="info-modal" tabindex="-1" aria-labelledby="info-label" aria-hidden="true" id="1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="">Tenant Info</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          
+            <img src = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png" class ="rounded mx-auto d-block tenant-photo">
+            <h5 class="mt-4">Tenant ID: <span class="ten-id"></span></h5>
+            <h5 class="mt-4">Full Name: <span class="ten-surname"></span>, <span class="ten-name"></span></h5>
+            <h5 class="mt-4">Email Address: <span class="ten-email"></span></h5>
+            <h5 class="mt-4">Age: <span class="ten-age"></span></h5>
+            <h5 class="mt-4">Mobile Number: <span class="ten-num"></span></h5>
+            <h5 class="mt-4">Rent Date: <span class="ten-date"></span></h5>
+            <h5 class="mt-4">Status: <span class="ten-status"></span></h5>
+            <h5 class="mt-4">Balance Due: P<span class="ten-due"></span></h5>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Unassign Tenant</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
-
-            <!---- Modal Dialog ---->
-            <div class="modal fade" id="tenantForm" tabindex="-1" aria-labelledby="tenantReglabel" aria-hidden="true">
+    <!---- Register Dialog---->
+    <div class="modal fade" id="tenantForm" tabindex="-1" aria-labelledby="tenantReglabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -75,13 +153,23 @@
                                 <input type="text" class="ml-3 form-control align-self-center" id="" name="tenantMobile"
                                        value="{{old('tenantMobile')}}">
                             </div>
+
+
                             <div class="mb-3 text-center">
-                                <label for="age" class="">Rent Date: </label>
+                                <label for="mobile" class="">Rent Status</label>
+                                <select id="rental_status" name="rent_status">
+                                    <option value="ACTIVE">ACTIVE</option>
+                                    <option value="ARCHIVED">ARCHIVED</option>
+                                  </select>
+                            </div>
+
+                            <div class="mb-3 text-center">
+                                <label for="age" class="">Rent Date</label>
                                 <input type="date" class="ml-3 form-control align-self-center" id=""
                                        name="tenantRentdate" value="{{now()->toDateString('Y-m-d')}}"
                                        max="{{now()->toDateString('Y-m-d')}}">
                             </div>
-
+                            
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                                 <button type="submit" class="btn btn-primary">Register</button>
@@ -91,50 +179,8 @@
                     </div>
                 </div>
             </div>
-            <!---- Modal Form End -->
+            
 
-            <!---- Table Column Start -->
-            <thead>
-            <tr class="tenant-table-header">
-                <th scope="col">Tenant ID</th>
-                <th scope="col">Surname</th>
-                <th scope="col">First Name</th>
-                <th scope="col">Email Address</th>
-                <th scope="col">Age</th>
-                <th scope="col">Mobile Number</th>
-                <th scope="col">Initial Rent Date</th>
-                <th scope="col">Actions</th>
-            </tr>
-            </thead>
-            <tbody>
-            @if($tenant->count())
-                @foreach($tenant as $ten)
-                    <tr>
-                        <th scope="row">{{$ten->id}}</th>
-                        <td>{{$ten->surname}}</td>
-                        <td>{{$ten->firstname}}</td>
-                        <td>{{$ten->email}}</td>
-                        <td>{{$ten->age}}</td>
-                        <td>{{$ten->mobile}}</td>
-                        <td>{{$ten->rent_date}}</td>
-                        <td>
-                            <button type="button" class="btn btn-primary editEntry" data-bs-target="#editModal" data-bs-toggle="modal" id="{{$ten->id}}">Edit</button>
-                            <button type="button" class="btn btn-danger deleteEntry" id="{{$ten->id}}"
-                                    data-bs-target="#deleteModal" data-bs-toggle="modal">Delete
-                            </button>
-                        </td>
-                    </tr>
-                @endforeach
-            @else
-                <tr>
-                    <td colspan="42">
-                        <h1 class='text-center no-tenant'>No Tenants</h1>
-                    </td>
-                </tr>
-            @endif
-            </tbody>
-        </table>
-    </div>
 
     <!--- Modal Dialog for Deletion -->
     <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteTenantLabel" aria-hidden="true">
@@ -227,6 +273,19 @@
                                    name="tenantRentdate" value="{{now()->toDateString('Y-m-d')}}"
                                    max="{{now()->toDateString('Y-m-d')}}">
                         </div>
+
+
+                        <div class="mb-3 text-center">
+                            <label for="mobile" class="">Rent Status</label>
+                            <select id="rent_status" name="rent_status">
+                                <option value="ACTIVE">ACTIVE</option>
+                                <option value="ARCHIVED">ARCHIVED</option>
+                              </select>
+                        </div>
+
+                   
+
+
                     </form>
 
 
@@ -239,6 +298,9 @@
                 </div>
             </div>
         </div>
+
+            
+   
 
 
 

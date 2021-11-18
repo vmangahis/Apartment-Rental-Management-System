@@ -3,6 +3,10 @@
     box-sizing:border-box;
 }
 
+button{
+    font-size:24px;
+}
+
 
 
 table{
@@ -15,6 +19,12 @@ table{
 table >  *{
     font-size:24px;
 }
+
+.clickable-row:hover{
+    cursor: pointer;
+    background-color: #EAAA00;
+}
+
 
 .main-header{
     font-size:64px !important;
@@ -30,7 +40,7 @@ table >  *{
     position:relative;
     display:block;
     overflow: auto;
-    height:500px;
+    height:650px;
     table-layout: fixed;
     width:100%;
     word-break: break-word;
@@ -48,6 +58,8 @@ table >  *{
 }
 
 
+
+
 .expensebutton{
     display:block;
     margin-left:auto;
@@ -58,6 +70,7 @@ table >  *{
     position:sticky;
     top:0;
     width:10000px;
+    background-color:#FFFFCC;
 }
 
 .nav-link{
@@ -120,9 +133,10 @@ a {
 
 }
 
-span, .tenant-count,.amount-pay,.amount-expenses{
+.tenant-count,.amount-pay,.amount-expenses{
     font-size:48px;
 }
+
 
 .sidebar{
     position:relative;
@@ -137,6 +151,11 @@ span, .tenant-count,.amount-pay,.amount-expenses{
 .sidebar-heading{
     background-color: #EAAA00 !important;
     border-bottom: 3px solid white !important;
+}
+
+.tenant-photo{
+    width:50%;
+    height:50%;
 }
 
 

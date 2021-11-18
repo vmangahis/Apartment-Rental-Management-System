@@ -39,22 +39,42 @@
   <thead>
     <tr>
       <th scope="col">Room ID</th>
+      <th scope="col">Occupant</th>
       <th scope="col">Status</th>
+      <th scope="col">Actions</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th scope="row">1</th>
+      <td>-</td>
       <td>Occupied</td>
+      <td class = "">
+        <button class="btn btn-primary">More Info</button>
+        <button class="btn btn-primary">Remove Room</button>
+    </td>
     </tr>
     <tr>
       <th scope="row">2</th>   
+      <td>-</td>
           <td>Vacant</td>
+          <td class = "">
+            <button class="btn btn-primary">More Info</button>
+            <button class="btn btn-primary">Remove Room</button>
+        </td>    
     </tr>
     <tr>
       <th scope="row">3</th>
+      <td>-</td>
       <td>Vacant</td>
+      <td class = "">
+        <button class="btn btn-primary">More Info</button>
+        <button class="btn btn-primary">Remove Room</button>
+    </td>
     </tr>
+
+   
+   
   </tbody>
 </table>
     @endsection

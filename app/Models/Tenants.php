@@ -16,7 +16,8 @@ class Tenants extends Model
         'email',
         'age',
         'mobile',
-        'date'
+        'date',
+        'rental_status'
     ];
 
 
