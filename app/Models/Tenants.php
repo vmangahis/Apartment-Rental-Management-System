@@ -13,10 +13,11 @@ class Tenants extends Model
     protected $fillable = [
         'surname',
         'firstname',
+        'middle_name',
         'email',
         'age',
         'mobile',
-        'date',
+        'rent_date',
         'rental_status'
     ];
 

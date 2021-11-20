@@ -4,17 +4,43 @@
 
 
         <h1 class="text-center main-header m-4">Tenants</h1>
+        
+
+        <!--- Search and Add Tenant --->
+        <div class="search-add">
+            <div class="row g-3 ms-3">
+                <h3>Search By:</h3>
+                <div class="col-auto fs-4">
+                    <select name="search-option" id="search-option">
+                        <option value="">ID</option>
+                        <option value="">Surname</option>
+                        <option value="">First Name</option>
+                        <option value="">Middle Name</option>
+                        <option value="">Age</option>
+                        <option value="">Email Address</option>      
+                    </select>
+                </div>
+
+
+                <div class="col-auto">
+                <input type="text" class="form-control search-input">
+                </div>
+
+            </div>
+
+            <button type="button" class="btn btn-primary fs-5 add-tenant" data-bs-toggle="modal" data-bs-target="#tenantForm">Add Tenant</button>    
+        </div>
+
+
+
+        <!--- Tenant Table -->
         <table class="table tenant-table text-center">
-            
-            <button type="button" class="btn btn-primary add-tenant mb-5" data-bs-toggle="modal"
-                    data-bs-target="#tenantForm">Add Tenant
-            </button>
-            
             <thead>
                 <tr class="tenant-table-header">
                     <th scope="col">Tenant ID</th>
                     <th scope="col">Surname</th>
                     <th scope="col">First Name</th>
+                    <th scope="col">Middle Name</th>
                     <th scope="col">Email Address</th>
                     <th scope="col">Age</th>
                     <th scope="col">Mobile Number</th>
@@ -33,6 +59,7 @@
                            <th scope="row" id="{{$ten->id}}">{{$ten->id}}</th>
                             <td id="{{$ten->id}}">{{$ten->surname}}</td>
                             <td id="{{$ten->id}}">{{$ten->firstname}}</td>
+                            <td id="{{$ten->id}}">{{$ten->middle_name}}</td>
                             <td id="{{$ten->id}}">{{$ten->email}}</td>
                             <td id="{{$ten->id}}">{{$ten->age}}</td>
                             <td id="{{$ten->id}}">{{$ten->mobile}}</td>
@@ -40,7 +67,7 @@
                             <td id="{{$ten->id}}">{{$ten->rental_status}}</td>
                             <td id="{{$ten->id}}">{{$ten->balance_due}}</td>
                             <td>
-                                <button type="button" class="btn btn-primary editEntry fs-5" data-bs-target="#editModal" data-bs-toggle="modal" id="{{$ten->id}}">Edit</button>
+                                <button type="button" class="btn btn-primary editEntry fs-5 mb-3" data-bs-target="#editModal" data-bs-toggle="modal" id="{{$ten->id}}">Edit</button>
                                 <button type="button" class="btn btn-primary deleteEntry fs-5" id="{{$ten->id}}"
                                         data-bs-target="#deleteModal" data-bs-toggle="modal">Delete
                                 </button>
@@ -123,7 +150,13 @@
                             </div>
 
 
-                            <div class='text-danger align-self-center mb-2 error-firstname'></div>
+                            <div class="mb-3 text-center">
+                                <label for="" class="mr-3 text-center">Tenant Middle Name: </label>
+                                <!--- Middle Name Input --->
+                                <input type="text"
+                                       class="form-control @error('tenantMiddlename')border border-danger @enderror"
+                                       id="tenant-middlename" name="tenantMiddlename" value="{{old('tenantMiddlename')}}">
+                            </div>
 
                             <div class="mb-3 text-center">
                                 <label for="email" class="">Email Address</label>

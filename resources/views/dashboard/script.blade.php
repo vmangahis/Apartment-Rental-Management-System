@@ -1,4 +1,10 @@
 <script type = "text/javascript">
+
+$('.search-input').on('change input',e => {
+    console.log('change');
+})
+
+
     $('.clickable-row').on('click', (e) => {
         var tenant_data = {!! json_encode($tenant->toArray(), JSON_HEX_TAG) !!}
         console.log(e.target.id);
@@ -25,12 +31,6 @@
     // Adding Tenant
     $('#tenantRegistration').on('submit',(e) => {
         e.preventDefault();
-
-        /*  $.ajaxSetup({
-        headers: {
-        'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-        }
-        });*/
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -110,7 +110,7 @@
     })
 
 
-// PUT Tenant
+// PUT REQUEST
 $('.editEntry').on('click', (e) =>{
 
     var data = {!! json_encode($tenant->toArray(), JSON_HEX_TAG) !!}
@@ -142,6 +142,7 @@ $('.confirmEdit').on('click', (ev) => {
     var mobile = $('#mobile').val();
     var rent_date = $('#rent-date').val();
     var rent_stat = $('#rent_status').find(":selected").text();
+    var middle = "edited";
 
     $.ajaxSetup({
         headers: {
@@ -155,7 +156,7 @@ $('.confirmEdit').on('click', (ev) => {
         method: "PUT",
         data:{"id" : id, "surname": surname, "firstname" : firstname,
             "email": email, "age": age, "mobileNum" : mobile,
-            "rent_date": rent_date, "rental_status": rent_stat},
+            "rent_date": rent_date, "rental_status": rent_stat, "middle_n" : middle},
         success: (resp) => {
             if (resp.errors)
             {

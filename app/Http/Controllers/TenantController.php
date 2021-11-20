@@ -34,6 +34,7 @@ class TenantController extends Controller
             'tenantFirstname'=>'required|max:255',
             'tenantEmail'=>'required|max:255',
             'tenantAge'=>'required',
+            'tenantMiddlename'=>'required'
 
         ]);
 
@@ -53,7 +54,9 @@ class TenantController extends Controller
         Tenants::create([
             'surname' => $req->tenantSurname,
             'firstname'=>$req->tenantFirstname,
+            'middle_name'=>$req->tenantMiddlename,
             'email'=>$req->tenantEmail,
+            'rent_date'=>$req->tenantRentdate,
             'age'=>$req->tenantAge,
             'mobile'=>$req->tenantMobile,
             'rental_status'=>$req->get('rent_status')
@@ -68,6 +71,25 @@ class TenantController extends Controller
     public function edit(Request $rq)
     {
 
+        $validator = Validator::make($rq->all(), ['tenantSurname' => 'required|max:255',
+            'tenantFirstname'=>'required|max:255',
+            'tenantEmail'=>'required|max:255',
+            'tenantAge'=>'required',
+            'tenantMiddlename'=>'required'
+
+        ]);
+
+
+        if($validator->fails())
+        {
+            return response()->json(array(
+                'success' => false,
+                'message' => 'Missing or incorrect',
+                'errors' =>$validator->getMessageBag()->toArray()
+            ),422);
+        }
+
+
 
         Tenants::where('id', $rq->id)
             ->update(['surname' => $rq->surname,
@@ -76,8 +98,8 @@ class TenantController extends Controller
                 'age' => $rq->age,
                 'mobile' => $rq->mobileNum,
                 'rent_date' => $rq->rent_date,
-                'rental_status' => $rq->rental_status
-                
+                'rental_status' => $rq->rental_status,
+                'middle_name' => $rq->middle_n
                 ]
             
             

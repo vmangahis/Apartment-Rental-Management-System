@@ -30,10 +30,22 @@ table >  *{
     font-size:64px !important;
 }
 
+.search-add{
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.search-input{
+    width:400px;
+}
+
 .add-tenant{
     display:block;
-   margin-left:auto;
-    margin-right:10px;
+    margin-top:auto;
+    margin-right:20px;
+    
+    margin-bottom:auto;
 }
 
 .tenant-table{
@@ -169,6 +181,9 @@ a {
     justify-content: space-between;
 }
 
+#searchname{
+    width:40%;
+}
 
 
 
