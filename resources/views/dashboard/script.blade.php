@@ -1,7 +1,25 @@
 <script type = "text/javascript">
 
+$(document).ready( () => {
+    $('.search-input').prop('disabled', true);
+
+    $('#search-option').change((e) => {
+        if($('#search-option').val() === 'none')
+        {
+                $('.search-input').prop('disabled', true);
+                $('.search-input').val('');
+        }
+
+        else{
+            $('.search-input').prop('disabled', false);
+            
+        }
+    })
+  
+    
 $('.search-input').on('change input',e => {
-    console.log('change');
+    
+
 })
 
 
@@ -178,5 +196,8 @@ $('.confirmEdit').on('click', (ev) => {
 
 
 })
+
+}
+)
 
 </script>

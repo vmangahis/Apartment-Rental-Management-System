@@ -12,12 +12,13 @@
                 <h3>Search By:</h3>
                 <div class="col-auto fs-4">
                     <select name="search-option" id="search-option">
-                        <option value="">ID</option>
-                        <option value="">Surname</option>
-                        <option value="">First Name</option>
-                        <option value="">Middle Name</option>
-                        <option value="">Age</option>
-                        <option value="">Email Address</option>      
+                        <option value="none">None</option>
+                        <option value="id">ID</option>
+                        <option value="surname">Surname</option>
+                        <option value="fname">First Name</option>
+                        <option value="mname">Middle Name</option>
+                        <option value="age">Age</option>
+                        <option value="email">Email Address</option>      
                     </select>
                 </div>
 
