@@ -3,15 +3,20 @@
 @section('content')
 
 
+    <div class="tenants-header d-flex justify-content-center">
         <h1 class="text-center main-header m-4">Tenants</h1>
-        
+        <div class="tab-nav d-flex flex-column align-items-center justify-content-around">
+            <button class="btn btn-primary" onClick="location.href='/tenants'">Active</a>
+            <button class="btn btn-primary" onClick="location.href='/tenants/archived'">Archived</a>
+        </div>
+    </div>
 
         <!--- Search and Add Tenant --->
         <div class="search-add">
             <div class="row g-3 ms-3">
                 <h3>Search By:</h3>
                 <div class="col-auto fs-4">
-                    <select name="search-option" id="search-option">
+                    <select name="search-option" id="search-option" @if(!$tenant->count())disabled value="none" @endif>
                         <option value="none">None</option>
                         <option value="id">ID</option>
                         <option value="surname">Surname</option>
@@ -51,9 +56,9 @@
                     <th scope="col">Actions</th>
                 </tr>
                 </thead>
-                <tbody>
+                <tbody id="table-body">
                     
-                @if($tenant->count())
+               @if($tenant->count())
                     @foreach($tenant as $ten)
                     
                         <tr class="clickable-row" id="{{$ten->id}}" href="#info-modal" data-bs-target="#info-modal" data-bs-toggle="modal" > 
@@ -67,11 +72,9 @@
                             <td id="{{$ten->id}}">{{$ten->rent_date}}</td>
                             <td id="{{$ten->id}}">{{$ten->rental_status}}</td>
                             <td id="{{$ten->id}}">{{$ten->balance_due}}</td>
-                            <td>
-                                <button type="button" class="btn btn-primary editEntry fs-5 mb-3" data-bs-target="#editModal" data-bs-toggle="modal" id="{{$ten->id}}">Edit</button>
-                                <button type="button" class="btn btn-primary deleteEntry fs-5" id="{{$ten->id}}"
-                                        data-bs-target="#deleteModal" data-bs-toggle="modal">Delete
-                                </button>
+                            <td class = "d-flex flex-column align-items-center">
+                                <button type="button" class="btn btn-primary editEntry fs-4 mb-3" data-bs-target="#editModal" data-bs-toggle="modal" id="{{$ten->id}}">Edit</button>
+                                <button type="button" class="btn btn-primary deleteEntry fs-4" id="{{$ten->id}}" data-bs-target="#deleteModal" data-bs-toggle="modal">Delete</button>
                             </td>
                         </tr>
                     @endforeach
@@ -79,10 +82,15 @@
                 
                     <tr>
                         <td colspan="42">
-                            <h1 class='text-center no-tenant'>No Tenants</h1>
+                            @if(Route::is('tenants'))
+                            <h1 class='text-center no-tenant'>No Active Tenants</h1>     
+
+                            @else
+                            <h1 class='text-center no-tenant'>No Archived Tenants</h1>
+                            @endif
                         </td>
                     </tr>
-                @endif
+                @endif 
                 
             
                 </tbody>
@@ -189,6 +197,21 @@
                             </div>
 
 
+
+
+
+
+
+
+
+                            <div class="mb-3 text-center">
+                                <label for="mobile" class="">Room Assignment: </label>
+                                <select for='room'>
+                                    <option value="1">1</option>
+                                </select>
+                            </div>
+
+
                             <div class="mb-3 text-center">
                                 <label for="mobile" class="">Rent Status</label>
                                 <select id="rental_status" name="rent_status">
@@ -248,26 +271,30 @@
                 <div class="modal-body">
 
                     <form class="d-flex flex-column align-items-center mt-5 editform"  method="POST">
-
+                        
                             <div class="mb-3 text-center">
                             <label for="inputTenant" class="form-label mr-3 text-center">Tenant Surname: </label>
                             <!--- Surname Input --->
                             <input type="text"
                                    class="form-control ml-5 @error('tenantSurname')border border-danger @enderror "
-                                   aria-describedby="emailHelp" name="surname" id="tenantSurname" value="">
+                                   aria-describedby="emailHelp" name="tenantSurnameEdit" id="tenantSurnameEdit">
                         </div>
-
-
                         @error('tenantSurname')
                         <div class='text-danger align-self-center mb-2 error-surname'>{{$message}}</div>
                         @enderror
 
-
+                        <!--- Firstname Input --->
                         <div class="mb-3 text-center">
                             <label for="" class="mr-3 text-center">Tenant First Name: </label>
+                            <input type="text"
+                                   class="form-control @error('tenantFirstname')border border-danger @enderror"  id="tenantFirstnameEdit" name="tenantFirstnameEdit">
+                        </div>
+
+                        <div class="mb-3 text-center">
+                            <label for="" class="mr-3 text-center">Tenant Middle Name: </label>
                             <!--- Firstname Input --->
                             <input type="text"
-                                   class="form-control @error('tenantFirstname')border border-danger @enderror"  id="tenantfirstname" name="tenantFirstname">
+                                   class="form-control @error('tenantMiddlename')border border-danger @enderror"  id="tenantMiddlenameEdit" name="tenantMiddlenameEdit">
                         </div>
 
 
@@ -279,7 +306,7 @@
                             <!--- Email Input --->
                             <input type="email"
                                    class="ml-3 form-control align-self-center  @error('tenantEmail')border border-danger @enderror"
-                                   id="email" name="tenantEmail" value="{{old('tenantEmail')}}">
+                                   id="tenantEmailEdit" name="tenantEmailEdit" value="{{old('tenantEmail')}}">
 
                         </div>
                         @error('tenantEmail')
@@ -291,7 +318,7 @@
                             <!--- Age Input --->
                             <input type="number"
                                    class="ml-3 form-control align-self-center @error('tenantAge')border border-danger @enderror"
-                                   id="agecounter" name="tenantAge">
+                                   id="tenantAgeEdit" name="tenantAgeEdit">
                         </div>
                         @error('tenantAge')
                         <div class='text-danger align-self-center mb-2 error-age'>{{$message}}</div>

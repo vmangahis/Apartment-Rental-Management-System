@@ -5,7 +5,7 @@
 
 
 
-
+<!---- Pending for refactoral ---->
   
   <!-- Modal -->
   <div class="modal fade" id="expenseModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

@@ -20,6 +20,10 @@ Route::get('/payment/tenant',[PaymentController::class, 'index'])->name('tenantp
 
 Route::get('/tenants', [TenantController::class, 'index'])->name('tenants'); // Tenant
 
+Route::get('/tenants/archived', [TenantController::class, 'filter'])->name('archived-tenants');
+
+Route::get('/searchtenant', [TenantController::class, 'search_active']); // Search Tenant
+
 Route::get('/rooms',[RoomController::class, 'index'])->name('room'); //Room
 
 Route::get('/report',[ReportsController::class, 'index'])->name('report');

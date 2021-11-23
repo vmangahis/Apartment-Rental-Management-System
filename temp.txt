@@ -1,0 +1,20 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+TO IMPLEMENT TODAY
+- Uploading of Images
+- Assign Tenants to Room 
+- Expenses & Payments
+- Addition of Rooms

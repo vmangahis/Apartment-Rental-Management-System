@@ -1,36 +1,91 @@
 <script type = "text/javascript">
 
 $(document).ready( () => {
-    $('.search-input').prop('disabled', true);
 
+
+    // Disable input in tenants at first open of Tenants Tab
+    $('.search-input').prop('disabled', true); 
+
+
+$('.search-input').on('keypress', e =>{
+       if(e.which == 32)
+       {
+           return false;
+       }
+    })
+
+
+
+
+
+
+
+    //Dropdown list change
     $('#search-option').change((e) => {
+        $('.search-input').val('');
+        let que = null;
         if($('#search-option').val() === 'none')
         {
                 $('.search-input').prop('disabled', true);
-                $('.search-input').val('');
+        
         }
-
         else{
-            $('.search-input').prop('disabled', false);
-            
+            $('.search-input').prop('disabled', false);    
         }
-    })
+    });
+
+
   
+    //Text input change in Tenant Search
+$(document).on('change input','.search-input',e => {
+    $(this).unbind('blur');
+
+    var params = "";
     
-$('.search-input').on('change input',e => {
     
+    if(window.location.pathname === "/tenants")
+    {
+        params = "ACTIVE"
+    }
+    else{
+        params = "ARCHIVED";
+    }
+    
+    console.log(params);
+    
+    $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+    $.ajax({ 
+            method: 'get',
+            data: {"query" : $('.search-input').val(), "column": $('#search-option').val(), "path" : params},
+            url: "{{url('/searchtenant')}}",
+            
+            success: (data) => {
+                
+                $('#table-body').html(data);
+
+            },
+            error: (data) => {
+                console.log(data);
+            }
+        })
+
 
 })
 
 
-    $('.clickable-row').on('click', (e) => {
+    $(document).on('click','.clickable-row', (e) => {
         var tenant_data = {!! json_encode($tenant->toArray(), JSON_HEX_TAG) !!}
-        console.log(e.target.id);
+        console.log(e.currentTarget.id);
         
         tenant_data.forEach(dat => {
             if(e.target.id == dat.id)
             {
-                console.log('extracting data');
+                
                 $('.ten-id').html(dat.id);
                 $('.ten-name').html(dat.firstname);
                 $('.ten-surname').html(dat.surname);
@@ -46,16 +101,14 @@ $('.search-input').on('change input',e => {
 
 
 
-    // Adding Tenant
-    $('#tenantRegistration').on('submit',(e) => {
+// Adding Tenant // POST Request
+$('#tenantRegistration').on('submit',(e) => {
         e.preventDefault();
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
-
-
         $.ajax({
             url: "{{url('/tenants')}}",
             method: 'post',
@@ -65,7 +118,7 @@ $('.search-input').on('change input',e => {
                     console.log('error');
                 } else {
                     console.log('not error');
-                    window.location = "/tenants";
+                    window.location = window.location.pathname;
                 }
 
             },
@@ -76,15 +129,15 @@ $('.search-input').on('change input',e => {
     }); 
     
     
-    // POST
+
 
 
 
  
 
 // DELETE
-    $('.deleteEntry').on('click', (e) => {
-        var data = {!! json_encode($tenant->toArray(), JSON_HEX_TAG) !!}
+$(document).on('click','.deleteEntry', (e) => {
+        var data = {!! json_encode($tenant->    toArray(), JSON_HEX_TAG) !!}
         data.forEach((tenants) => {
 
             if (e.target.id == tenants.id) {
@@ -98,7 +151,7 @@ $('.search-input').on('change input',e => {
     });
 
 
-    $('.confirmDelete').on('click', (e) => {
+    $('.confirmDelete').on('click',(e) => {
 
         $.ajaxSetup({
             headers: {
@@ -115,7 +168,7 @@ $('.search-input').on('change input',e => {
                     console.log('error');
                 } else {
                     console.log('not error');
-                    window.location = "/tenants";
+                    window.location = window.location.pathname;
 
 
                 }
@@ -129,38 +182,39 @@ $('.search-input').on('change input',e => {
 
 
 // PUT REQUEST
-$('.editEntry').on('click', (e) =>{
+$(document).on('click','.editEntry' ,(e) =>{
 
     var data = {!! json_encode($tenant->toArray(), JSON_HEX_TAG) !!}
-
+    console.log(e.currentTarget.id);
     data.forEach(dat => {
         if(e.target.id == dat.id){
-            console.log('no error in PUT TENANT');
-            $('#tenantSurname').val(dat.surname);
-            $('#tenantfirstname').val(dat.firstname);
-            $('#email').val(dat.email);
-            $('#agecounter').val(parseInt(dat.age));
+            
+            $('#tenantSurnameEdit').val(dat.surname);
+            $('#tenantFirstnameEdit').val(dat.firstname);
+            $('#tenantEmailEdit').val(dat.email);
+            $('#tenantAgeEdit').val(parseInt(dat.age));
             $('#mobile').val(dat.mobile);
             $('#rent-date').val(dat.rent_date);
             $('.editform').attr('id',dat.id);
             $('#rent_status').val(dat.rental_status);
+            $('#tenantMiddlenameEdit').val(dat.middle_name);
         }
     })
+});
 
-
-})
-
-$('.confirmEdit').on('click', (ev) => {
+    $('.confirmEdit').on('click', (ev) => {
     ev.preventDefault();
     var id = $('.editform').attr('id');
-    var surname = $('#tenantSurname').val();
-    var firstname = $('#tenantfirstname').val();
-    var email = $('#email').val();
-    var age = $('#agecounter').val();
+    var surname = $('#tenantSurnameEdit').val();
+    var firstname = $('#tenantFirstnameEdit').val();
+    var email = $('#tenantEmailEdit').val();
+    var age = $('#tenantAgeEdit').val();
     var mobile = $('#mobile').val();
     var rent_date = $('#rent-date').val();
     var rent_stat = $('#rent_status').find(":selected").text();
-    var middle = "edited";
+    var middle = $('#tenantMiddlenameEdit').val();
+
+   
 
     $.ajaxSetup({
         headers: {
@@ -182,7 +236,7 @@ $('.confirmEdit').on('click', (ev) => {
             }
 
             else{
-                window.location = "/tenants";
+                window.location = window.location.pathname;
             }
         },
         errors: (data) =>{
@@ -195,9 +249,7 @@ $('.confirmEdit').on('click', (ev) => {
 
 
 
-})
-
-}
-)
+    })
+    })
 
 </script>
