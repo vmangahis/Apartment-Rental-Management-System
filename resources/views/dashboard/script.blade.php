@@ -147,14 +147,18 @@ $(document).on('submit','#tenantRegistration',(e) => {
 
             },
             error: (data) => {
-               
+               console.log(data);
             }
         })
     }); 
     
     
 
-
+$(document).on('change','#rental_status', e =>{
+    e.preventDefault();
+    var rooms = {!!json_encode($rooms->toArray(), JSON_HEX_TAG) !!}
+    console.log(rooms.length);
+})
 
 
  
@@ -222,7 +226,7 @@ $(document).on('click','.editEntry' ,(e) =>{
             $('.editform').attr('id',dat.id);
             $('#rent_status').val(dat.rental_status);
             $('#tenantMiddlenameEdit').val(dat.middle_name);
-            //$('.tenant-photo').attr(dat.middle_name);
+            
         }
     })
 });

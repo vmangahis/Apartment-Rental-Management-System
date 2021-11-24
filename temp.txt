@@ -14,7 +14,7 @@
 
 
 TO IMPLEMENT TODAY
-- Uploading of Images
-- Assign Tenants to Room 
+- Uploading of Images (done)
+- Assign Tenants to Room    
 - Expenses & Payments
 - Addition of Rooms

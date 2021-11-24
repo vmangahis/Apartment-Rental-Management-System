@@ -200,8 +200,17 @@
                             <!--- Room Assignment ---->
                             <div class="mb-3 text-center d-flex flex-row align-items-center">
                                 <label for="mobile" class="">Room Assignment: </label>
-                                <select for='room' class="ms-4 w-35">
-                                    <option value="1">1</option>
+                                
+                                    @if(count($rooms) > 0)
+                                    <select for='room' class="ms-4 w-35" name="room_number">
+                                    @foreach($rooms as $roomnum)
+                                    <option value="{{$roomnum->room_id}}">{{$roomnum->room_id}}</option>
+                                    @endforeach
+
+                                    @else
+                                    <select class="ms-4 w-35" disabled>
+                                    <option value='none'>No Rooms Available</option>
+                                        @endif
                                 </select>
                             </div>
 

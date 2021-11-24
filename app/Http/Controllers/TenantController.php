@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\Tenants;
+use App\Models\Rooms;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
@@ -16,8 +17,10 @@ class TenantController extends Controller
     //Active in Default
     public function index(Request $rq)
     {
-        $tenants = DB::table('tenants')->where('rental_status','ACTIVE')->get();
-        return view('dashboard.tenants')->with('tenant', $tenants);
+        $tenant = DB::table('tenants')->where('rental_status','ACTIVE')->get();
+        $rooms = DB::table('rooms')->get();
+        error_log($rooms);
+        return view('dashboard.tenants', compact('tenant', 'rooms'));
         
     }
 
@@ -25,9 +28,9 @@ class TenantController extends Controller
     //Archive filter
     public function filter(Request $rq)
     {
-        $tenants = DB::table('tenants')->where('rental_status', 'ARCHIVED')->get();
-
-        return view('dashboard.tenants')->with('tenant', $tenants);
+        $tenant = DB::table('tenants')->where('rental_status', 'ARCHIVED')->get();
+        $rooms = DB::table('rooms')->get();
+        return view('dashboard.tenants', compact('tenant', 'rooms'));
     }
 
     public function search_active(Request $rq)
@@ -175,6 +178,7 @@ class TenantController extends Controller
 
     public function register(Request $req)
     {
+        $id = 1;
 
 
 
@@ -239,8 +243,16 @@ class TenantController extends Controller
             'age'=>$req->tenantAge,
             'mobile'=>$req->tenantMobile,
             'rental_status'=>$req->get('rent_status'),
-            'image_name'=>$hashed_fname
+            'image_name'=>$hashed_fname,
+            'room_id'=> $req->get('room_number')
         ]);
+
+        Rooms::where('room_id', $req->get('room_number'))
+        ->update(['tenant_id' => $id,
+        'status' => 'OCCUPIED']
+        );
+
+        
 
         return redirect()->route('tenants');
 
