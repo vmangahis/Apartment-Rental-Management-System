@@ -1,11 +1,14 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\Rooms;
+use Illuminate\Support\Facades\DB;
 
 class RoomController extends Controller
 {
     public function index()
     {
-        return view('dashboard.rooms');
+        $rooms=DB::table('rooms')->get();
+        return view('dashboard.rooms')->with('room', $rooms);
     }
 }

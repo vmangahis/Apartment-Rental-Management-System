@@ -116,6 +116,7 @@
             <h5 class="mt-4">Rent Date: <span class="ten-date"></span></h5>
             <h5 class="mt-4">Status: <span class="ten-status"></span></h5>
             <h5 class="mt-4">Balance Due: P<span class="ten-due"></span></h5>
+            <h5 class="mt-4">Room Assigned: <span class="ten-room"></span></h5>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

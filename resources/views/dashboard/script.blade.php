@@ -7,7 +7,8 @@ $(document).ready( () => {
     $('.search-input').prop('disabled', true); 
 
 
-$('.search-input').on('keypress', e =>{
+//No spaces in search
+    $('.search-input').on('keypress', e =>{
        if(e.which == 32)
        {
            return false;
@@ -96,6 +97,7 @@ $(document).on('change input','.search-input',e => {
                 $('.ten-status').html(dat.rental_status);
                 $('.ten-due').html(dat.balance_due);
                 $('.tenant-photo').attr('src', '{{asset("storage/tenantimages")}}'+'/'+dat.image_name);
+                $('.ten-room').html(dat.room_id);
             }
         })
     })

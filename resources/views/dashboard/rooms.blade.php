@@ -39,39 +39,31 @@
   <thead>
     <tr>
       <th scope="col">Room ID</th>
-      <th scope="col">Occupant</th>
+      <th scope="col">Occupant ID</th>
       <th scope="col">Status</th>
       <th scope="col">Actions</th>
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>-</td>
-      <td>Occupied</td>
+    @if(count($room)>0)
+    @foreach($room as $rm)
+    <tr id = "{{$rm->room_id}}">
+      <th scope="row">{{$rm->room_id}}</th>
+      <td>{{$rm->tenant_id}}</td>
+      <td>{{$rm->status}}</td>
       <td class = "">
-        <button class="btn btn-primary">More Info</button>
         <button class="btn btn-primary">Remove Room</button>
     </td>
     </tr>
+    @endforeach
+
+    @else
     <tr>
-      <th scope="row">2</th>   
-      <td>-</td>
-          <td>Vacant</td>
-          <td class = "">
-            <button class="btn btn-primary">More Info</button>
-            <button class="btn btn-primary">Remove Room</button>
-        </td>    
+      <td colspan="42">
+      <h1 class='text-center'>No Rooms</h1>     
+      </td>
     </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td>-</td>
-      <td>Vacant</td>
-      <td class = "">
-        <button class="btn btn-primary">More Info</button>
-        <button class="btn btn-primary">Remove Room</button>
-    </td>
-    </tr>
+    @endif
 
    
    
