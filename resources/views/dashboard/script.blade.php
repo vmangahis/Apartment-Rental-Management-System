@@ -3,7 +3,7 @@
 $(document).ready( () => {
 
 
-    // Disable input in tenants at first open of Tenants Tab
+// Disable input in tenants at first open of Tenants Tab
     $('.search-input').prop('disabled', true); 
 
 
@@ -20,7 +20,7 @@ $('.search-input').on('keypress', e =>{
 
 
 
-    //Dropdown list change
+//Dropdown list change
     $('#search-option').change((e) => {
         $('.search-input').val('');
         let que = null;
@@ -36,7 +36,7 @@ $('.search-input').on('keypress', e =>{
 
 
   
-    //Text input change in Tenant Search
+//Text input change in Tenant Search
 $(document).on('change input','.search-input',e => {
     $(this).unbind('blur');
 
@@ -95,6 +95,7 @@ $(document).on('change input','.search-input',e => {
                 $('.ten-date').html(dat.rent_date);
                 $('.ten-status').html(dat.rental_status);
                 $('.ten-due').html(dat.balance_due);
+                $('.tenant-photo').attr('src', '{{asset("storage/tenantimages")}}'+'/'+dat.image_name);
             }
         })
     })
@@ -102,28 +103,51 @@ $(document).on('change input','.search-input',e => {
 
 
 // Adding Tenant // POST Request
-$('#tenantRegistration').on('submit',(e) => {
+$(document).on('submit','#tenantRegistration',(e) => {
         e.preventDefault();
+        
+        
+        console.log(new FormData(document.getElementById("tenantRegistration")));
+        
+        
+        
+
+        
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
+    
         $.ajax({
             url: "{{url('/tenants')}}",
             method: 'post',
-            data: $('#tenantRegistration').serializeArray(),
+            data: new FormData(document.getElementById("tenantRegistration")),
+            processData: false,
+            
+            contentType: false,
+            beforeSend: () => {
+                $('#tenantRegistration').find('div.error').text('');
+            },
             success: (res) => {
-                if (res.errors) {
-                    console.log('error');
-                } else {
-                    console.log('not error');
+                if (res.code == 0) {
+                    $.each(res.error, (pre, val) => {
+                        console.log(pre);
+                        $('#tenantRegistration').find('div.'+pre+'-error').text(val[0]);
+                    })
+
+
+
+                } 
+                else {
+                    console.log('hello');
+                    $('#tenantRegistration')[0].reset();
                     window.location = window.location.pathname;
                 }
 
             },
             error: (data) => {
-                console.log(data);
+               
             }
         })
     }); 
@@ -198,6 +222,7 @@ $(document).on('click','.editEntry' ,(e) =>{
             $('.editform').attr('id',dat.id);
             $('#rent_status').val(dat.rental_status);
             $('#tenantMiddlenameEdit').val(dat.middle_name);
+            //$('.tenant-photo').attr(dat.middle_name);
         }
     })
 });
@@ -224,8 +249,8 @@ $(document).on('click','.editEntry' ,(e) =>{
 
 
     $.ajax({
-        url:  "{{url('/tenants')}}",
-        method: "PUT",
+        url:  "{{url('/edittenants')}}",
+        method: "POST",
         data:{"id" : id, "surname": surname, "firstname" : firstname,
             "email": email, "age": age, "mobileNum" : mobile,
             "rent_date": rent_date, "rental_status": rent_stat, "middle_n" : middle},

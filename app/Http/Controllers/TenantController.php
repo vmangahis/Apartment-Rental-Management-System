@@ -178,25 +178,56 @@ class TenantController extends Controller
 
 
 
-        $validator = Validator::make($req->all(), ['tenantSurname' => 'required|max:255',
-            'tenantFirstname'=>'required|max:255',
-            'tenantEmail'=>'required|max:255',
+        $validator = Validator::make($req->all(), ['tenantSurname' => 'required|alpha',
+            'tenantFirstname'=>'required|alpha|max:255',
+            'tenantEmail'=>'required',
             'tenantAge'=>'required',
-            'tenantMiddlename'=>'required'
+            'tenantMiddlename'=>'required|alpha',
+            'tenantImage'=>'mimes:jpeg,jpg,jpg,png,gif|max:10000'
 
+        ],[
+            'tenantSurname.required' => 'Surname required',
+            'tenantSurname.alpha' => 'Surname cannot contain numbers or special characters',
+            'tenantMiddlename.alpha' => 'Middle Name cannot contain numbers or special characters',
+            'tenantImage.mimes' => 'Tenant Image must be in image format'
         ]);
 
-
+        error_log($req->file('tenantImage'));
+        
 
         // IF form validation failed
-        if($validator->fails())
+        if(!$validator->passes())
         {
-            return response()->json(array(
-                'success' => false,
-                'message' => 'Missing or incorrect',
-                'errors' =>$validator->getMessageBag()->toArray()
-            ),422);
+            return response()->json(['code'=> 0, 'error'=>$validator->errors()->toArray()]);
+            
+        }        
+
+        else{
+
+            $path = "tenantimages/";
+
+            // If no image was uploaded
+            if($req->file('tenantImage') == '')
+            {
+                $hashed_fname = 'blankimage.png';
+                error_log('no image uploaded');
+            }
+
+            else{
+                $image_filename = $req->file('tenantImage');
+                $hashed_fname = time().'_'.$image_filename->getclientOriginalName();
+                $upload = $image_filename->storeAs($path, $hashed_fname, 'public');
+
+                if($upload)
+                {
+                    error_log('non blank image uploaded');
+                }
+            }
+
+        
         }
+
+        
 
         //storing tenants to database
         Tenants::create([
@@ -207,7 +238,8 @@ class TenantController extends Controller
             'rent_date'=>$req->tenantRentdate,
             'age'=>$req->tenantAge,
             'mobile'=>$req->tenantMobile,
-            'rental_status'=>$req->get('rent_status')
+            'rental_status'=>$req->get('rent_status'),
+            'image_name'=>$hashed_fname
         ]);
 
         return redirect()->route('tenants');

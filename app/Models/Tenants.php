@@ -18,7 +18,9 @@ class Tenants extends Model
         'age',
         'mobile',
         'rent_date',
-        'rental_status'
+        'rental_status',
+        'image_name'
+        
     ];
 
 

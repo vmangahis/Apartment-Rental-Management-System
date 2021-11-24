@@ -3,7 +3,7 @@
 @section('content')
 
 
-    <div class="tenants-header d-flex justify-content-center">
+<div class="tenants-header d-flex justify-content-center">
         <h1 class="text-center main-header m-4">Tenants</h1>
         <div class="tab-nav d-flex flex-column align-items-center justify-content-around">
             <button class="btn btn-primary" onClick="location.href='/tenants'">Active</a>
@@ -12,7 +12,7 @@
     </div>
 
         <!--- Search and Add Tenant --->
-        <div class="search-add">
+<div class="search-add">
             <div class="row g-3 ms-3">
                 <h3>Search By:</h3>
                 <div class="col-auto fs-4">
@@ -39,8 +39,8 @@
 
 
 
-        <!--- Tenant Table -->
-        <table class="table tenant-table text-center">
+<!--- Tenant Table -->
+<table class="table tenant-table text-center">
             <thead>
                 <tr class="tenant-table-header">
                     <th scope="col">Tenant ID</th>
@@ -97,8 +97,8 @@
             </table>
         </div>
   
-  <!--- view info modal ---->
-  <div class="modal fade" id="info-modal" tabindex="-1" aria-labelledby="info-label" aria-hidden="true" id="1">
+<!--- view info modal ---->
+<div class="modal fade" id="info-modal" tabindex="-1" aria-labelledby="info-label" aria-hidden="true" id="1">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -107,7 +107,7 @@
         </div>
         <div class="modal-body">
           
-            <img src = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png" class ="rounded mx-auto d-block tenant-photo">
+            <img class ="rounded mx-auto d-block tenant-photo">
             <h5 class="mt-4">Tenant ID: <span class="ten-id"></span></h5>
             <h5 class="mt-4">Full Name: <span class="ten-surname"></span>, <span class="ten-name"></span></h5>
             <h5 class="mt-4">Email Address: <span class="ten-email"></span></h5>
@@ -125,8 +125,9 @@
     </div>
   </div>
 
-    <!---- Register Dialog---->
-    <div class="modal fade" id="tenantForm" tabindex="-1" aria-labelledby="tenantReglabel" aria-hidden="true">
+
+<!---- Register Dialog---->
+<div class="modal fade" id="tenantForm" tabindex="-1" aria-labelledby="tenantReglabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -134,99 +135,94 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
 
-                        <form class="d-flex flex-column align-items-center mt-5" id="tenantRegistration" method="POST">
+                        <form class="d-flex flex-column align-items-center justify-content-center mt-5" id="tenantRegistration" method="POST" enctype="multipart/form-data">
                         @csrf
 
+                            <!---- Image Upload ----->
+                            <div class="mb-3 text-center w-50">
+                                <label for="imageupload">Tenant Image:</label>
+                                <input type="file" class="form-control" id="tenantImage" name="tenantImage">
+                              </div>
+                              <div class='text-danger align-self-center mb-2 tenantImage-error error'></div>
+
+                            <!--- Surname Input ---->
                             <div class="mb-3 text-center">
                                 <label for="inputTenant" class="form-label mr-3 text-center">Tenant Surname: </label>
-
-                                <!--- Surname Input --->
-
                                 <input type="text"
-                                       class="form-control ml-5 @error('tenantSurname')border border-danger @enderror "
-                                       id="tenant-surname" aria-describedby="emailHelp" name="tenantSurname"
+                                       class="form-control ml-5"
+                                         aria-describedby="emailHelp" name="tenantSurname"
                                        value="{{old('tenantSurname')}}" id="tenantSurname">
                             </div>
-                            @error('tenantSurname')
-                            <div class='text-danger align-self-center mb-2 error-surname'>{{$message}}</div>
-                            @enderror
+                            <div class='text-danger align-self-center mb-2 error tenantSurname-error'></div>
+
+                            <!--- Firstname Input --->
                             <div class="mb-3 text-center">
                                 <label for="" class="mr-3 text-center">Tenant First Name: </label>
-                                <!--- Firstname Input --->
                                 <input type="text"
-                                       class="form-control @error('tenantFirstname')border border-danger @enderror"
+                                       class="form-control"
                                        id="tenant-firstname" name="tenantFirstname" value="{{old('tenantFirstname')}}">
                             </div>
+                            <div class='text-danger align-self-center mb-2 error tenantFirstname-error'></div>
 
-
+                            <!--- Middle Name Input --->
                             <div class="mb-3 text-center">
-                                <label for="" class="mr-3 text-center">Tenant Middle Name: </label>
-                                <!--- Middle Name Input --->
-                                <input type="text"
-                                       class="form-control @error('tenantMiddlename')border border-danger @enderror"
+                                <label for="" class="mr-3 text-center">Tenant Middle Name:</label>
+                                <input type="text" class="form-control"
                                        id="tenant-middlename" name="tenantMiddlename" value="{{old('tenantMiddlename')}}">
                             </div>
+                            <div class='text-danger align-self-center mb-2 error tenantMiddlename-error'></div>
 
+                            <!---- Email Input ----->
                             <div class="mb-3 text-center">
-                                <label for="email" class="">Email Address</label>
-
-                                <!--- Email Input --->
+                                <label for="email" class="">Email Address:</label>
                                 <input type="email"
-                                       class="ml-3 form-control align-self-center @error('tenantEmail')border border-danger @enderror"
+                                       class="ml-3 form-control align-self-center"
                                        id="age" name="tenantEmail" value="{{old('tenantEmail')}}">
-
                             </div>
-                            @error('tenantEmail')
-                            <div class='text-danger align-self-center mb-2 error-email'>{{$message}}</div>
-                            @enderror
+                            <div class='text-danger align-self-center mb-2 error tenantEmail-error'></div>
+                            
+                            
+                            <!---- Age input ---->
                             <div class="mb-3 text-center">
                                 <label for="age" class="">Age: </label>
-
-                                <!--- Age Input --->
                                 <input type="number"
-                                       class="ml-3 form-control align-self-center @error('tenantAge')border border-danger @enderror"
+                                       class="ml-3 form-control align-self-center"
                                        id="age" name="tenantAge" value="{{old('tenantAge')}}">
                             </div>
-                            @error('tenantAge')
-                            <div class='text-danger align-self-center mb-2 error-age'>{{$message}}</div>
-                            @enderror
+                            <div class='text-danger align-self-center mb-2 error tenantAge-error'></div>
+                            
                             <div class="mb-3 text-center">
                                 <label for="mobile" class="">Mobile Number: </label>
                                 <input type="text" class="ml-3 form-control align-self-center" id="" name="tenantMobile"
                                        value="{{old('tenantMobile')}}">
                             </div>
 
-
-
-
-
-
-
-
-
-                            <div class="mb-3 text-center">
+                            <!--- Room Assignment ---->
+                            <div class="mb-3 text-center d-flex flex-row align-items-center">
                                 <label for="mobile" class="">Room Assignment: </label>
-                                <select for='room'>
+                                <select for='room' class="ms-4 w-35">
                                     <option value="1">1</option>
                                 </select>
                             </div>
 
-
-                            <div class="mb-3 text-center">
-                                <label for="mobile" class="">Rent Status</label>
-                                <select id="rental_status" name="rent_status">
+                            <!---- Rent Status ----->
+                            <div class="mb-3 text-center d-flex flex-row align-items-center">
+                                <label for="rental_status" class="">Rent Status:</label>
+                                <select id="rental_status" name="rent_status" class="ms-4">
                                     <option value="ACTIVE">ACTIVE</option>
                                     <option value="ARCHIVED">ARCHIVED</option>
                                   </select>
                             </div>
 
+                            <!---- Rent Date ----->
                             <div class="mb-3 text-center">
-                                <label for="age" class="">Rent Date</label>
+                                <label for="age" class="">Rent Date:</label>
                                 <input type="date" class="ml-3 form-control align-self-center" id=""
                                        name="tenantRentdate" value="{{now()->toDateString('Y-m-d')}}"
                                        max="{{now()->toDateString('Y-m-d')}}">
                             </div>
                             
+                            <!---- Register --->
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                                 <button type="submit" class="btn btn-primary">Register</button>
@@ -239,8 +235,8 @@
             
 
 
-    <!--- Modal Dialog for Deletion -->
-    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteTenantLabel" aria-hidden="true">
+<!--- Modal Dialog for Deletion -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteTenantLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -260,8 +256,8 @@
         </div>
     </div>
 
-    <!--- Edit Modal --->
-    <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editTenantLabel" aria-hidden="true">
+<!--- Edit Modal --->
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editTenantLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -271,7 +267,12 @@
                 <div class="modal-body">
 
                     <form class="d-flex flex-column align-items-center mt-5 editform"  method="POST">
-                        
+
+                        <div class="mb-3 text-center">
+                            <label for="tenant-photo">Current Tenant Image: </label>
+                            <img class =" mx-auto d-block tenant-photo" src="">    
+                            </div>
+
                             <div class="mb-3 text-center">
                             <label for="inputTenant" class="form-label mr-3 text-center">Tenant Surname: </label>
                             <!--- Surname Input --->

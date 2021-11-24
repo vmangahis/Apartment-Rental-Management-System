@@ -24,6 +24,8 @@ Route::get('/tenants/archived', [TenantController::class, 'filter'])->name('arch
 
 Route::get('/searchtenant', [TenantController::class, 'search_active']); // Search Tenant
 
+
+
 Route::get('/rooms',[RoomController::class, 'index'])->name('room'); //Room
 
 Route::get('/report',[ReportsController::class, 'index'])->name('report');
@@ -35,9 +37,8 @@ Route::get('/send', [MailController::class, 'send']);
 //POST
 Route::post('/tenants', [TenantController::class, 'register']);
 
-//PUT
+Route::post('/edittenants', [TenantController::class, 'edit']);
 
-Route::put('/tenants', [TenantController::class, 'edit']);
 
 //DELETE
 Route::delete('/tenants', [TenantController::class, 'destroy']);
