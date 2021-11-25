@@ -6,6 +6,7 @@ use DB;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+
 class DashboardController extends Controller
 {
     public function index()
@@ -25,6 +26,7 @@ class DashboardController extends Controller
         }
 
         $tenantcount = count(DB::table('tenants')->get());
-        return view('dashboard.index')->with('totalexpense', $totalexpenses)->with('totalpayments', $totalpayments)->with( 'numbertenant', $tenantcount);
+        $vacantcount = count(DB::table('rooms')->where('status', 'VACANT')->get());
+        return view('dashboard.index', compact('totalexpenses','totalpayments','tenantcount', 'vacantcount'));
     }
 }
