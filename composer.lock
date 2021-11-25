@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3a07a13de397a1c61a334abc8d31e818",
+    "content-hash": "a1ef1c8bff3849619efd860cadedc216",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -201,6 +201,43 @@
                 }
             ],
             "time": "2021-08-15T20:50:18+00:00"
+        },
+        {
+            "name": "ctrlaltdylan/courier",
+            "version": "1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ctrlaltdylan/courier.git",
+                "reference": "22c771200d67e347905324eb24b1c624adfc1401"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ctrlaltdylan/courier/zipball/22c771200d67e347905324eb24b1c624adfc1401",
+                "reference": "22c771200d67e347905324eb24b1c624adfc1401",
+                "shasum": ""
+            },
+            "require-dev": {
+                "phpunit/phpunit": "5.6.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Courier\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "Dylan Pierce",
+                    "email": "me@dylanjpierce.com"
+                }
+            ],
+            "description": "A simple wrapper for the free SMS API provider TextBelt.",
+            "support": {
+                "issues": "https://github.com/ctrlaltdylan/courier/issues",
+                "source": "https://github.com/ctrlaltdylan/courier/tree/international"
+            },
+            "time": "2016-10-05T03:11:29+00:00"
         },
         {
             "name": "dflydev/dot-access-data",

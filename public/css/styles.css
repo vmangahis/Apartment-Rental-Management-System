@@ -95,6 +95,23 @@ table >  *{
     font-size:24px;
 }
 
+.room-table{
+    position:relative;
+    display:block;
+    overflow: auto;
+    height:650px;
+    table-layout: fixed;
+    width:100%;
+    word-break: break-word;
+}
+
+.room-table-header > th{
+    position:sticky;
+    top:0;
+    width:1000px;
+    background-color:#FFFFCC;
+}
+
 .parent-container{
     height:auto;
     display: flex;

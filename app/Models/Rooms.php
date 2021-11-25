@@ -16,3 +16,8 @@ class Rooms extends Model
     'tenant_id',
     ];
 }
+
+
+
+
+

@@ -2,71 +2,81 @@
 
 @section('content')
 
-    <h1 class="text-center p-5">Rooms</h1>
-
-    <p class ='fs-3 ms-3'>Sort Status by:</p>
-
-
-  <div class = "room-settings ms-3 me-5">  
-      <div class='form-container'>
-        <div class="form-check form-check-inline fs-5">
-          <input class="form-check-input" type="radio" name="roomstatus" id="flexRadioDefault1" checked>
-          <label class="form-check-label" for="flexRadioDefault1">
-          None
-          </label>
-      </div>
-      <div class="form-check form-check-inline fs-5">
-      <input class="form-check-input" type="radio" name="roomstatus" id="flexRadioDefault1">
-      <label class="form-check-label" for="flexRadioDefault1">
-      Occupied
-      </label>
-    </div>
-    <div class="form-check form-check-inline fs-5">
-    <input class="form-check-input" type="radio" name="roomstatus" id="flexRadioDefault1">
-    <label class="form-check-label" for="flexRadioDefault1">
-      Vacant
-    </label>
+<div class="tenants-header d-flex justify-content-center">
+  <h1 class="text-center main-header m-4">Rooms</h1>
+  <div class="tab-nav d-flex flex-column align-items-center justify-content-around">
+      <button class="btn btn-primary" onClick="location.href = '/rooms'">Vacant</a>
+      <button class="btn btn-primary" onClick="location.href = '/rooms/occupied'">Occupied</a>
   </div>
 </div>
 
-  <button type="button" class='btn btn-primary addroombutton'>Add Room</button>
+<!---- Search Room ------>
+<div class="search-add">
+  <div class="row g-3 ms-3">
+      <h3>Search By:</h3>
+      <div class="col-auto fs-4">
+          <select name="search-option" id="room-search-option" @if(!$room->count())disabled value="none" @endif>
+              <option value="none">None</option>
+              <option value="room_id">Room ID</option>
+              <option value="occupant_id">Occupant ID</option>
+          </select>
+      </div>
+
+
+      <div class="col-auto">
+      <input type="text" class="form-control room-search-input">
+      </div>
+
+  </div>
+
+  
+
+  <button type="button" class='btn btn-primary fs-5 addroombutton'>Add Room</button>
 </div>
 
 
-
-
-    <table class="table">
+  <table class="table room-table">
   <thead>
-    <tr>
+    <tr class = "room-table-header">
       <th scope="col">Room ID</th>
       <th scope="col">Occupant ID</th>
       <th scope="col">Status</th>
       <th scope="col">Actions</th>
     </tr>
   </thead>
-  <tbody>
+  <tbody class = "room-body" id="room-body">
     @if(count($room)>0)
     @foreach($room as $rm)
     <tr id = "{{$rm->room_id}}">
       <th scope="row">{{$rm->room_id}}</th>
-      <td>{{$rm->tenant_id}}</td>
+
+      
+      <td>@if($rm->tenant_id != 0){{$rm->tenant_id}} @else No Occupant @endif</td>
+
+
+
       <td>{{$rm->status}}</td>
       <td class = "">
-        <button class="btn btn-primary">Remove Room</button>
-    </td>
+        <button class="btn btn-primary fs-4">Remove Room</button>
+      </td>
     </tr>
     @endforeach
 
     @else
     <tr>
       <td colspan="42">
-      <h1 class='text-center'>No Rooms</h1>     
+      @if(Route::is('room'))
+      <h1 class='text-center'>No Vacant Rooms</h1>     
+      @else
+      <h1 class='text-center'>No Occupied Rooms</h1>
+      @endif
       </td>
+      
     </tr>
     @endif
 
-   
-   
   </tbody>
 </table>
+
+@include('dashboard.roomscript')
     @endsection

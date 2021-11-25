@@ -376,7 +376,7 @@
 
 
 
-    @include('dashboard.script')
+    @include('dashboard.tenantscript')
 
 
 @endsection

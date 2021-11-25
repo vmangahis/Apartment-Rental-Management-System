@@ -86,7 +86,6 @@ $(document).on('change input','.search-input',e => {
         tenant_data.forEach(dat => {
             if(e.target.id == dat.id)
             {
-                
                 $('.ten-id').html(dat.id);
                 $('.ten-name').html(dat.firstname);
                 $('.ten-surname').html(dat.surname);
@@ -110,11 +109,7 @@ $(document).on('submit','#tenantRegistration',(e) => {
         
         
         console.log(new FormData(document.getElementById("tenantRegistration")));
-        
-        
-        
 
-        
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -155,14 +150,12 @@ $(document).on('submit','#tenantRegistration',(e) => {
     }); 
     
     
-
+// Allow landlord to enter any room number if rental status is archived
 $(document).on('change','#rental_status', e =>{
     e.preventDefault();
     var rooms = {!!json_encode($rooms->toArray(), JSON_HEX_TAG) !!}
     console.log(rooms.length);
 })
-
-
  
 
 // DELETE
@@ -275,12 +268,6 @@ $(document).on('click','.editEntry' ,(e) =>{
         }
     })
 
-
-
-
-
-
     })
     })
-
 </script>

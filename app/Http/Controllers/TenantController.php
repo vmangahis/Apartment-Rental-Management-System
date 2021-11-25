@@ -251,13 +251,7 @@ class TenantController extends Controller
         ->update(['tenant_id' => $id,
         'status' => 'OCCUPIED']
         );
-
-        
-
         return redirect()->route('tenants');
-
-
-
     }
 
     public function edit(Request $rq)

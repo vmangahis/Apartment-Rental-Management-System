@@ -26,7 +26,9 @@ Route::get('/searchtenant', [TenantController::class, 'search_active']); // Sear
 
 
 
-Route::get('/rooms',[RoomController::class, 'index'])->name('room'); //Room
+Route::get('/rooms',[RoomController::class, 'index'])->name('room');//Room
+
+Route::get('/rooms/occupied',[RoomController::class, 'occupied'])->name('occupied_room'); // Occupied Room
 
 Route::get('/report',[ReportsController::class, 'index'])->name('report');
 
@@ -38,6 +40,8 @@ Route::get('/send', [MailController::class, 'send']);
 Route::post('/tenants', [TenantController::class, 'register']);
 
 Route::post('/edittenants', [TenantController::class, 'edit']);
+
+Route::post('/rooms', [RoomController::class, 'addroom']);
 
 
 //DELETE
