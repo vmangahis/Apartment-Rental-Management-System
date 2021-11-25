@@ -11,7 +11,7 @@
         </div>
     </div>
 
-        <!--- Search and Add Tenant --->
+<!--- Search and Add Tenant --->
 <div class="search-add">
             <div class="row g-3 ms-3">
                 <h3>Search By:</h3>
@@ -72,7 +72,7 @@
                             <td id="{{$ten->id}}">{{$ten->rent_date}}</td>
                             <td id="{{$ten->id}}">{{$ten->rental_status}}</td>
                             <td id="{{$ten->id}}">{{$ten->balance_due}}</td>
-                            <td class = "d-flex flex-column align-items-center">
+                            <td class = "d-flex flex-column align-items-center" id="{{$ten->id}}">
                                 <button type="button" class="btn btn-primary editEntry fs-4 mb-3" data-bs-target="#editModal" data-bs-toggle="modal" id="{{$ten->id}}">Edit</button>
                                 <button type="button" class="btn btn-primary deleteEntry fs-4" id="{{$ten->id}}" data-bs-target="#deleteModal" data-bs-toggle="modal">Delete</button>
                             </td>
@@ -326,7 +326,7 @@
                         <div class="mb-3 text-center">
                             <label for="age" class="">Age: </label>
 
-                            <!--- Age Input --->
+                        <!--- Age Input Edit--->
                             <input type="number"
                                    class="ml-3 form-control align-self-center @error('tenantAge')border border-danger @enderror"
                                    id="tenantAgeEdit" name="tenantAgeEdit">
@@ -339,6 +339,35 @@
                             <input type="text" class="ml-3 form-control align-self-center" id="mobile" name="tenantMobile"
                                    value="{{old('tenantMobile')}}">
                         </div>
+
+                         <!--- Room Assignment Edit---->
+                         <div class="mb-3 text-center d-flex flex-row align-items-center">
+                            <label for="room" class="">Room Assignment:</label>
+                            
+                                @if(count($rooms) > 0)
+                                <select for='room' class="ms-4 w-35" name="room_number" class="">
+                                @foreach($rooms as $roomnum)
+                                
+                                <option value="{{$roomnum->room_id}}">{{$roomnum->room_id}}</option>
+                                @endforeach
+
+                                @else
+                                <select class="ms-4 w-35" disabled>
+                                <option value='none'>No Rooms Available</option>
+                                    @endif
+                            </select>
+                        </div>  
+
+                         <!---- Rent Status Edit ----->
+                         <div class="mb-3 text-center d-flex align-items-center justify-content-center">
+                            <label for="mobile" class="">Rent Status:</label>
+                            <select id="rental_status_edit" name="rent_status" class="ms-4">
+                                <option value="ACTIVE">ACTIVE</option>
+                                <option value="ARCHIVED">ARCHIVED</option>
+                              </select>
+                        </div>
+
+                        <!---- Rent Date Edit ---->
                         <div class="mb-3 text-center">
                             <label for="rent-date" class="">Rent Date: </label>
                             <input type="date" class="ml-3 form-control align-self-center" id="rent-date"
@@ -346,18 +375,7 @@
                                    max="{{now()->toDateString('Y-m-d')}}">
                         </div>
 
-
-                        <div class="mb-3 text-center">
-                            <label for="mobile" class="">Rent Status</label>
-                            <select id="rent_status" name="rent_status">
-                                <option value="ACTIVE">ACTIVE</option>
-                                <option value="ARCHIVED">ARCHIVED</option>
-                              </select>
-                        </div>
-
-                   
-
-
+                       
                     </form>
 
 

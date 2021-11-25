@@ -22,7 +22,7 @@ Route::get('/tenants', [TenantController::class, 'index'])->name('tenants'); // 
 
 Route::get('/tenants/archived', [TenantController::class, 'filter'])->name('archived-tenants');
 
-Route::get('/searchtenant', [TenantController::class, 'search_active']); // Search Tenant
+Route::get('/searchtenant', [TenantController::class, 'search_tenants']); // Search Tenant
 
 
 

@@ -18,9 +18,9 @@ class TenantController extends Controller
     public function index(Request $rq)
     {
         $tenant = DB::table('tenants')->where('rental_status','ACTIVE')->get();
-        $rooms = DB::table('rooms')->get();
-        error_log($rooms);
-        return view('dashboard.tenants', compact('tenant', 'rooms'));
+        $rooms = DB::table('rooms')->where('status', 'VACANT')->get();
+        $allroom = DB::table('rooms')->get();
+        return view('dashboard.tenants', compact('tenant', 'rooms','allroom'));
         
     }
 
@@ -33,7 +33,7 @@ class TenantController extends Controller
         return view('dashboard.tenants', compact('tenant', 'rooms'));
     }
 
-    public function search_active(Request $rq)
+    public function search_tenants(Request $rq)
     {
         
         $rent_stat = "";
@@ -94,18 +94,18 @@ class TenantController extends Controller
             {
                 foreach($tenants as $ten)
                 {
-                    $res.='<tr class="clickable-row" id="{$ten->id}" href="#info-modal" data-bs-target="#info-modal" data-bs-toggle="modal">'.
-                    '<th scope="row" id="{$ten->id}">'.$ten->id.'</th>'.
-                    '<td id="{$ten->id}">'.$ten->surname.'</td>'.
-                    '<td id="{$ten->id}">'.$ten->firstname.'</td>'.
-                    '<td id="{$ten->id}">'.$ten->middle_name.'</td>'.
-                    '<td id="{$ten->id}">'.$ten->email.'</td>'.
-                    '<td id="{$ten->id}">'.$ten->age.'</td>'.
-                    '<td id="{$ten->id}">'.$ten->mobile.'</td>'.
-                    '<td id="{$ten->id}">'.$ten->rent_date.'</td>'.
-                    '<td id="{$ten->id}">'.$ten->rental_status.'</td>'.
-                    '<td id="{$ten->id}">'.$ten->balance_due.'</td>'.
-                    '<td class = "d-flex flex-column align-items-center">'.
+                    $res.='<tr class="clickable-row" id='.$ten->id.'href="#info-modal" data-bs-target="#info-modal" data-bs-toggle="modal">'.
+                    '<th scope="row" id='.$ten->id.'>'.$ten->id.'</th>'.
+                    '<td id='.$ten->id.'>'.$ten->surname.'</td>'.
+                    '<td id='.$ten->id.'>'.$ten->firstname.'</td>'.
+                    '<td id='.$ten->id.'>'.$ten->middle_name.'</td>'.
+                    '<td id='.$ten->id.'>'.$ten->email.'</td>'.
+                    '<td id='.$ten->id.'>'.$ten->age.'</td>'.
+                    '<td id='.$ten->id.'>'.$ten->mobile.'</td>'.
+                    '<td id='.$ten->id.'>'.$ten->rent_date.'</td>'.
+                    '<td id='.$ten->id.'>'.$ten->rental_status.'</td>'.
+                    '<td id='.$ten->id.'>'.$ten->balance_due.'</td>'.
+                    '<td class = "d-flex flex-column align-items-center"'.$ten->id.'>'.
 
                     '<button type="button" class="btn btn-primary editEntry fs-4 mb-3" data-bs-target="#editModal" data-bs-toggle="modal" id='.$ten->id.'>Edit'.'</button>'.
                     '<button type="button" class="btn btn-primary deleteEntry fs-4 " data-bs-target="#deleteModal" data-bs-toggle="modal" id='.$ten->id.'>Delete</button>'.
@@ -178,9 +178,7 @@ class TenantController extends Controller
 
     public function register(Request $req)
     {
-        $id = 1;
-
-
+    
 
         $validator = Validator::make($req->all(), ['tenantSurname' => 'required|alpha',
             'tenantFirstname'=>'required|alpha|max:255',
@@ -196,7 +194,7 @@ class TenantController extends Controller
             'tenantImage.mimes' => 'Tenant Image must be in image format'
         ]);
 
-        error_log($req->file('tenantImage'));
+        
         
 
         // IF form validation failed
@@ -214,7 +212,7 @@ class TenantController extends Controller
             if($req->file('tenantImage') == '')
             {
                 $hashed_fname = 'blankimage.png';
-                error_log('no image uploaded');
+                
             }
 
             else{
@@ -231,8 +229,13 @@ class TenantController extends Controller
         
         }
 
-        
+        $room_status = "OCCUPIED";
 
+        if($req->get('rent_status') == "ARCHIVED")
+        {
+            $room_status="VACANT";
+        }
+        
         //storing tenants to database
         Tenants::create([
             'surname' => $req->tenantSurname,
@@ -247,17 +250,23 @@ class TenantController extends Controller
             'room_id'=> $req->get('room_number')
         ]);
 
+        //Getting te last tenant ID upon creation
+        $latest_tenant_id = DB::table('tenants')->orderBy('id', 'DESC')->value('id');
+        
+
+        //Update vacant room
         Rooms::where('room_id', $req->get('room_number'))
-        ->update(['tenant_id' => $id,
-        'status' => 'OCCUPIED']
+        ->update(['tenant_id' => $latest_tenant_id,
+        'status' => $room_status]
         );
+
         return redirect()->route('tenants');
     }
 
     public function edit(Request $rq)
     {
 
-        
+        $newroom_id = "";
         $validator = Validator::make($rq->all(), array('surname' => 'required|max:255',
             'firstname'=>'required|max:255',
             'email'=>'required|max:255',
@@ -266,17 +275,15 @@ class TenantController extends Controller
 
         ));
 
-        error_log('reach');
         if($validator->fails())
         {
             error_log($validator->errors());
-
             return  Redirect::route('dashboard.tenants')->withInput()->withErrors($validator->errors());
-           /* return response()->json(array(
-                'success' => false,
-                'message' => 'Missing or incorrect',
-                'errors' =>$validator->getMessageBag()->toArray()
-            ),422);*/
+        }
+
+        if($rq->rental_status == "ARCHIVED")
+        {
+            $newroom_id=0;
         }
 
         
@@ -289,7 +296,8 @@ class TenantController extends Controller
                 'mobile' => $rq->mobileNum,
                 'rent_date' => $rq->rent_date,
                 'rental_status' => $rq->rental_status,
-                'middle_name' => $rq->middle_n
+                'middle_name' => $rq->middle_n,
+                
                 ]
             
             
@@ -301,9 +309,6 @@ class TenantController extends Controller
     {
        Tenants::destroy($req->id);
     }
-
-
-
 
 
 }

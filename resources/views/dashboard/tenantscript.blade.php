@@ -120,8 +120,7 @@ $(document).on('submit','#tenantRegistration',(e) => {
             url: "{{url('/tenants')}}",
             method: 'post',
             data: new FormData(document.getElementById("tenantRegistration")),
-            processData: false,
-            
+            processData: false, 
             contentType: false,
             beforeSend: () => {
                 $('#tenantRegistration').find('div.error').text('');
@@ -129,11 +128,8 @@ $(document).on('submit','#tenantRegistration',(e) => {
             success: (res) => {
                 if (res.code == 0) {
                     $.each(res.error, (pre, val) => {
-                        console.log(pre);
                         $('#tenantRegistration').find('div.'+pre+'-error').text(val[0]);
                     })
-
-
 
                 } 
                 else {
@@ -153,9 +149,22 @@ $(document).on('submit','#tenantRegistration',(e) => {
 // Allow landlord to enter any room number if rental status is archived
 $(document).on('change','#rental_status', e =>{
     e.preventDefault();
-    var rooms = {!!json_encode($rooms->toArray(), JSON_HEX_TAG) !!}
+    var rooms = {!! json_encode($allroom->toArray(), JSON_HEX_TAG) !!}
+    var vacantrooms = {!! json_encode($rooms->toArray(),JSON_HEX_TAG) !!}
+    var html_tag = "";
+    
+    // If archived show all rooms
+    if($('#rental_status').val() == "ARCHIVED"){
+        console.log('archived');
+    }
+})
+
+$(document).on('change','#rental_status_edit', e =>{
+    e.preventDefault();
+    var rooms = {!! json_encode($allroom->toArray(), JSON_HEX_TAG) !!}
     console.log(rooms.length);
 })
+
  
 
 // DELETE
@@ -226,7 +235,11 @@ $(document).on('click','.editEntry' ,(e) =>{
     })
 });
 
-    $('.confirmEdit').on('click', (ev) => {
+
+
+
+// Confirm Edit
+$('.confirmEdit').on('click', (ev) => {
     ev.preventDefault();
     var id = $('.editform').attr('id');
     var surname = $('#tenantSurnameEdit').val();
@@ -237,7 +250,7 @@ $(document).on('click','.editEntry' ,(e) =>{
     var rent_date = $('#rent-date').val();
     var rent_stat = $('#rent_status').find(":selected").text();
     var middle = $('#tenantMiddlenameEdit').val();
-
+    
    
 
     $.ajaxSetup({
@@ -267,7 +280,6 @@ $(document).on('click','.editEntry' ,(e) =>{
             console.log(data);
         }
     })
-
     })
-    })
+})
 </script>
