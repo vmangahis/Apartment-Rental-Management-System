@@ -21,7 +21,7 @@ class TenantController extends Controller
         $rooms = DB::table('rooms')->where('status', 'VACANT')->get();
         $allroom = DB::table('rooms')->get();
         return view('dashboard.tenants', compact('tenant', 'rooms','allroom'));
-        
+
     }
 
 
@@ -35,12 +35,12 @@ class TenantController extends Controller
 
     public function search_tenants(Request $rq)
     {
-        
+
         $rent_stat = "";
         $columnquery = $rq->input('column');
         $parameter = $rq->input('path');
         $res ="";
-        
+
 
         //Check what column will the search base from
         switch ($columnquery){
@@ -72,24 +72,24 @@ class TenantController extends Controller
 
         }
 
-        
+
 
         // Check Status from Data sent by AJAX
         if($rq->input('path') == "ACTIVE")
         {
             $rent_stat = "ACTIVE";
-            
+
         }
         else{
             $rent_stat = "ARCHIVED";
         }
-        
-        
-        
+
+
+
         if($rq->ajax())
         {
             $tenants = DB::table('tenants')->where('rental_status', $rent_stat)->get();
-            
+
             if($rq->get('query') == '') // empty input
             {
                 foreach($tenants as $ten)
@@ -109,7 +109,7 @@ class TenantController extends Controller
 
                     '<button type="button" class="btn btn-primary editEntry fs-4 mb-3" data-bs-target="#editModal" data-bs-toggle="modal" id='.$ten->id.'>Edit'.'</button>'.
                     '<button type="button" class="btn btn-primary deleteEntry fs-4 " data-bs-target="#deleteModal" data-bs-toggle="modal" id='.$ten->id.'>Delete</button>'.
-                    
+
                     '</td>'.
                     '</tr>';
                 }
@@ -117,8 +117,8 @@ class TenantController extends Controller
             }
 
             else{
-                
-                
+
+
                 $tenants = DB::table('tenants')->where($columnquery, 'LIKE', '%'.$rq->get('query').'%')
                 ->where('rental_status','=', $rent_stat)
                 ->get();
@@ -140,10 +140,10 @@ class TenantController extends Controller
                     '<td id='.$ten->id.'>'.$ten->balance_due.'</td>'.
                     '<td class = "d-flex flex-column align-items-center" id='.$ten->id.'>'.
 
-                    '<button type="button" class="btn btn-primary editEntry fs-4 mb-3" data-bs-target="#editModal" 
+                    '<button type="button" class="btn btn-primary editEntry fs-4 mb-3" data-bs-target="#editModal"
                      data-bs-toggle="modal" id='.$ten->id.'>Edit'.'</button>'.
                     '<button type="button" class="btn btn-primary deleteEntry fs-4"  data-bs-target="#deleteModal" data-bs-toggle="modal" id='.$ten->id.'>Delete'.'</button>'.
-                    
+
                     '</td>'.
                     '</tr>';
                     }
@@ -162,23 +162,23 @@ class TenantController extends Controller
 
 
                 return Response($res);
-              
+
             }
 
 
-            
+
         }
       // no  ajax request
         else{
             $tenants = DB::table('tenants')->get();
             return view('dashboard.tenants')->with('tenant', $tenants);
-        }    
-        
+        }
+
     }
 
     public function register(Request $req)
     {
-    
+
 
         $validator = Validator::make($req->all(), ['tenantSurname' => 'required|alpha',
             'tenantFirstname'=>'required|alpha|max:255',
@@ -191,18 +191,19 @@ class TenantController extends Controller
             'tenantSurname.required' => 'Surname required',
             'tenantSurname.alpha' => 'Surname cannot contain numbers or special characters',
             'tenantMiddlename.alpha' => 'Middle Name cannot contain numbers or special characters',
-            'tenantImage.mimes' => 'Tenant Image must be in image format'
+            'tenantImage.mimes' => 'Tenant Image must be in image format',
+            'tenantEmail.required' => 'Email is required'
         ]);
 
-        
-        
+
+
 
         // IF form validation failed
         if(!$validator->passes())
         {
             return response()->json(['code'=> 0, 'error'=>$validator->errors()->toArray()]);
-            
-        }        
+
+        }
 
         else{
 
@@ -212,7 +213,7 @@ class TenantController extends Controller
             if($req->file('tenantImage') == '')
             {
                 $hashed_fname = 'blankimage.png';
-                
+
             }
 
             else{
@@ -226,7 +227,7 @@ class TenantController extends Controller
                 }
             }
 
-        
+
         }
 
         $room_status = "OCCUPIED";
@@ -235,7 +236,7 @@ class TenantController extends Controller
         {
             $room_status="VACANT";
         }
-        
+
         //storing tenants to database
         Tenants::create([
             'surname' => $req->tenantSurname,
@@ -252,7 +253,7 @@ class TenantController extends Controller
 
         //Getting te last tenant ID upon creation
         $latest_tenant_id = DB::table('tenants')->orderBy('id', 'DESC')->value('id');
-        
+
 
         //Update vacant room
         Rooms::where('room_id', $req->get('room_number'))
@@ -286,7 +287,7 @@ class TenantController extends Controller
             $newroom_id=0;
         }
 
-        
+
 
         Tenants::where('id', $rq->id)
             ->update(['surname' => $rq->surname,
@@ -297,10 +298,10 @@ class TenantController extends Controller
                 'rent_date' => $rq->rent_date,
                 'rental_status' => $rq->rental_status,
                 'middle_name' => $rq->middle_n,
-                
+
                 ]
-            
-            
+
+
             );
 
     }

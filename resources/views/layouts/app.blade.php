@@ -23,7 +23,7 @@
         <div class="sidebar-heading border-bottom  text-center text-white sidebar-heading "><span class="sideheading">Apartment Rental Management System</span></div>
         <div class=" list-group-flush side-nav">
             <a class="list-group-item list-group-item-action list-group-item-light p-3 bg-dark border-bottom border-white navigation sidebar-heading " href="/"><span class="sideheading">Dashboard</span></a>
-            <a class="list-group-item list-group-item-action list-group-item-light p-3 bg-dark border-bottom border-white navigation sidebar-heading" href="{{route('summary')}}"><span class="sideheading">Summary</span></a>
+            <a class="list-group-item list-group-item-action list-group-item-light p-3 bg-dark border-bottom border-white navigation sidebar-heading" href="{{route('profile')}}"><span class="sideheading">Profile</span></a>
             <a class="list-group-item list-group-item-action list-group-item-light p-3 bg-dark border-bottom border-white navigation sidebar-heading" href="{{route('tenants')}}"><span class="sideheading">Tenants</span></a>
             <a class="list-group-item list-group-item-action list-group-item-light p-3 bg-dark border-bottom border-white navigation sidebar-heading" href="{{route('room')}}"><span class="sideheading">Rooms</span></a>
             <a class="list-group-item list-group-item-action list-group-item-light p-3 bg-dark border-bottom border-white navigation sidebar-heading" href="{{route('payment')}}"><span class="sideheading">Expenses & Payments</span></a>

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TenantController;
 use App\Http\Controllers\ExpenseController;
@@ -21,6 +22,8 @@ Route::get('/payment/tenant',[PaymentController::class, 'index'])->name('tenantp
 Route::get('/tenants', [TenantController::class, 'index'])->name('tenants'); // Tenant
 
 Route::get('/tenants/archived', [TenantController::class, 'filter'])->name('archived-tenants');
+
+Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
 
 Route::get('/searchtenant', [TenantController::class, 'search_tenants']); // Search Tenant
 

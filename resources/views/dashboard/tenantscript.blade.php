@@ -155,7 +155,9 @@ $(document).on('change','#rental_status', e =>{
     
     // If archived show all rooms
     if($('#rental_status').val() == "ARCHIVED"){
-        console.log('archived');
+        rooms.forEach((item) => {
+            console.log(item);
+        })
     }
 })
 
