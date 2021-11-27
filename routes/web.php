@@ -27,8 +27,6 @@ Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
 
 Route::get('/searchtenant', [TenantController::class, 'search_tenants']); // Search Tenant
 
-
-
 Route::get('/rooms',[RoomController::class, 'index'])->name('room');//Room
 
 Route::get('/rooms/occupied',[RoomController::class, 'occupied'])->name('occupied_room'); // Occupied Room
@@ -41,6 +39,8 @@ Route::get('/send', [MailController::class, 'send']);
 
 //POST
 Route::post('/tenants', [TenantController::class, 'register']);
+
+Route::post('/profile/update', [ProfileController::class, 'edit']);
 
 Route::post('/edittenants', [TenantController::class, 'edit']);
 
