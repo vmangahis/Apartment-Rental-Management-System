@@ -23,7 +23,7 @@
                         <option value="fname">First Name</option>
                         <option value="mname">Middle Name</option>
                         <option value="age">Age</option>
-                        <option value="email">Email Address</option>      
+                        <option value="email">Email Address</option>
                     </select>
                 </div>
 
@@ -34,7 +34,7 @@
 
             </div>
 
-            <button type="button" class="btn btn-primary fs-5 add-tenant" data-bs-toggle="modal" data-bs-target="#tenantForm">Add Tenant</button>    
+            <button type="button" class="btn btn-primary fs-5 add-tenant" data-bs-toggle="modal" data-bs-target="#tenantForm">Add Tenant</button>
         </div>
 
 
@@ -57,11 +57,11 @@
                 </tr>
                 </thead>
                 <tbody id="table-body">
-                    
+
                @if($tenant->count())
                     @foreach($tenant as $ten)
-                    
-                        <tr class="clickable-row" id="{{$ten->id}}" href="#info-modal" data-bs-target="#info-modal" data-bs-toggle="modal" > 
+
+                        <tr class="clickable-row" id="{{$ten->id}}" href="#info-modal" data-bs-target="#info-modal" data-bs-toggle="modal" >
                            <th scope="row" id="{{$ten->id}}">{{$ten->id}}</th>
                             <td id="{{$ten->id}}">{{$ten->surname}}</td>
                             <td id="{{$ten->id}}">{{$ten->firstname}}</td>
@@ -79,24 +79,24 @@
                         </tr>
                     @endforeach
                 @else
-                
+
                     <tr>
                         <td colspan="42">
                             @if(Route::is('tenants'))
-                            <h1 class='text-center no-tenant'>No Active Tenants</h1>     
+                            <h1 class='text-center no-tenant'>No Active Tenants</h1>
 
                             @else
                             <h1 class='text-center no-tenant'>No Archived Tenants</h1>
                             @endif
                         </td>
                     </tr>
-                @endif 
-                
-            
+                @endif
+
+
                 </tbody>
             </table>
-        </div>
-  
+
+
 <!--- view info modal ---->
 <div class="modal fade" id="info-modal" tabindex="-1" aria-labelledby="info-label" aria-hidden="true" id="1">
     <div class="modal-dialog">
@@ -106,7 +106,7 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          
+
             <img class ="rounded mx-auto d-block tenant-photo">
             <h5 class="mt-4">Tenant ID: <span class="ten-id"></span></h5>
             <h5 class="mt-4">Full Name: <span class="ten-surname"></span>, <span class="ten-name"></span></h5>
@@ -181,8 +181,8 @@
                                        id="age" name="tenantEmail" value="{{old('tenantEmail')}}">
                             </div>
                             <div class='text-danger align-self-center mb-2 error tenantEmail-error'></div>
-                            
-                            
+
+
                             <!---- Age input ---->
                             <div class="mb-3 text-center">
                                 <label for="age" class="">Age: </label>
@@ -191,7 +191,7 @@
                                        id="age" name="tenantAge" value="{{old('tenantAge')}}">
                             </div>
                             <div class='text-danger align-self-center mb-2 error tenantAge-error'></div>
-                            
+
                             <div class="mb-3 text-center">
                                 <label for="mobile" class="">Mobile Number: </label>
                                 <input type="text" class="ml-3 form-control align-self-center" id="" name="tenantMobile"
@@ -201,7 +201,7 @@
                             <!--- Room Assignment ---->
                             <div class="mb-3 text-center d-flex flex-row align-items-center">
                                 <label for="mobile" class="">Room Assignment: </label>
-                                
+
                                     @if(count($rooms) > 0)
                                     <select for='room' class="ms-4 w-35" name="room_number">
                                     @foreach($rooms as $roomnum)
@@ -231,7 +231,7 @@
                                        name="tenantRentdate" value="{{now()->toDateString('Y-m-d')}}"
                                        max="{{now()->toDateString('Y-m-d')}}">
                             </div>
-                            
+
                             <!---- Register --->
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
@@ -242,7 +242,7 @@
                     </div>
                 </div>
             </div>
-            
+
 
 
 <!--- Modal Dialog for Deletion -->
@@ -272,15 +272,16 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="editTenant">Edit Tenant</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
+
+
+                <!--- Edit info form tab ---->
                 <div class="modal-body">
-
                     <form class="d-flex flex-column align-items-center mt-5 editform"  method="POST">
-
+                        @csrf
                         <div class="mb-3 text-center">
                             <label for="tenant-photo">Current Tenant Image: </label>
-                            <img class =" mx-auto d-block tenant-photo" src="">    
+                            <img class =" mx-auto d-block tenant-photo" src="">
                             </div>
 
                             <div class="mb-3 text-center">
@@ -289,10 +290,8 @@
                             <input type="text"
                                    class="form-control ml-5 @error('tenantSurname')border border-danger @enderror "
                                    aria-describedby="emailHelp" name="tenantSurnameEdit" id="tenantSurnameEdit">
-                        </div>
-                        @error('tenantSurname')
-                        <div class='text-danger align-self-center mb-2 error-surname'>{{$message}}</div>
-                        @enderror
+                             </div>
+
 
                         <!--- Firstname Input --->
                         <div class="mb-3 text-center">
@@ -343,11 +342,11 @@
                          <!--- Room Assignment Edit---->
                          <div class="mb-3 text-center d-flex flex-row align-items-center">
                             <label for="room" class="">Room Assignment:</label>
-                            
+
                                 @if(count($rooms) > 0)
                                 <select for='room' class="ms-4 w-35" name="room_number" class="">
                                 @foreach($rooms as $roomnum)
-                                
+
                                 <option value="{{$roomnum->room_id}}">{{$roomnum->room_id}}</option>
                                 @endforeach
 
@@ -356,7 +355,7 @@
                                 <option value='none'>No Rooms Available</option>
                                     @endif
                             </select>
-                        </div>  
+                        </div>
 
                          <!---- Rent Status Edit ----->
                          <div class="mb-3 text-center d-flex align-items-center justify-content-center">
@@ -375,7 +374,7 @@
                                    max="{{now()->toDateString('Y-m-d')}}">
                         </div>
 
-                       
+
                     </form>
 
 
@@ -389,8 +388,8 @@
             </div>
         </div>
 
-            
-   
+
+
 
 
 

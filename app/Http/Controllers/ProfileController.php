@@ -5,15 +5,36 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Hash;
 
 
 class ProfileController extends Controller
 {
-    public function index()
+    public function index(Request $rq)
     {
         $landlord_name = DB::table('landlord_table')->orderBy('id', 'DESC')->get();
+
+            if($rq->ajax())
+            {
+                return response()->json(['response' => $landlord_name]);
+            }
+
+
+
+
         return view('dashboard.profile')->with('landlord', $landlord_name);
     }
+
+    public function change_username(Request $rq)
+    {
+
+    }
+
+    public function change_password(Request $rq)
+    {
+        error_log('helll');
+    }
+
     public function edit(Request $rq){
         $name = $rq->get('landlord-surname');
 
@@ -37,7 +58,7 @@ class ProfileController extends Controller
         {
             return response()->json(['code'=> 1, 'error' => $val->errors()->toArray()]);
         }
-        DB::table('landlord_table')->update(['surname' => $rq->get('landlordSurname'),
+        $landlord = DB::table('landlord_table')->update(['surname' => $rq->get('landlordSurname'),
             'firstname' => $rq->get('landlordFirstname'),
             'middlename' => $rq->get('landlordMiddlename'),
             'age' => $rq->get('landlordAge'),
@@ -48,11 +69,14 @@ class ProfileController extends Controller
             'state' => $rq->get('landlordState'),
             ]);
 
-        return response()->json(['value' => [$rq->get('landlordSurname'), $rq->get('landlordFirstname'),
-            $rq->get('landlordMiddlename'), $rq->get('landlordAge'),
-            $rq->get('landlordAddress-1'),$rq->get('landlordAddress-2'),
-            $rq->get('landlordCity'), $rq->get('landlordState')
+
+            return response()->json(['value' => [$rq->get('landlordSurname'), $rq->get('landlordFirstname'),
+                $rq->get('landlordMiddlename'), $rq->get('landlordAge'),
+                $rq->get('landlordAddress-1'),$rq->get('landlordAddress-2'),
+                $rq->get('landlordCity'), $rq->get('landlordState')
             ]]);
+
+
     }
 
 }

@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+
 class Tenants extends Model
 {
     public $timestamps = false;
@@ -20,8 +21,11 @@ class Tenants extends Model
         'rent_date',
         'rental_status',
         'image_name',
+        'balance_due',
         'room_id'
     ];
+
+
 
 
 }

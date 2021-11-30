@@ -6,6 +6,8 @@
 <h1 class="text-center p-5 main-header">Owner</h1>
         <div class ="d-flex justify-content-center">
         <div class = "profile-container d-flex flex-column align-items-center justify-content-center">
+
+
             <!--- Landlord Image ---->
             <img src="{{asset('/storage/landlord_image/blankimage.png')}}" class="rounded mx-auto d-block landlord-photo mb-2">
 
@@ -48,16 +50,83 @@
 
             <!---- Modal Header ---->
             <div class="modal-header">
-                <h5 class="modal-title" id="editTitle">Edit Information</h5>
+                <h5 class="modal-title fs-2" id="editTitle">Edit Profile</h5>
             </div>
 
-            <!---- Modal Body ---->
-            <div class="modal-body">
 
+            <ul class="nav nav-tabs ms-auto mx-auto" id="myTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" href="#edit-login-info" id="info-tab" data-bs-toggle="tab" data-bs-target="#edit-tab-landlord" type="button" role="tab" aria-controls="edit-form-landlord-tab" aria-selected="true">Profile Info</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" href="#edit-form-landlord-tab"   id="login-tab" data-bs-toggle="tab" data-bs-target="#edit-login-info" type="button" role="tab" aria-controls="edit-login-info-tab" aria-selected="false">Login</button>
+                </li>
+            </ul>
+
+
+
+
+                <div class="tab-content">
+                    <!-- Modal Body for login change --->
+                <div class=" tab-pane fade" role="tabpanel" aria-labelledby="edit-login-info-tab" id="edit-login-info" >
+                    <!-- Edit Username --->
+                    <form class="d-flex justify-content-center flex-column align-items-center border-bottom">
+                        <div class="mb-3 text-center">
+                            <label for="old-username-input" class="form-label">Old Username</label>
+                            <input type="text" class="form-control" id="old-username-input" placeholder="Input old username...">
+                        </div>
+                        <div class="mb-3 text-center">
+                            <label for="new-username-input" class="form-label">New Username</label>
+                            <input type="text" class="form-control" id="new-username-input" placeholder="Input new username...">
+                        </div>
+                        <div class="mb-3 text-center">
+                            <label for="password-input" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="password-input" placeholder="Input password...">
+                        </div>
+
+                        <div class="text-center pb-2">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal" data-bs-toggle="modal" data-bs-target="#editlandlord">Close</button>
+                            <button type="button" class="btn btn-primary submit-username-change">Update Username</button>
+                        </div>
+                    </form>
+
+                    <!--- Edit Password --->
+                    <form class="d-flex justify-content-center flex-column align-items-center border-bottom">
+
+                        <div class="mb-3 text-center">
+                            <label for="current-username-input" class="form-label">Username</label>
+                            <input type="text" class="form-control" id="current-username-input" name="current-username-input" placeholder="Input username...">
+                        </div>
+                        <div class="mb-3 text-center">
+                            <label for="old-password-input" class="form-label">Current Password</label>
+                            <input type="password" class="form-control" id="old-password-input" name="old-password-input" placeholder="Input old password...">
+                        </div>
+                        <div class="mb-3 text-center">
+                            <label for="new-password-input" class="form-label">New Password</label>
+                            <input type="password" class="form-control" id="new-password-input" placeholder="Input new password...">
+                        </div>
+
+                        <div class="mb-3 text-center">
+                            <label for="confirm-password-input" class="form-label">Reenter Password</label>
+                            <input type="password" class="form-control" id="confirm-password-input" placeholder="Confirm new password...">
+                        </div>
+
+                        <div class="text-center pb-2">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal" data-bs-toggle="modal" data-bs-target="#editlandlord">Close</button>
+                            <button type="button" class="btn btn-primary submit-password-change">Update Password</button>
+                        </div>
+                    </form>
+
+                </div>
+
+
+                    <!-- Modal Body for profile info change --->
+                <div class="tab-pane fade show active" role="tabpanel" id="edit-tab-landlord" aria-labelledby="edit-form-landlord-tab">
                 <form class="d-flex flex-column justify-content-center align-items-center edit-landlord-form" id="edit-form-landlord">
                     @csrf
+
                     <label class = "fs-3">Current Image</label>
-                    <img src="{{asset('storage/landlord_image/'.$landlord[0]->image)}}" class="text-center landlord-photo">
+                    <img src="{{asset('storage/landlord_image/'.$landlord[0]->image)}}" class="text-center landlord-photo mb-3">
 
                     <div class="mb-3 text-center">
                         <label for="inputsurname" class="form-label">Surname</label>
@@ -106,15 +175,18 @@
                         <input type="text" class="form-control" id="landlordState" name="landlordState">
                     </div>
                     <div class="text-danger landlordState-error error"></div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" data-bs-toggle="modal" data-bs-target="#editlandlord">Close</button>
+                        <button type="button" class="btn btn-primary submit-edit-profile">Update Profile</button>
+                    </div>
                 </form>
+                </div>
 
 
-            </div>
+                 </div>
 
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" data-bs-toggle="modal" data-bs-target="#editlandlord">Close</button>
-                <button type="button" class="btn btn-primary submit-edit-profile">Update Profile</button>
-            </div>
+
 
         </div>
     </div>

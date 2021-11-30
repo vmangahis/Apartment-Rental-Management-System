@@ -30,7 +30,8 @@ class TenantController extends Controller
     {
         $tenant = DB::table('tenants')->where('rental_status', 'ARCHIVED')->get();
         $rooms = DB::table('rooms')->get();
-        return view('dashboard.tenants', compact('tenant', 'rooms'));
+        $allroom = DB::table('rooms')->get();
+        return view('dashboard.tenants', compact('tenant', 'rooms', 'allroom'));
     }
 
     public function search_tenants(Request $rq)
@@ -267,7 +268,7 @@ class TenantController extends Controller
     public function edit(Request $rq)
     {
 
-        $newroom_id = "";
+
         $validator = Validator::make($rq->all(), array('surname' => 'required|max:255',
             'firstname'=>'required|max:255',
             'email'=>'required|max:255',
@@ -276,33 +277,29 @@ class TenantController extends Controller
 
         ));
 
+
         if($validator->fails())
         {
             error_log($validator->errors());
             return  Redirect::route('dashboard.tenants')->withInput()->withErrors($validator->errors());
         }
 
-        if($rq->rental_status == "ARCHIVED")
-        {
-            $newroom_id=0;
-        }
+
+
+        //Make the room available upon change to archived status of tenants
 
 
 
-        Tenants::where('id', $rq->id)
-            ->update(['surname' => $rq->surname,
-                'firstname' => $rq->firstname,
-                'email'=>$rq->email,
-                'age' => $rq->age,
-                'mobile' => $rq->mobileNum,
-                'rent_date' => $rq->rent_date,
-                'rental_status' => $rq->rental_status,
-                'middle_name' => $rq->middle_n,
-
-                ]
-
-
-            );
+        Tenants::where('id', $rq->get('id'))
+            ->update(['surname' => $rq->get('surname'),
+                'firstname' => $rq->get('firstname'),
+                'email'=>$rq->get('email'),
+                'age' => $rq->get('age'),
+                'mobile' => $rq->get('mobileNum'),
+                'rent_date' => $rq->get('rent_date'),
+                'rental_status' => $rq->get('rental_status'),
+                'middle_name' => $rq->get('middle_n'),
+        ]);
 
     }
 

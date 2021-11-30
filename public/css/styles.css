@@ -206,6 +206,10 @@ a {
 
 }
 
+.modal-content{
+    border:0
+}
+
 .room-settings{
     display:flex;
     justify-content: space-between;
@@ -218,6 +222,9 @@ a {
 .tenants-header{
     margin-left:auto;
 }
+
+
+
 
 
 
