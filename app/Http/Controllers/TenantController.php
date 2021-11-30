@@ -214,7 +214,6 @@ class TenantController extends Controller
             if($req->file('tenantImage') == '')
             {
                 $hashed_fname = 'blankimage.png';
-
             }
 
             else{
@@ -305,7 +304,9 @@ class TenantController extends Controller
 
     public function destroy(Request $req)
     {
+
        Tenants::destroy($req->id);
+
     }
 
 

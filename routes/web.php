@@ -33,11 +33,13 @@ Route::get('/rooms/occupied',[RoomController::class, 'occupied'])->name('occupie
 
 Route::get('/report',[ReportsController::class, 'index'])->name('report');
 
-Route::get('/summary',[SummaryController::class, 'index'])->name('summary');
+
 
 Route::get('/send', [MailController::class, 'send']);
 
 //POST
+Route::post('/profile/password', [ProfileController::class, 'change_password']);
+
 Route::post('/tenants', [TenantController::class, 'register']);
 
 Route::post('/profile/update', [ProfileController::class, 'edit']);

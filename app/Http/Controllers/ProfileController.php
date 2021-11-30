@@ -32,7 +32,52 @@ class ProfileController extends Controller
 
     public function change_password(Request $rq)
     {
-        error_log('helll');
+        $val = Validator::make($rq->all(), ['current-username-input' => 'required|string',
+            'new-password-input' => 'required|min:5|max:128'
+        ],
+        // Custom Messages
+        ['current-username-input.required' => 'This field cannot be empty.',
+            'new-password-input.required' => 'This field cannot be empty',
+            'new-password-input.min' => 'Password should not be less than 5 characters'
+        ]
+        );
+
+        //If something is missing
+        if($val->fails())
+        {
+            return response()->json(['code' => 5, 'error' => $val->errors()->toArray()]);
+        }
+
+        $admin = DB::table('landlord_login')->select('username','password')->get();
+
+        if($rq->get('current-username-input') != $admin[0]->username )
+        {
+            return response()->json(['code' => 8, 'error' => ['current-username-input' => 'Wrong username']]);
+        }
+
+        if($rq->get('new-password-input') != $rq->get('confirm-password-input'))
+        {
+            return response()->json(['code' => 7, 'error' => ['confirm-password-input' => 'Password do not match with the new password']]);
+        }
+
+        //aptproject
+        if(Hash::check($rq->get('old-password-input'), $admin[0]->password ))
+        {
+            $hashed = Hash::make($rq->get('new-password-input'));
+            DB::table('landlord_login')->update(['password' => $hashed]);
+            return response()->json(['code' => 0, 'result' => 'Password Changed']);
+        }
+
+        // Wrong Old Password
+        else{
+            return response()->json(['code'=> 6 ,'error' => ['old-password-input' => 'Incorrect Password']]);
+        }
+
+
+
+        return response()->json(['response' =>'done']);
+
+
     }
 
     public function edit(Request $rq){

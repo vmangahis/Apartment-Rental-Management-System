@@ -1,9 +1,6 @@
 <script type="text/javascript">
     $(document).ready(() => {
 
-
-
-
         $(document).on('click', '.edit-landlord', e => {
             $.ajaxSetup({
                 headers: {
@@ -28,13 +25,11 @@
                     $('#landlordState').val(res.response[0].state);
                 }
             })
-
-
         });
 
         $(document).on('click', '.submit-edit-profile', e => {
-            var old_data = {!! json_encode($landlord, JSON_HEX_TAG) !!};
-            console.log(old_data);
+
+
             var formdata = new FormData(document.getElementById('edit-form-landlord'));
             $.ajaxSetup({
                 headers: {
@@ -81,6 +76,61 @@
             });
         });
 
+        $('.submit-password-change').on('click', e =>{
+            e.preventDefault();
+            var form = new FormData(document.getElementById('edit-password'))
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            $.ajax({
+                method: "POST",
+                url: "{{url('/profile/password')}}",
+                data: form,
+                contentType: false,
+                processData: false,
+                beforeSend: () =>{
+                    //Clear text after entering
+                    $('#edit-password').find('div.error').text('');
+                },
+                success: res =>{
+                    if(res.code == 5)
+                    {
+                        console.log(res);
+                        $.each(res.error, (prefix, value) =>{
+                           $('#edit-password').find('div.'+prefix+'-error').text(value[0]);
+                        });
+                    }
+
+                    else if(res.code == 0)
+                    {
+
+                        $('#edit-password')[0].reset();
+                        alert('Password changed');
+                    }
+
+                    else if(res.code == 6 || res.code == 7 || res.code == 8)
+                    {
+
+                        $.each(res.error, (ind, val) =>{
+                            console.log(1);
+                            $('#edit-password').find('div.'+ind+'-error').text(val);
+                        })
+                    }
+
+
+
+                    else{
+                        console.log(res);
+                    }
+
+                }
+            })
+
+        })
 
 });
 </script>

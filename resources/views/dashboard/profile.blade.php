@@ -91,25 +91,31 @@
                     </form>
 
                     <!--- Edit Password --->
-                    <form class="d-flex justify-content-center flex-column align-items-center border-bottom">
+                    <form class="d-flex justify-content-center flex-column align-items-center border-bottom" id="edit-password">
 
                         <div class="mb-3 text-center">
                             <label for="current-username-input" class="form-label">Username</label>
                             <input type="text" class="form-control" id="current-username-input" name="current-username-input" placeholder="Input username...">
+                            <div class="text-danger current-username-input-error error"></div>
                         </div>
+
                         <div class="mb-3 text-center">
                             <label for="old-password-input" class="form-label">Current Password</label>
                             <input type="password" class="form-control" id="old-password-input" name="old-password-input" placeholder="Input old password...">
                         </div>
+                        <div class="text-danger old-password-input-error error"></div>
+
                         <div class="mb-3 text-center">
                             <label for="new-password-input" class="form-label">New Password</label>
-                            <input type="password" class="form-control" id="new-password-input" placeholder="Input new password...">
+                            <input type="password" class="form-control" id="new-password-input" name="new-password-input" placeholder="Input new password...">
                         </div>
+                        <div class="text-danger new-password-input-error error"></div>
 
                         <div class="mb-3 text-center">
                             <label for="confirm-password-input" class="form-label">Reenter Password</label>
-                            <input type="password" class="form-control" id="confirm-password-input" placeholder="Confirm new password...">
+                            <input type="password" class="form-control" id="confirm-password-input" name="confirm-password-input" placeholder="Confirm new password...">
                         </div>
+                        <div class="text-danger confirm-password-input-error error"></div>
 
                         <div class="text-center pb-2">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal" data-bs-toggle="modal" data-bs-target="#editlandlord">Close</button>
