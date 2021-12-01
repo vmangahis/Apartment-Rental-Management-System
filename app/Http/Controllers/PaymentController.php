@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\DB;
+
 class PaymentController extends Controller
 {
     public function index()
     {
-        return view('dashboard.payment');
+        $payments = DB::table('payments')->get();
+        return view('dashboard.payment', compact('payments'));
     }
 }

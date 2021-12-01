@@ -121,14 +121,65 @@
                         })
                     }
 
-
-
                     else{
                         console.log(res);
                     }
 
                 }
             })
+        })
+
+
+        $('.submit-username-change').on('click' , e => {
+            e.preventDefault();
+            var data = new FormData(document.getElementById('edit-username'));
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            $.ajax({
+                method: "POST",
+                url: "{{url('profile/username')}}",
+                data : data,
+                processData: false,
+                contentType: false,
+                beforeSend : () =>{
+                    // Clear red font errors before making request
+                    $('#edit-username').find('div.error').text('');
+                },
+                success: (response) => {
+                    if(response.code == 1)
+                    {
+                        console.log('code 1');
+                        console.log(response.response);
+                    }
+
+                    else if (response.code == 5  || response.code == 8 || response.code == 6 || response.code == 10)
+                    {
+                        console.log('code ' + response.code);
+                        $.each(response.error, (pre, val) => {
+                            console.log(pre);
+                            $('#edit-username').find('div.' + pre + '-error').text(val);
+                        })
+                    }
+
+                    else{
+                        console.log('Username successfully changed');
+                        console.log(response);
+                        $('#edit-username')[0].reset();
+                        alert('Username changed');
+
+                    }
+
+
+
+
+                },
+            })
+
 
         })
 

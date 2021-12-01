@@ -3,6 +3,16 @@
 @section('content')
 
 
+
+<div class="expenses-payments-header d-flex justify-content-center">
+        <h1 class="text-center main-header m-4">Expenses & Payments</h1>
+        <div class="tab-nav d-flex flex-column align-items-center justify-content-around">
+            <button class="btn btn-primary" onClick="location.href = '/payment'">Expenses</button>
+            <button class="btn btn-primary" onClick="location.href = '/payment/tenant'">Payments</button>
+        </div>
+</div>
+
+
 <div class="modal fade" id="paymentModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -11,9 +21,6 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          
-
-
 
         </div>
         <div class="modal-footer">
@@ -24,21 +31,11 @@
     </div>
   </div>
 
-<h1 class = 'text-center p-5 main-header'>Payments</h1>
-<ul class="nav nav-pills bg-gray">
-    <li class="nav-item nav-link">
-        <a class="nav-link" aria-current="page" href="{{route('payment')}}">Expenses</a>
-    </li>
-    <li class="nav-item nav-link">
-        <a class="nav-link active" href="{{route('tenantpayment')}}">Payments</a>
-    </li>
-
-</ul>
-
-<table class="table mt-5">
-    <button class = 'btn btn-success expensebutton mt-5 fs-3' data-bs-toggle="modal" data-bs-target="#paymentModal">+New Payment</button>
+<button class = 'btn btn-primary paymentButton d-block ms-auto mt-5 fs-5' data-bs-toggle="modal" data-bs-target="#paymentModal">+New Payment</button>
+<table class="payment-table table mt-5">
+    <h1 class="text-center">Payments Table</h1>
     <thead>
-    <tr>
+    <tr class="payment-table-header">
         <th scope="col" class="'text-center">Transaction ID</th>
         <th scope="col">Surname</th>
         <th scope="col">First Name</th>
@@ -47,13 +44,23 @@
     </tr>
     </thead>
     <tbody>
+    @if(count($payments) > 0)
+        @foreach($payments as $pay)
     <tr>
-        <th scope="row">1</th>
-        <td>TestSurname</td>
-        <td>TestFirstName</td>
-        <td>2000.00</td>
-        <td>2021-05-02</td>
+        <th scope="row">{{$pay->transaction_id}}</th>
+        <td>surname</td>
+        <td>firstname</td>
+        <td>{{$pay->amount_paid}}</td>
+        <td>{{$pay->transaction_date}}</td>
     </tr>
+        @endforeach
+
+    @else
+    <tr>
+        <td colspan = "42"><h1 class="text-center">No Records</h1></td>
+    </tr>
+        @endif
+
     </tbody>
 </table>
 

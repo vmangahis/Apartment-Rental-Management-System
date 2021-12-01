@@ -2,11 +2,11 @@
 
 @section('content')
 
-<div class="tenants-header d-flex justify-content-center">
+<div class="rooms-header d-flex justify-content-center">
   <h1 class="text-center main-header m-4">Rooms</h1>
   <div class="tab-nav d-flex flex-column align-items-center justify-content-around">
-      <button class="btn btn-primary" onClick="location.href = '/rooms'">Vacant</a>
-      <button class="btn btn-primary" onClick="location.href = '/rooms/occupied'">Occupied</a>
+      <button class="btn btn-primary" onClick="location.href = '/rooms'">Vacant</button>
+      <button class="btn btn-primary" onClick="location.href = '/rooms/occupied'">Occupied</button>
   </div>
 </div>
 
@@ -29,7 +29,7 @@
 
   </div>
 
-  
+
 
   <button type="button" class='btn btn-primary fs-5 addroombutton'>Add Room</button>
 </div>
@@ -50,7 +50,7 @@
     <tr id = "{{$rm->room_id}}">
       <th scope="row">{{$rm->room_id}}</th>
 
-      
+
       <td>@if($rm->tenant_id != 0){{$rm->tenant_id}} @else No Occupant @endif</td>
 
 
@@ -66,17 +66,17 @@
     <tr>
       <td colspan="42">
       @if(Route::is('room'))
-      <h1 class='text-center'>No Vacant Rooms</h1>     
+      <h1 class='text-center'>No Vacant Rooms</h1>
       @else
       <h1 class='text-center'>No Occupied Rooms</h1>
       @endif
       </td>
-      
+
     </tr>
     @endif
 
   </tbody>
 </table>
 
-@include('dashboard.roomscript')
+@include('script.roomscript')
     @endsection

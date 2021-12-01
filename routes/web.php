@@ -12,49 +12,53 @@ use App\Http\Controllers\SummaryController;
 use App\Http\Controllers\MailController;
 
 
-//GET Request
-Route::get('/', [DashboardController::class, 'index']); //dashboard
+//Dashboard
+Route::get('/', [DashboardController::class, 'index']);
 
-Route::get('/payment', [ExpenseController::class, 'index'])->name('payment'); //expenses
+//Expenses and Payments
+Route::get('/payment', [ExpenseController::class, 'index'])->name('payment');
 
-Route::get('/payment/tenant',[PaymentController::class, 'index'])->name('tenantpayment'); //payments
+Route::get('/payment/tenant',[PaymentController::class, 'index'])->name('tenantpayment');
 
+//Tenants
 Route::get('/tenants', [TenantController::class, 'index'])->name('tenants'); // Tenant
 
 Route::get('/tenants/archived', [TenantController::class, 'filter'])->name('archived-tenants');
 
+Route::get('/searchtenant', [TenantController::class, 'search_tenants']);
+
+Route::post('/tenants', [TenantController::class, 'register']);
+
+Route::post('/edittenants', [TenantController::class, 'edit']);
+
+Route::delete('/tenants', [TenantController::class, 'destroy']);
+
+
+//Landlord Profile
+
 Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
 
-Route::get('/searchtenant', [TenantController::class, 'search_tenants']); // Search Tenant
+Route::post('/profile/password', [ProfileController::class, 'change_password']);
 
-Route::get('/rooms',[RoomController::class, 'index'])->name('room');//Room
+Route::post('/profile/username', [ProfileController::class, 'change_username']);
+
+Route::post('/profile/update', [ProfileController::class, 'edit']);
+
+
+//Rooms
+Route::get('/rooms',[RoomController::class, 'index'])->name('room');
+
+Route::post('/rooms', [RoomController::class, 'addroom']);
 
 Route::get('/rooms/occupied',[RoomController::class, 'occupied'])->name('occupied_room'); // Occupied Room
 
 Route::get('/report',[ReportsController::class, 'index'])->name('report');
 
 
-
+// To implement mailing send
 Route::get('/send', [MailController::class, 'send']);
-
-//POST
-Route::post('/profile/password', [ProfileController::class, 'change_password']);
-
-Route::post('/tenants', [TenantController::class, 'register']);
-
-Route::post('/profile/update', [ProfileController::class, 'edit']);
-
-Route::post('/edittenants', [TenantController::class, 'edit']);
-
-Route::post('/rooms', [RoomController::class, 'addroom']);
-
-
-//DELETE
-Route::delete('/tenants', [TenantController::class, 'destroy']);
-
 
 
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

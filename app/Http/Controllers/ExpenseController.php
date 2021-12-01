@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\DB;
+
 class ExpenseController extends Controller
 {
     public function index()
     {
 
-
-        return view('dashboard.expense');
+        $expenses= DB::table('expenses')->get();
+        return view('dashboard.expense', compact('expenses'));
     }
 }

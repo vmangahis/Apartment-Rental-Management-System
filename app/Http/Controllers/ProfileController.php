@@ -27,7 +27,45 @@ class ProfileController extends Controller
 
     public function change_username(Request $rq)
     {
+        $validator = Validator::make($rq->all(), ['old-username-input' => 'required',
+            'new-username-input' => 'required|min:5',
+            'password-input' => 'required'],
 
+            ['old-username-input.required' => 'This is a required field',
+                'new-username-input.required' => 'This is a required field',
+                'password-input.required' => 'This is a required field']
+        );
+
+        //Missing field
+        if($validator->fails())
+        {
+            return response()->json(['code' => 5, 'error' => $validator->errors()->toArray()]);
+        }
+
+        $username = DB::table('landlord_login')->select('username', 'password')->get();
+
+
+        if($username[0]->username != $rq->get('old-username-input'))
+        {
+            return response()->json(['code' => 8, 'error' => ['old-username-input'=>'Incorrect username. Please try again.']]);
+        }
+
+        else if($rq->get('new-username-input') == $rq->get('old-username-input')){
+            return response()->json(['code' => 10, 'error' => ['new-username-input' => 'New username cannot be the old username']]);
+        }
+
+        else if(!Hash::check($rq->get('password-input'), $username[0]->password))
+        {
+            return response()->json(['code' => 6, 'error' => ['password-input' => 'Incorrect password. Please try again']]);
+        }
+
+        else{
+            DB::table('landlord_login')->update(['username' => $rq->get('new-username-input')]);
+            return response()->json(['code' => 0, 'response' => 'Username changed']);
+        }
+
+
+        return response()->json(['code' => 1 ,'response' => 'unknown']);
     }
 
     public function change_password(Request $rq)

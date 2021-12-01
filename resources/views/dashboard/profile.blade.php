@@ -70,19 +70,24 @@
                     <!-- Modal Body for login change --->
                 <div class=" tab-pane fade" role="tabpanel" aria-labelledby="edit-login-info-tab" id="edit-login-info" >
                     <!-- Edit Username --->
-                    <form class="d-flex justify-content-center flex-column align-items-center border-bottom">
+                    <form class="d-flex justify-content-center flex-column align-items-center border-bottom" id="edit-username">
                         <div class="mb-3 text-center">
                             <label for="old-username-input" class="form-label">Old Username</label>
-                            <input type="text" class="form-control" id="old-username-input" placeholder="Input old username...">
+                            <input type="text" class="form-control" id="old-username-input" name= "old-username-input" placeholder="Input old username...">
                         </div>
+                        <div class = "text-danger error old-username-input-error"></div>
+
                         <div class="mb-3 text-center">
                             <label for="new-username-input" class="form-label">New Username</label>
-                            <input type="text" class="form-control" id="new-username-input" placeholder="Input new username...">
+                            <input type="text" class="form-control" id="new-username-input" name="new-username-input" placeholder="Input new username...">
                         </div>
+                        <div class = "text-danger error new-username-input-error"></div>
+
                         <div class="mb-3 text-center">
                             <label for="password-input" class="form-label">Password</label>
-                            <input type="password" class="form-control" id="password-input" placeholder="Input password...">
+                            <input type="password" class="form-control" id="password-input" name="password-input" placeholder="Input password...">
                         </div>
+                        <div class = "text-danger error password-input-error"></div>
 
                         <div class="text-center pb-2">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal" data-bs-toggle="modal" data-bs-target="#editlandlord">Close</button>
