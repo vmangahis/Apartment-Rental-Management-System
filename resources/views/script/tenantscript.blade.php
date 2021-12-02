@@ -133,7 +133,7 @@ $(document).on('submit','#tenantRegistration',(e) => {
 
                 }
                 else {
-                    console.log('hello');
+
                     $('#tenantRegistration')[0].reset();
                     window.location = window.location.pathname;
                 }
@@ -201,7 +201,7 @@ $(document).on('click','.deleteEntry', (e) => {
                 if (res.errors) {
                     console.log('error');
                 } else {
-                    console.log('not error');
+
                     window.location = window.location.pathname;
 
 

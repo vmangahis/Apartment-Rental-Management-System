@@ -202,6 +202,13 @@ a {
 
 }
 
+.form-inputs{
+    display:flex;
+    flex-direction:column;
+    align-items: center;
+    justify-content: center;
+}
+
 
 .sideheading{
     font-size:24px;

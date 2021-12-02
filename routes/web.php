@@ -20,6 +20,10 @@ Route::get('/payment', [ExpenseController::class, 'index'])->name('payment');
 
 Route::get('/payment/tenant',[PaymentController::class, 'index'])->name('tenantpayment');
 
+Route::post('/payment', [ExpenseController::class, 'addrecord']);
+
+
+
 //Tenants
 Route::get('/tenants', [TenantController::class, 'index'])->name('tenants'); // Tenant
 

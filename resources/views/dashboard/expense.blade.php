@@ -17,10 +17,11 @@
 
 
 
+<button class = 'btn btn-primary expenseButton mt-5 ms-auto d-block fs-5' data-bs-toggle="modal" data-bs-target="#expenseModal">+New Expense</button>
 
 
   <!-- Modal -->
-  <div class="modal fade" id="expenseModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="expenseModal" tabindex="-1">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -29,28 +30,49 @@
         </div>
         <div class="modal-body">
 
+            <form class="d-flex flex-column justify-content-center" id="expense-form">
+                <div class="mb-3 form-inputs">
+                    <label for="description-input" class="form-label">Description</label>
+                    <input type="text" class="form-control" id="description-input" name="description-input">
+                </div>
+                <div class = "text-danger error description-input-error"></div>
+
+                <div class="mb-3 form-inputs">
+                    <label for="expense-amount" class="form-label">Amount</label>
+                    <input type="number" step="0.01" class="form-control" id="expense-amount" name="expense-amount" value="0.00" min="1">
+                </div>
+
+                <div class="mb-3 form-inputs">
+                    <label for="transaction-date" class="form-label">Transaction Date</label>
+                    <input type="date" value="<?php echo date('Y-m-d'); ?>" max="<?php echo date('Y-m-d'); ?>" name="transaction-date-input">
+                </div>
+
+            </form>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Add</button>
+          <button type="button" class="btn btn-primary addExpenseRecord">Add Record</button>
         </div>
       </div>
     </div>
   </div>
 
-<button class = 'btn btn-primary expenseButton mt-5 ms-auto  d-block fs-5' data-bs-toggle="modal" data-bs-target="#expenseModal">+New Expense</button>
+
+
+
     <!---- Expenses Table ----->
     <table class="table mt-5 expense-table">
         <h1 class="text-center">Expenses Table</h1>
         <thead>
         <tr class="expense-table-header">
-            <th scope="col" class="'text-center">Transaction ID</th>
-            <th scope="col">Description</th>
-            <th scope="col">Amount</th>
-            <th scope="col">Transaction Date</th>
+            <th scope="col" class="text-center">Transaction ID</th>
+            <th scope="col" class="text-center">Description</th>
+            <th scope="col" class="text-center">Amount</th>
+            <th scope="col" class="text-center">Transaction Date</th>
+            <th scope="col" class="text-center">Actions</th>
         </tr>
         </thead>
-        <tbody>
+        <tbody class="expense-table-body">
         @if(count($expenses) > 0 )
             @foreach($expenses as $exp)
             <tr>
@@ -58,6 +80,10 @@
             <td>{{$exp->description}}</td>
             <td>{{$exp->amount}}</td>
             <td>{{$exp->transaction_date}}</td>
+                <td class="d-flex justify-content-evenly">
+                    <button id="{{$exp->transaction_id}}" type="button" class="btn btn-primary">Edit</button>
+                    <button id="{{$exp->transaction_id}}" type="button" class="btn btn-primary">Delete</button>
+                </td>
             </tr>
             @endforeach
 
@@ -71,5 +97,5 @@
             @endif
         </tbody>
     </table>
-
+@include('script.expensescript')
 @endsection
