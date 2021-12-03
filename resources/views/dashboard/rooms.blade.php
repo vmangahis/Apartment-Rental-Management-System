@@ -51,7 +51,7 @@
       <th scope="row">{{$rm->room_id}}</th>
 
 
-      <td>@if($rm->tenant_id != 0){{$rm->tenant_id}} @else No Occupant @endif</td>
+      <td>@if($rm->tenant_id != 0){{$rm->tenant_id}}@else No Occupant @endif</td>
 
 
 

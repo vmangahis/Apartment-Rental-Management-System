@@ -16,7 +16,7 @@ class PaymentController extends Controller
 
     public function addPayment(Request $rq)
     {
-        //DB::table('')
+
         return response()->json(['response' => 'Successfully called controller']);
     }
 }

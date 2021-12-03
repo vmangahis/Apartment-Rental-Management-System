@@ -15,6 +15,11 @@ class Rooms extends Model
     'status',
     'tenant_id',
     ];
+
+    public function tenant()
+    {
+        return $this->belongsTo(Tenants::class, 'tenant_id');
+    }
 }
 
 
