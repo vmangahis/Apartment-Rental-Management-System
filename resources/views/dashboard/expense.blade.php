@@ -81,8 +81,8 @@
             <td>{{$exp->amount}}</td>
             <td>{{$exp->transaction_date}}</td>
                 <td class="d-flex justify-content-evenly">
-                    <button id="{{$exp->transaction_id}}" type="button" class="btn btn-primary">Edit</button>
-                    <button id="{{$exp->transaction_id}}" type="button" class="btn btn-primary">Delete</button>
+                    <button id="{{$exp->transaction_id}}" type="button" class="btn btn-primary fs-4">Edit</button>
+                    <button id="{{$exp->transaction_id}}" type="button" class="btn btn-primary fs-4">Delete</button>
                 </td>
             </tr>
             @endforeach

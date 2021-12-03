@@ -23,27 +23,49 @@
 
         <div class="modal-body">
 
-            <form class="d-flex flex-column justify-content-center">
-                <div class="mb-3">
-                    <label for="exampleInputEmail1" class="form-label">Email address</label>
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                    <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+            <form class="d-flex flex-column justify-content-center" id="payment-form">
+
+                <div class="mb-3 form-inputs">
+                    <label for="input-tenant-pay">Tenant Number:</label>
+                    <select class="input-tenant-pay" name="input-tenant-pay" id="input-tenant-pay" @if(count($tenants) == 0)disabled @endif>
+                        <!--- Put active tenants in here ---->
+                        @if(count($tenants) > 0)
+                            @foreach($tenants as $ten)
+                                <option value="{{$ten->id}}">{{$ten->id}} - <span class="tenantLastName">
+                                        {{$ten->surname}},</span>
+                                <span class="tenantFirstName">
+                                    {{$ten->firstname}}
+                                </span>
+                                    <span class="tenantMiddlename">
+                                    {{$ten->middle_name}}
+                                </span>
+                                </option>
+                            @endforeach
+
+                            @else
+                            <option>No Tenants</option>
+                            @endif
+                    </select>
+
                 </div>
-                <div class="mb-3">
-                    <label for="exampleInputPassword1" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="exampleInputPassword1">
+
+                <div class="mb-3 form-inputs">
+                    <label for="expense-amount" class="form-label">Amount</label>
+                    <input type="number" step="0.01" class="form-control" id="expense-amount" name="expense-amount" value="0.00" min="1">
                 </div>
-                <div class="mb-3 form-check">
-                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                    <label class="form-check-label" for="exampleCheck1">Check me out</label>
+
+                <div class="mb-3 form-inputs">
+                    <label for="payment-date" class="form-label">Transaction Date</label>
+                    <input type="date" value="<?php echo date('Y-m-d'); ?>" max="<?php echo date('Y-m-d'); ?>" name="payment-date-input">
                 </div>
 
             </form>
+
         </div>
 
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Add</button>
+          <button type="button" class="btn btn-primary addPaymentRecord">Add Record</button>
         </div>
       </div>
     </div>
@@ -54,12 +76,12 @@
     <h1 class="text-center">Payments Table</h1>
     <thead>
     <tr class="payment-table-header">
-        <th scope="col" class="'text-center">Transaction ID</th>
-        <th scope="col">Surname</th>
-        <th scope="col">First Name</th>
-        <th scope="col">Amount Paid</th>
-        <th scope="col">Date Paid</th>
-        <td scope="col">Actions</td>
+        <th scope="col" class="text-center">Transaction ID</th>
+        <th scope="col" class="text-center">Surname</th>
+        <th scope="col" class="text-center">First Name</th>
+        <th scope="col" class="text-center">Amount Paid</th>
+        <th scope="col" class="text-center">Date Paid</th>
+        <th scope="col" class="text-center">Actions</th>
     </tr>
     </thead>
     <tbody>
@@ -72,8 +94,8 @@
         <td>{{$pay->amount_paid}}</td>
         <td>{{$pay->transaction_date}}</td>
         <td>
-            <button type="button" class="btn btn-primary">Edit</button>
-            <button type="button" class="btn btn-primary">Delete</button>
+            <button type="button" class="btn btn-primary" id="{{$pay->transaction_id}}">Edit</button>
+            <button type="button" class="btn btn-primary" id="{{$pay->transaction_id}}">Delete</button>
         </td>
     </tr>
         @endforeach
@@ -87,5 +109,5 @@
     </tbody>
 </table>
 
-
+@include('script.paymentscript')
     @endsection

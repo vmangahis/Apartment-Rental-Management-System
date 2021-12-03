@@ -44,11 +44,10 @@ class ExpenseController extends Controller
             '<td id='.$tab->transaction_id.'>'.$tab->amount.'</td>'.
             '<td id='.$tab->transaction_id.'>'.$tab->transaction_date.'</td>'.
                 '<td class="d-flex justify-content-evenly" id='.$tab->transaction_id.'>'.
-                '<button type="button" class="btn btn-primary editExpense" id='.$tab->transaction_id.'>'.'Edit'.'</button>'.
-                '<button type="button" class="btn btn-primary deleteExpense" id='.$tab->transaction_id.'>'.'Delete'.'</button>'.
+                '<button type="button" class="btn btn-primary editExpense fs-4" id='.$tab->transaction_id.'>'.'Edit'.'</button>'.
+                '<button type="button" class="btn btn-primary deleteExpense fs-4" id='.$tab->transaction_id.'>'.'Delete'.'</button>'.
                 '</td>'.
-            '</tr>'
-            ;
+            '</tr>';
         }
 
 

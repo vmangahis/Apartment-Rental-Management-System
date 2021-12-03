@@ -15,12 +15,16 @@ use App\Http\Controllers\MailController;
 //Dashboard
 Route::get('/', [DashboardController::class, 'index']);
 
-//Expenses and Payments
+//Expenses
 Route::get('/payment', [ExpenseController::class, 'index'])->name('payment');
+
+Route::post('/payment', [ExpenseController::class, 'addrecord']);
+
+//Payment
 
 Route::get('/payment/tenant',[PaymentController::class, 'index'])->name('tenantpayment');
 
-Route::post('/payment', [ExpenseController::class, 'addrecord']);
+Route::post('/payment/tenant',[PaymentController::class, 'addPayment']);
 
 
 
