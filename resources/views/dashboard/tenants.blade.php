@@ -6,8 +6,8 @@
 <div class="tenants-header d-flex justify-content-center">
         <h1 class="text-center main-header m-4">Tenants</h1>
         <div class="tab-nav d-flex flex-column align-items-center justify-content-around">
-            <button class="btn btn-primary" onClick="location.href='/tenants'">Active</a>
-            <button class="btn btn-primary" onClick="location.href='/tenants/archived'">Archived</a>
+            <button class="btn btn-primary" onClick="location.href='/tenants'">Active</button>
+            <button class="btn btn-primary" onClick="location.href='/tenants/archived'">Archived</button>
         </div>
     </div>
 
@@ -235,7 +235,7 @@
                             <!---- Register --->
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                <button type="submit" class="btn btn-primary">Register</button>
+                                <button type="submit" class="btn btn-primary" @if($roomCount == 0) disabled @endif>Register</button>
                             </div>
 
                         </form>

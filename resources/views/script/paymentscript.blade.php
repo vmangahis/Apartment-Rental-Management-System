@@ -19,9 +19,14 @@ $(document).ready(() => {
             processData: false,
             data: data,
             success: res =>{
-                console.log(res);
+                $('#paymentModal').modal('hide');
+                $('#payment-form')[0].reset();
+                $('.payment-table-body').html(res.html);
+            },
+            error: err => {
+                console.log(err);
             }
-        })
+        });
 
     });
 

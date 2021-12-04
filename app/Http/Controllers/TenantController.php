@@ -20,7 +20,8 @@ class TenantController extends Controller
         $tenant = DB::table('tenants')->where('rental_status','ACTIVE')->get();
         $rooms = DB::table('rooms')->where('status', 'VACANT')->get();
         $allroom = DB::table('rooms')->get();
-        return view('dashboard.tenants', compact('tenant', 'rooms','allroom'));
+        $roomCount = Rooms::where('status', 'VACANT')->count();
+        return view('dashboard.tenants', compact('tenant', 'rooms','allroom', 'roomCount'));
 
     }
 

@@ -25,7 +25,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Expenses</h5>
+          <h5 class="modal-title">Expenses</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
@@ -62,7 +62,13 @@
 
     <!---- Expenses Table ----->
     <table class="table mt-5 expense-table">
-        <h1 class="text-center">Expenses Table</h1>
+        <div class="table-header d-flex flex-column justify-content-center text-center">
+            <h1 class="text-center">Expenses Table</h1>
+            <div class="d-inline-block">
+                <button type="button" class="btn btn-primary">Monthly Report</button>
+                <button type="button" class="btn btn-primary">Annual Report</button>
+            </div>
+        </div>
         <thead>
         <tr class="expense-table-header">
             <th scope="col" class="text-center">Transaction ID</th>

@@ -27,10 +27,10 @@
 
                 <div class="mb-3 form-inputs">
                     <label for="input-tenant-pay">Tenant Number:</label>
-                    <select class="input-tenant-pay" name="input-tenant-pay" id="input-tenant-pay" @if(count($tenants) == 0)disabled @endif>
+                    <select class="input-tenant-pay" name="input-tenant-pay" id="input-tenant-pay" @if($tenantCount == 0)disabled @endif>
                         <!--- Put active tenants in here ---->
-                        @if(count($tenants) > 0)
-                            @foreach($tenants as $ten)
+                        @if($tenantCount > 0)
+                            @foreach($tenant as $ten)
                                 <option value="{{$ten->id}}">{{$ten->id}} - <span class="tenantLastName">
                                         {{$ten->surname}},</span>
                                 <span class="tenantFirstName">
@@ -49,7 +49,7 @@
 
                 </div>
 
-                <div class="mb-3 form-inputs">
+                <div class="mb-3 form-inputs"}>
                     <label for="expense-amount" class="form-label">Amount</label>
                     <input type="number" step="0.01" class="form-control" id="expense-amount" name="expense-amount" value="0.00" min="1">
                 </div>
@@ -64,8 +64,8 @@
         </div>
 
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary addPaymentRecord">Add Record</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" >Close</button>
+          <button type="button" class="btn btn-primary addPaymentRecord" @if($tenantCount == 0) disabled @endif>Add Record</button>
         </div>
       </div>
     </div>
@@ -73,29 +73,37 @@
 
 <button class = 'btn btn-primary paymentButton d-block ms-auto mt-5 fs-5' data-bs-toggle="modal" data-bs-target="#paymentModal">+New Payment</button>
 <table class="payment-table table mt-5">
+    <div class="table-header d-flex flex-column justify-content-center text-center">
     <h1 class="text-center">Payments Table</h1>
+        <div class="d-inline-block">
+        <button type="button" class="btn btn-primary">Monthly Report</button>
+        <button type="button" class="btn btn-primary">Annual Report</button>
+        </div>
+    </div>
     <thead>
     <tr class="payment-table-header">
         <th scope="col" class="text-center">Transaction ID</th>
         <th scope="col" class="text-center">Surname</th>
         <th scope="col" class="text-center">First Name</th>
+        <th scope="col" class="text-center">Middle Name</th>
         <th scope="col" class="text-center">Amount Paid</th>
         <th scope="col" class="text-center">Date Paid</th>
         <th scope="col" class="text-center">Actions</th>
     </tr>
     </thead>
-    <tbody>
+    <tbody class="payment-table-body">
     @if(count($payments) > 0)
         @foreach($payments as $pay)
     <tr>
-        <th scope="row">{{$pay->transaction_id}}</th>
-        <td>surname</td>
-        <td>firstname</td>
-        <td>{{$pay->amount_paid}}</td>
-        <td>{{$pay->transaction_date}}</td>
-        <td>
+        <th scope="row" class="text-center">{{$pay->transaction_id}}</th>
+        <td class="text-center">{{$pay->tenant->surname}}</td>
+        <td class="text-center">{{$pay->tenant->firstname}}</td>
+        <td class="text-center">{{$pay->tenant->middle_name}}</td>
+        <td class="text-center">{{$pay->amount_paid}}</td>
+        <td class="text-center">{{$pay->transaction_date}}</td>
+        <td class ="d-flex flex-column align-items-center">
             <button type="button" class="btn btn-primary" id="{{$pay->transaction_id}}">Edit</button>
-            <button type="button" class="btn btn-primary" id="{{$pay->transaction_id}}">Delete</button>
+            <button type="button" class="btn btn-primary mt-2 " id="{{$pay->transaction_id}}">Delete</button>
         </td>
     </tr>
         @endforeach
