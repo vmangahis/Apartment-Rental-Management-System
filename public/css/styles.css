@@ -87,7 +87,7 @@ table >  *{
     position:relative;
     display:block;
     overflow: auto;
-    height:650px;
+    height:550px;
     table-layout: fixed;
     width:100%;
     word-break: break-word;

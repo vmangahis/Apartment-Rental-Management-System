@@ -120,7 +120,6 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Unassign Tenant</button>
         </div>
       </div>
     </div>
@@ -203,13 +202,13 @@
                                 <label for="mobile" class="">Room Assignment: </label>
 
                                     @if(count($rooms) > 0)
-                                    <select for='room' class="ms-4 w-35" name="room_number">
+                                    <select for='room' class="ms-4 w-35" name="room_number" @if(count($rooms) == 0) disabled @endif>
                                     @foreach($rooms as $roomnum)
                                     <option value="{{$roomnum->room_id}}">{{$roomnum->room_id}}</option>
                                     @endforeach
 
                                     @else
-                                    <select class="ms-4 w-35" disabled>
+
                                     <option value='none'>No Rooms Available</option>
                                         @endif
                                 </select>
@@ -344,18 +343,19 @@
                             <label for="room" class="">Room Assignment:</label>
 
                                 @if(count($rooms) > 0)
-                                <select for='room' class="ms-4 w-35" name="room_number" class="">
+                                <select for='room' class="ms-4 w-35" name="room_number" class="" @if(count($rooms) == 0) disabled @endif>
                                 @foreach($rooms as $roomnum)
 
                                 <option value="{{$roomnum->room_id}}">{{$roomnum->room_id}}</option>
                                 @endforeach
 
                                 @else
-                                <select class="ms-4 w-35" disabled>
+
                                 <option value='none'>No Rooms Available</option>
                                     @endif
                             </select>
-                        </div>
+                         </div>
+
 
                          <!---- Rent Status Edit ----->
                          <div class="mb-3 text-center d-flex align-items-center justify-content-center">

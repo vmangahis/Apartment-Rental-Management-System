@@ -12,8 +12,56 @@
         </div>
 </div>
 
+<!-- Monthly Report Modal -->
+<div class="modal fade" id="monthly-payments-modal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Monthly Payments Report</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="d-flex flex-column justify-content-center align-items-center">
+                    <label for="month-report-input">Select Month</label>
+                    <input type="month" id="month-report-input-payment" name="month-report-input-payment" max="<?php echo date('Y-m-d');?>" class="mt-3">
+                </div>
 
-<div class="modal fade" id="paymentModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Get Report</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--- Annual report modal --->
+<div class="modal fade" id="annual-payments-modal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Annual Payments Report</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="d-flex flex-column justify-content-center align-items-center">
+                    <label for="annual-report-input-payments">Enter Year</label>
+                    <input type="number" value="<?php echo date('Y'); ?>" step=1 class="aannual-report-input-payments mt-3" id="annual-report-input-payments" min="1999" name="annual-report-input-payments" max="2100" class="mt-3">
+                </div>
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Get Report</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="paymentModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -76,8 +124,8 @@
     <div class="table-header d-flex flex-column justify-content-center text-center">
     <h1 class="text-center">Payments Table</h1>
         <div class="d-inline-block">
-        <button type="button" class="btn btn-primary">Monthly Report</button>
-        <button type="button" class="btn btn-primary">Annual Report</button>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#monthly-payments-modal">Monthly Report</button>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#annual-payments-modal">Annual Report</button>
         </div>
     </div>
     <thead>
@@ -102,8 +150,8 @@
         <td class="text-center">{{$pay->amount_paid}}</td>
         <td class="text-center">{{$pay->transaction_date}}</td>
         <td class ="d-flex flex-column align-items-center">
-            <button type="button" class="btn btn-primary" id="{{$pay->transaction_id}}">Edit</button>
-            <button type="button" class="btn btn-primary mt-2 " id="{{$pay->transaction_id}}">Delete</button>
+            <button type="button" class="btn btn-primary fs-4" id="{{$pay->transaction_id}}">Edit</button>
+            <button type="button" class="btn btn-primary mt-2 fs-4 " id="{{$pay->transaction_id}}">Delete</button>
         </td>
     </tr>
         @endforeach
