@@ -53,4 +53,15 @@ class ExpenseController extends Controller
 
         return response()->json(['code' => strtoupper($rq->get('description-input')), 'update' => $html]);
     }
+
+    public function getMonthlyReport()
+    {
+        return response()->json(['response' => 'Successfully parsed monthly report']);
+    }
+
+    public function getAnnualReport()
+    {
+        return response()->json(['response' => 'Successfully parsed annual report']);
+    }
+
 }

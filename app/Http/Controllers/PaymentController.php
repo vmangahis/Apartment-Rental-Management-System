@@ -61,4 +61,14 @@ class PaymentController extends Controller
 
     }
 
+    public function getMonthly()
+    {
+        return response()->json(['response' => 'Monthly Payments']);
+    }
+
+    public function getAnnual()
+    {
+        return response()->json(['response' => 'Annual Payments']);
+    }
+
 }

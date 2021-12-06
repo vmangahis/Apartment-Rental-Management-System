@@ -12,6 +12,27 @@
         </div>
 </div>
 
+<!--- Report Modal (where actual report pops up) --->
+<div class="modal fade" id="" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 <!-- Monthly Report Modal -->
 <div class="modal fade" id="monthly-payments-modal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
@@ -21,16 +42,17 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
+
+                <form id = "monthly-payment-report-form">
                 <div class="d-flex flex-column justify-content-center align-items-center">
                     <label for="month-report-input">Select Month</label>
                     <input type="month" id="month-report-input-payment" name="month-report-input-payment" max="<?php echo date('Y-m-d');?>" class="mt-3">
                 </div>
-
-
+                </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Get Report</button>
+                <button type="button" class="btn btn-primary getPaymentReportMonthly">Get Report</button>
             </div>
         </div>
     </div>
@@ -45,16 +67,19 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
+                <form id = "annual-report-payment-form">
                 <div class="d-flex flex-column justify-content-center align-items-center">
                     <label for="annual-report-input-payments">Enter Year</label>
                     <input type="number" value="<?php echo date('Y'); ?>" step=1 class="aannual-report-input-payments mt-3" id="annual-report-input-payments" min="1999" name="annual-report-input-payments" max="2100" class="mt-3">
                 </div>
 
+                </form>
+
 
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Get Report</button>
+                <button type="button" class="btn btn-primary getAnnualPayment">Get Report</button>
             </div>
         </div>
     </div>

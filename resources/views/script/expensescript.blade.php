@@ -6,7 +6,7 @@ $(document).ready(() =>{
 
         $.ajaxSetup({
             headers:{
-            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr('content')
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr('content')
             }
         })
 
@@ -41,7 +41,52 @@ $(document).ready(() =>{
     })
 
 
+$('.getMonthlyExpenseReport').on('click', e => {
+    let data = new FormData(document.getElementById('monthly-expense-report'));
 
+    $.ajaxSetup({
+        headers:{
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr('content')
+        }
+    })
+
+    $.ajax({
+        method: "GET",
+        url: "{{url('/payment/monthly-report')}}",
+        contentType: false,
+        processData: false,
+        success: res => {
+            console.log(res);
+        },
+        error : err => {
+            console.log(err);
+        }
+    })
+
+});
+
+$('.getAnnualReport').on('click', e => {
+    let data = new FormData(document.getElementById('annual-report-expense-form'));
+
+    $.ajaxSetup({
+        headers:{
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr('content')
+        }
+    })
+
+    $.ajax({
+        method: "GET",
+        url: "{{url('/payment/annual-report')}}",
+        contentType: false,
+        processData:false,
+        success: res => {
+            console.log(res);
+        },
+        error: err => {
+            console.log(err);
+        }
+    })
+});
 
 
 

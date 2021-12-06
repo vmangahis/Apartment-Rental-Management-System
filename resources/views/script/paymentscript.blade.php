@@ -33,6 +33,58 @@ $(document).ready(() => {
 
 
 
+    $('.getPaymentReportMonthly').on('click', e => {
+        let data = new FormData(document.getElementById('monthly-payment-report-form'));
+
+
+
+        $.ajaxSetup({
+            headers:{
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $.ajax({
+            method: "GET",
+            url: "{{url('/payment/tenant/monthly-report')}}",
+            processData: false,
+            contentType: false,
+            success: response => {
+                console.log(response);
+            },
+            error: err => {
+                console.log(err);
+            }
+        })
+
+    })
+
+    $('.getAnnualPayment').on('click', e => {
+        let data = new FormData(document.getElementById('annual-report-payment-form'));
+
+
+
+        $.ajaxSetup({
+            headers:{
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $.ajax({
+            method: "GET",
+            url: "{{url('/payment/tenant/annual-report')}}",
+            processData: false,
+            contentType: false,
+            success: response => {
+                console.log(response);
+            },
+            error: err => {
+                console.log(err);
+            }
+        })
+
+    })
+
 
 
 

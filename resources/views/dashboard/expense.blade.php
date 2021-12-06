@@ -62,16 +62,18 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
+                <form id="monthly-expense-report">
                 <div class="d-flex flex-column justify-content-center align-items-center">
                     <label for="month-report-input">Enter Month</label>
                     <input type="month" id="month-report-input" name="month-report-input" max="<?php echo date('Y-m-d');?>" class="mt-3">
                 </div>
+                </form>
 
 
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Get Report</button>
+                <button type="button" class="btn btn-primary getMonthlyExpenseReport">Get Report</button>
             </div>
         </div>
     </div>
@@ -86,16 +88,17 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
+                <form id = "annual-report-expense-form">
                 <div class="d-flex flex-column justify-content-center align-items-center">
                     <label for="annual-report-input">Select Year</label>
                     <input type="number" value="<?php echo date('Y'); ?>" step=1 class="annual-report-input mt-3" id="annual-report-input" min="1999" name="month-report-input" max="2100" class="mt-3">
                 </div>
 
-
+                </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Get Report</button>
+                <button type="button" class="btn btn-primary getAnnualReport">Get Report</button>
             </div>
         </div>
     </div>

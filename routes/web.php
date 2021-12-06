@@ -18,6 +18,10 @@ Route::get('/', [DashboardController::class, 'index']);
 //Expenses
 Route::get('/payment', [ExpenseController::class, 'index'])->name('payment');
 
+Route::get('/payment/monthly-report', [ExpenseController::class, 'getMonthlyReport']);
+
+Route::get('/payment/annual-report', [ExpenseController::class, 'getAnnualReport']);
+
 Route::post('/payment', [ExpenseController::class, 'addrecord']);
 
 //Payment
@@ -25,6 +29,12 @@ Route::post('/payment', [ExpenseController::class, 'addrecord']);
 Route::get('/payment/tenant',[PaymentController::class, 'index'])->name('tenantpayment');
 
 Route::post('/payment/tenant',[PaymentController::class, 'addPayment']);
+
+Route::get('/payment/tenant/monthly-report',[PaymentController::class, 'getMonthly']);
+
+Route::get('/payment/tenant/annual-report',[PaymentController::class, 'getAnnual']);
+
+
 
 
 
