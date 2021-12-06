@@ -86,9 +86,5 @@ $(document).ready(() => {
     })
 
 
-
-
-
-
 })
 </script>
