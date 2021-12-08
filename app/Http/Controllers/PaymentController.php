@@ -61,12 +61,38 @@ class PaymentController extends Controller
 
     }
 
-    public function getMonthly()
+    public function getMonthly(Request $rq, $yr, $month)
     {
-        return response()->json(['response' => 'Monthly Payments']);
+        $all_records = Payment::all();
+        error_log($all_records);
+        $html = "";
+
+        $total = 0.00;
+        foreach($all_records as $all)
+        {
+            $sliced_date = explode('-', $all->transaction_date);
+
+            if($yr == $sliced_date[0] && $month == $sliced_date[1])
+            {
+
+                $total+=$all->amount_paid;
+                $html.= "<tr>
+                                <th scope='row' class='text-center'>" . $all->transaction_id . "</th>
+                                <td class='text-center'>" . $all->tenant->surname . "</td>
+                                <td class='text-center'>" . $all->tenant->firstname . "</td>
+                                <td class='text-center'>" . $all->tenant->middle_name . "</td>
+                                <td class='text-center'>" . $all->transaction_date . "</td>
+                                <td class='text-center'>" . $all->amount_paid . "</td>
+                            </tr>";
+            }
+        }
+
+        error_log($html);
+
+        return response()->json(['html' => $html, 'total' => $total]);
     }
 
-    public function getAnnual()
+    public function getAnnual(Request $rq, $yr)
     {
         return response()->json(['response' => 'Annual Payments']);
     }

@@ -341,9 +341,9 @@
                          <!--- Room Assignment Edit---->
                          <div class="mb-3 text-center d-flex flex-row align-items-center">
                             <label for="room" class="">Room Assignment:</label>
-
+                             <select for='room' class="ms-4 w-35" name="room_number" class="" @if($roomCount == 0) disabled @endif>
                                 @if(count($rooms) > 0)
-                                <select for='room' class="ms-4 w-35" name="room_number" class="" @if(count($rooms) == 0) disabled @endif>
+
                                 @foreach($rooms as $roomnum)
 
                                 <option value="{{$roomnum->room_id}}">{{$roomnum->room_id}}</option>
@@ -353,7 +353,7 @@
 
                                 <option value='none'>No Rooms Available</option>
                                     @endif
-                            </select>
+                                 </select>
                          </div>
 
 

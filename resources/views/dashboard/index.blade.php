@@ -8,17 +8,17 @@
     <div class="container m-5 dashboard-container">
 
         <div class="box">
-           <a href="{{route('tenantpayment')}}" class="box-header"> <span>P</span> <span class="amount-pay">{{number_format($totalpayments,2)}}</span>
+           <a href="{{route('payment')}}" class="box-header"> <span>P</span> <span class="amount-pay">{{number_format($totalpayments,2)}}</span>
             <p>Total Payments<p></a>
-            <a href="{{route('tenantpayment')}}" class="direct-button">To Payments</a>
+            <a href="{{route('payment')}}" class="direct-button">To Payments</a>
         </div>
 
 
 
         <div class="box">
-            <a href="{{route('payment')}}" class="box-header"><span> P</span> <span class="amount-expenses">{{number_format($totalexpenses,2)}}</span>
+            <a href="{{route('expenses')}}" class="box-header"><span> P</span> <span class="amount-expenses">{{number_format($totalexpenses,2)}}</span>
                 <p>Total Expenses</p></a>
-                <a href="{{route('payment')}}" class="direct-button">To Expenses</a>
+                <a href="{{route('expenses')}}" class="direct-button">To Expenses</a>
         </div>
 
 

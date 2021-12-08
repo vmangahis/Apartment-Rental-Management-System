@@ -14,7 +14,7 @@ $(document).ready( () => {
            return false;
        }
     })
-    
+
 
 
 
@@ -66,7 +66,6 @@ $(document).on('change input','.search-input',e => {
             url: "{{url('/searchtenant')}}",
 
             success: (data) => {
-
                 $('#table-body').html(data);
 
             },

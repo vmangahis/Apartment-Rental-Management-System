@@ -35,8 +35,8 @@ $(document).ready(() => {
 
     $('.getPaymentReportMonthly').on('click', e => {
         let data = new FormData(document.getElementById('monthly-payment-report-form'));
-
-
+        let year = data.get('month-report-input-payment').split('-')[0];
+        let month = data.get('month-report-input-payment').split('-')[1];
 
         $.ajaxSetup({
             headers:{
@@ -46,11 +46,15 @@ $(document).ready(() => {
 
         $.ajax({
             method: "GET",
-            url: "{{url('/payment/tenant/monthly-report')}}",
+            url: "/payment/report/"+year+"/"+month,
             processData: false,
             contentType: false,
             success: response => {
-                console.log(response);
+                        $('#monthly-payments-modal').modal('hide');
+                        $('.report-payment-table-body').html(response.html);
+                        $('.payment-report-header').html('Monthly Payments Report');
+                        $('.total-payments').html(response.total);
+                        $('#payment-report-modal').modal('show');
             },
             error: err => {
                 console.log(err);

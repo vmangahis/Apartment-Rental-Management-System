@@ -92,15 +92,31 @@ table >  *{
     width:100%;
     word-break: break-word;
 
+}
 
+.report-expense-table{
+    position:relative;
+    display:block;
+    overflow: auto;
+    height:300px;
+    table-layout: fixed;
+    width:100%;
+    word-break: break-word;
 
 }
 
-.room-table-header > th, .payment-table-header > th, .expense-table-header > th{
+.room-table-header > th, .payment-table-header > th, .expense-table-header > th, .report-table-header > th{
     position:sticky;
     top:0;
     width:1000px;
     background-color:#FFFFCC;
+}
+
+.report-table-header > th {
+    position:sticky;
+    top:0;
+    width:1000px;
+    background-color:white;
 }
 
 .parent-container{
@@ -224,6 +240,7 @@ a {
 .tenants-header{
     margin-left:auto;
 }
+
 
 
 

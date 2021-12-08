@@ -32,7 +32,8 @@ class TenantController extends Controller
         $tenant = DB::table('tenants')->where('rental_status', 'ARCHIVED')->get();
         $rooms = DB::table('rooms')->get();
         $allroom = DB::table('rooms')->get();
-        return view('dashboard.tenants', compact('tenant', 'rooms', 'allroom'));
+        $roomCount = Rooms::where('status', 'ARCHIVED')->count();
+        return view('dashboard.tenants', compact('tenant', 'rooms', 'allroom', 'roomCount'));
     }
 
     public function search_tenants(Request $rq)
