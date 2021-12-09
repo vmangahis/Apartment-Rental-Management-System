@@ -65,7 +65,7 @@ $(document).ready(() => {
 
     $('.getAnnualPayment').on('click', e => {
         let data = new FormData(document.getElementById('annual-report-payment-form'));
-
+        let year = data.get('annual-report-input-payments');
 
 
         $.ajaxSetup({
@@ -76,11 +76,15 @@ $(document).ready(() => {
 
         $.ajax({
             method: "GET",
-            url: "{{url('/payment/tenant/annual-report')}}",
+            url: "/payment/report/"+year,
             processData: false,
             contentType: false,
             success: response => {
-                console.log(response);
+                $('#annual-payments-modal').modal('hide');
+                $('.report-payment-table-body').html(response.html);
+                $('.payment-report-header').html('Annual Payments Report');
+                $('.total-payments').html(response.total);
+                $('#payment-report-modal').modal('show');
             },
             error: err => {
                 console.log(err);

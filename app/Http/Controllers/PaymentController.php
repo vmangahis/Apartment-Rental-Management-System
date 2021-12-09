@@ -87,14 +87,34 @@ class PaymentController extends Controller
             }
         }
 
-        error_log($html);
+        $formatted_amount = number_format($total, 2);
 
-        return response()->json(['html' => $html, 'total' => $total]);
+        return response()->json(['html' => $html, 'total' => $formatted_amount]);
     }
 
     public function getAnnual(Request $rq, $yr)
     {
-        return response()->json(['response' => 'Annual Payments']);
+        $all_records = Payment::all();
+        $html = "";
+        $totalAnnual = 0.00;
+        foreach($all_records as $all)
+        {
+            $yearDate = explode('-',$all->transaction_date);
+            if($yr == $yearDate[0])
+            {
+                $totalAnnual+=$all->amount_paid;
+                $html.= "<tr>
+                                <th scope='row' class='text-center'>" . $all->transaction_id . "</th>
+                                <td class='text-center'>" . $all->tenant->surname . "</td>
+                                <td class='text-center'>" . $all->tenant->firstname . "</td>
+                                <td class='text-center'>" . $all->tenant->middle_name . "</td>
+                                <td class='text-center'>" . $all->transaction_date . "</td>
+                                <td class='text-center'>" . $all->amount_paid . "</td>
+                            </tr>";
+            }
+        }
+        $formatted_amount = number_format($totalAnnual, 2);
+        return response()->json(['html' => $html, 'total' => $formatted_amount]);
     }
 
 }

@@ -105,7 +105,7 @@ table >  *{
 
 }
 
-.room-table-header > th, .payment-table-header > th, .expense-table-header > th, .report-table-header > th{
+.room-table-header > th, .payment-table-header > th, .expense-table-header > th{
     position:sticky;
     top:0;
     width:1000px;

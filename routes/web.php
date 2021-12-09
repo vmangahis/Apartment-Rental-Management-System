@@ -12,6 +12,10 @@ use App\Http\Controllers\SummaryController;
 use App\Http\Controllers\MailController;
 
 
+//Login
+Route::get('/login', [LoginControlller::class, 'auth']);
+
+
 //Dashboard
 Route::get('/', [DashboardController::class, 'index']);
 

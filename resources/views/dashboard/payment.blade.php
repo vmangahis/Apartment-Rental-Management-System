@@ -14,53 +14,38 @@
 
 <!--- Report Modal (where actual report pops up) --->
 <div class="modal fade" id="payment-report-modal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title"></h5>
+                <h5 class="modal-title payment-report-header"></h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <table class="payment-table table mt-5">
                     <div class="table-header d-flex flex-column justify-content-center text-center">
-                        <h1 class="text-center payment-report-header"></h1>
-                        <div class="d-inline-block">
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#monthly-payments-modal">Monthly Report</button>
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#annual-payments-modal">Annual Report</button>
-                        </div>
+                        <h1 class="text-center ">Payments Table</h1>
                     </div>
                     <thead>
-                    <tr class="payment-table-header">
+                    <tr class="report-table-header">
                         <th scope="col" class="text-center">Transaction ID</th>
                         <th scope="col" class="text-center">Surname</th>
                         <th scope="col" class="text-center">First Name</th>
                         <th scope="col" class="text-center">Middle Name</th>
                         <th scope="col" class="text-center">Date Paid</th>
                         <th scope="col" class="text-center">Amount Paid</th>
-
                     </tr>
                     </thead>
                     <tbody class="report-payment-table-body">
-                           <!-- <tr>
-                                <th scope="row" class="text-center"></th>
-                                <td class="text-center"></td>
-                                <td class="text-center"></td>
-                                <td class="text-center"></td>
-                                <td class="text-center"></td>
-                                <td class="text-center"></td>
-                            </tr>  -->
+                    <!--- result will be extracted here --->
                     </tbody>
                 </table>
                 <div class="table-footer d-flex justify-content-between">
                     <h2>Total Payments:</h2>
                     <h2>P <span class="total-payments"></span></h2>
                 </div>
-
-
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-
             </div>
         </div>
     </div>
@@ -104,8 +89,8 @@
             <div class="modal-body">
                 <form id = "annual-report-payment-form">
                 <div class="d-flex flex-column justify-content-center align-items-center">
-                    <label for="annual-report-input-payments">Enter Year</label>
-                    <input type="number" value="<?php echo date('Y'); ?>" step=1 class="aannual-report-input-payments mt-3" id="annual-report-input-payments" min="1999" name="annual-report-input-payments" max="2100" class="mt-3">
+                    <label for="annual-report-input-payments">Enter Year:</label>
+                    <input type="number" value="<?php echo date('Y'); ?>" step=1 class="annual-report-input-payments mt-3" id="annual-report-input-payments" min="1999" name="annual-report-input-payments" max="2100" class="mt-3">
                 </div>
 
                 </form>
@@ -120,7 +105,7 @@
     </div>
 </div>
 
-<!--- Input modal --->
+<!--- Register Payment Input modal --->
 <div class="modal fade" id="paymentModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
