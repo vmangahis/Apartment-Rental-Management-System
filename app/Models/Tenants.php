@@ -22,7 +22,8 @@ class Tenants extends Model
         'rental_status',
         'image_name',
         'balance_due',
-        'room_id'
+        'room_id',
+        'monthly'
     ];
 
     public function room()

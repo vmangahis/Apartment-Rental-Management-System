@@ -116,6 +116,7 @@
             <h5 class="mt-4">Rent Date: <span class="ten-date"></span></h5>
             <h5 class="mt-4">Status: <span class="ten-status"></span></h5>
             <h5 class="mt-4">Balance Due: P<span class="ten-due"></span></h5>
+            <h5 class="mt-4">Monthly: P<span class="monthly-due"></span></h5>
             <h5 class="mt-4">Room Assigned: <span class="ten-room"></span></h5>
         </div>
         <div class="modal-footer">
@@ -191,10 +192,19 @@
                             </div>
                             <div class='text-danger align-self-center mb-2 error tenantAge-error'></div>
 
+                            <!--- mobile input ---->
                             <div class="mb-3 text-center">
                                 <label for="mobile" class="">Mobile Number: </label>
                                 <input type="text" class="ml-3 form-control align-self-center" id="" name="tenantMobile"
                                        value="{{old('tenantMobile')}}">
+                            </div>
+
+                            <!--- Monthly input ---->
+                            <div class="mb-3 text-center">
+                                <label for="monthly" class="">Monthly: </label>
+                                <input type="number"
+                                       class="ml-3 form-control align-self-center"
+                                       id="monthly" name="monthly" step="0.01" min="1" value="0.00">
                             </div>
 
                             <!--- Room Assignment ---->
@@ -338,6 +348,14 @@
                                    value="{{old('tenantMobile')}}">
                         </div>
 
+                        <!--- Monthly Edit ---->
+                        <div class="mb-3 text-center">
+                            <label for="monthly" class="">Monthly: </label>
+                            <input type="number"
+                                   class="ml-3 form-control align-self-center"
+                                   id="monthly-edit" name="monthly-edit" step="0.01" min="1" value="0.00">
+                        </div>
+
                          <!--- Room Assignment Edit---->
                          <div class="mb-3 text-center d-flex flex-row align-items-center">
                             <label for="room" class="">Room Assignment:</label>
@@ -350,7 +368,7 @@
                                 @endforeach
 
                                 @else
-                                <option value='none'>No Rooms Available</option>
+                                <option value='none' selected="selected">No Other Rooms Available</option>
                                     @endif
 
                                  </select>

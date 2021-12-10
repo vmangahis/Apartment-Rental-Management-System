@@ -8,7 +8,9 @@ use Illuminate\Http\Request;
 use App\Models\Tenants;
 use App\Models\Rooms;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
+use App\Mail\TestMail;
 
 class TenantController extends Controller
 {
@@ -188,7 +190,8 @@ class TenantController extends Controller
             'tenantEmail'=>'required',
             'tenantAge'=>'required',
             'tenantMiddlename'=>'required|alpha',
-            'tenantImage'=>'mimes:jpeg,jpg,jpg,png,gif|max:10000'
+            'tenantImage'=>'mimes:jpeg,jpg,jpg,png,gif|max:10000',
+            'monthly' => 'required'
 
         ],[
             'tenantSurname.required' => 'Surname required',
@@ -205,7 +208,6 @@ class TenantController extends Controller
         if(!$validator->passes())
         {
             return response()->json(['code'=> 0, 'error'=>$validator->errors()->toArray()]);
-
         }
 
         else{
@@ -250,8 +252,14 @@ class TenantController extends Controller
             'mobile'=>$req->tenantMobile,
             'rental_status'=>$req->get('rent_status'),
             'image_name'=>$hashed_fname,
-            'room_id'=> $req->get('room_number')
+            'room_id'=> $req->get('room_number'),
+            'monthly' => $req->get('monthly')
         ]);
+        $info = [
+            'title' => 'Confirmation Email from APT',
+            'body' => 'Test Body '
+        ];
+        Mail::to($req->tenantEmail)->send(new TestMail($info,$req->tenantFirstname, $req->tenantMiddlename, $req->tenantSurname));
 
         //Getting te last tenant ID upon creation
         $latest_tenant_id = DB::table('tenants')->orderBy('id', 'DESC')->value('id');
@@ -274,8 +282,8 @@ class TenantController extends Controller
             'firstname'=>'required|max:255',
             'email'=>'required|max:255',
             'age'=>'required',
-            'middle_n'=>'required'
-
+            'middle_n'=>'required',
+            'monthly' => 'required'
         ));
 
 
@@ -288,6 +296,11 @@ class TenantController extends Controller
 
 
         //Make the room available upon change to archived status of tenants
+        if($rq->get('rental_status') == "ARCHIVED")
+        {
+
+        }
+
 
 
 
@@ -300,6 +313,7 @@ class TenantController extends Controller
                 'rent_date' => $rq->get('rent_date'),
                 'rental_status' => $rq->get('rental_status'),
                 'middle_name' => $rq->get('middle_n'),
+                'monthly' => $rq->get('monthly')
         ]);
 
     }

@@ -41,6 +41,13 @@ return [
             'provider' => 'users',
         ],
 
+        'landlord' => [
+          'driver' => 'session',
+            'provider' => 'landlord_login'
+        ],
+
+
+
         'api' => [
             'driver' => 'token',
             'provider' => 'users',
@@ -66,6 +73,11 @@ return [
     */
 
     'providers' => [
+        'landlord_login' =>[
+            'driver' => 'eloquent',
+            'model'=>  App\Models\LandlordLogin::class,
+        ],
+
         'users' => [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,

@@ -96,6 +96,7 @@ $(document).on('change input','.search-input',e => {
                 $('.ten-due').html(dat.balance_due);
                 $('.tenant-photo').attr('src', '{{asset("storage/tenantimages")}}'+'/'+dat.image_name);
                 $('.ten-room').html(dat.room_id);
+                $('.monthly-due').html(dat.monthly);
             }
         })
     })
@@ -231,6 +232,7 @@ $(document).on('click','.editEntry' ,(e) =>{
             $('.editform').attr('id',dat.id);
             $('#rental_status_edit').val(dat.rental_status);
             $('#tenantMiddlenameEdit').val(dat.middle_name);
+            $('#monthly-edit').val(dat.monthly);
 
         }
     })
@@ -251,6 +253,7 @@ $('.confirmEdit').on('click', (ev) => {
     var rent_date = $('#rent-date').val();
     var rent_stat = $('#rental_status_edit option:selected').text();
     var middle = $('#tenantMiddlenameEdit').val();
+    var monthly = $('#monthly-edit').val();
 
 
 
@@ -267,7 +270,7 @@ $('.confirmEdit').on('click', (ev) => {
         method: "POST",
         data:{"id" : id, "surname": surname, "firstname" : firstname,
             "email": email, "age": age, "mobileNum" : mobile,
-            "rent_date": rent_date, "rental_status": rent_stat, "middle_n" : middle},
+            "rent_date": rent_date, "rental_status": rent_stat, "middle_n" : middle, "monthly" : monthly},
         success: (resp) => {
             if (resp.errors)
             {
