@@ -9,6 +9,7 @@ use App\Models\Tenants;
 use App\Models\Rooms;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use App\Mail\TestMail;
 
@@ -185,12 +186,14 @@ class TenantController extends Controller
     {
 
 
+
+
         $validator = Validator::make($req->all(), ['tenantSurname' => 'required|alpha',
             'tenantFirstname'=>'required|alpha|max:255',
             'tenantEmail'=>'required',
             'tenantAge'=>'required',
             'tenantMiddlename'=>'required|alpha',
-            'tenantImage'=>'mimes:jpeg,jpg,jpg,png,gif|max:10000',
+            'tenantImage'=>'mimes:jpeg,jpg,png,gif|max:10000',
             'monthly' => 'required'
 
         ],[
@@ -224,11 +227,6 @@ class TenantController extends Controller
                 $image_filename = $req->file('tenantImage');
                 $hashed_fname = time().'_'.$image_filename->getclientOriginalName();
                 $upload = $image_filename->storeAs($path, $hashed_fname, 'public');
-
-                if($upload)
-                {
-                    error_log('non blank image uploaded');
-                }
             }
 
 
@@ -274,46 +272,83 @@ class TenantController extends Controller
         return redirect()->route('tenants');
     }
 
-    public function edit(Request $rq)
+    public function edit(Request $rq, $id)
     {
 
+        $hashed_file = "";
 
-        $validator = Validator::make($rq->all(), array('surname' => 'required|max:255',
-            'firstname'=>'required|max:255',
-            'email'=>'required|max:255',
-            'age'=>'required',
-            'middle_n'=>'required',
-            'monthly' => 'required'
-        ));
+
+        $validator = Validator::make($rq->all(), ['tenantSurnameEdit' => 'required',
+                'tenantFirstnameEdit' => 'required',
+                'tenantMiddlenameEdit' => 'required',
+                'tenantEmailEdit' => 'required',
+                'tenantAgeEdit' => 'required',
+                'tenantMobile' => 'required'],
+
+            ['tenantSurnameEdit.required' => 'This field is required',
+             'tenantFirstnameEdit.required' => 'This field is required',
+              'tenantMiddlenameEdit.required' => 'This field is required',
+                'tenantEmailEdit.required' => 'This field is required',
+                'tenantAgeEdit.required' => 'This field is required',
+                'tenantMobile.required' => 'This field is required'
+            ]
+        );
 
 
         if($validator->fails())
         {
-            error_log($validator->errors());
-            return  Redirect::route('dashboard.tenants')->withInput()->withErrors($validator->errors());
-        }
 
+            return response()->json(['code' => 1,'error' => $validator->errors()->toArray()]);
+        }
 
 
         //Make the room available upon change to archived status of tenants
         if($rq->get('rental_status') == "ARCHIVED")
         {
-
+                Rooms::where('room_id', $rq->get('room_id'))->update(['tenant_id' => 0, 'status' => "VACANT"]);
+        }
+        else if($rq->get('rental_status') == "ACTIVE")
+        {
+            Rooms::where('room_id', $rq->get('room_id'))->update(['tenant_id' => $rq->get('id') , 'status' => "OCCUPIED"]);
         }
 
 
 
+        if($rq->file('editTenantImage') == '')
+        {
+            $hashed_file = "blankimage.png";
+        }
 
-        Tenants::where('id', $rq->get('id'))
-            ->update(['surname' => $rq->get('surname'),
-                'firstname' => $rq->get('firstname'),
-                'email'=>$rq->get('email'),
-                'age' => $rq->get('age'),
-                'mobile' => $rq->get('mobileNum'),
-                'rent_date' => $rq->get('rent_date'),
-                'rental_status' => $rq->get('rental_status'),
-                'middle_name' => $rq->get('middle_n'),
-                'monthly' => $rq->get('monthly')
+        else{
+            $path = "tenantimages/";
+            $previous_image = Tenants::where('id', $id)->first();
+            if($previous_image->image_name != "blankimage.png")
+            {
+                Storage::disk('public')->delete('tenantimages/'.$previous_image->image_name);
+            }
+
+            $origFile = $rq->file('editTenantImage');
+
+
+            $hashed_file = time().'_'.$origFile->getclientOriginalName();
+
+           $upload =  $origFile->storeAs($path, $hashed_file, 'public');
+        }
+
+
+
+        error_log('adding');
+        Tenants::where('id', $id)
+            ->update(['surname' => $rq->get('tenantSurnameEdit'),
+                'firstname' => $rq->get('tenantFirstnameEdit'),
+                'email'=>$rq->get('tenantEmailEdit'),
+                'age' => $rq->get('tenantAgeEdit'),
+                'mobile' => $rq->get('tenantMobile'),
+                'rent_date' => $rq->get('tenantRentdate'),
+                'rental_status' => $rq->get('rent_status'),
+                'middle_name' => $rq->get('tenantMiddlenameEdit'),
+                'monthly' => $rq->get('monthly-edit'),
+                'image_name' => $hashed_file
         ]);
 
     }

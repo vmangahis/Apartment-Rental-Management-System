@@ -12,6 +12,7 @@ class Rooms extends Model
 
     public $timestamps = false;
     protected $fillable = ['room_id',
+       'room_number' ,
     'status',
     'tenant_id',
     ];

@@ -14,8 +14,7 @@ $(document).ready(() =>{
 
     $(document).on('click', '.addroombutton', e =>{
         e.preventDefault();
-        var rooms = {!! json_encode($room, JSON_HEX_TAG) !!};
-        console.log(rooms.length);
+
 
         $.ajaxSetup({
             headers: {
@@ -36,7 +35,22 @@ $(document).ready(() =>{
         })
     })
 
-    $(document).on('click', '.remove-room', e => {
+
+
+$(document).on('click', '.deleteRoom', e => {
+    e.preventDefault();
+    let room_id = $('.deleteRoom').attr('id');
+    $('.deleteRoomForm').attr('id', room_id);
+    $('#deleteRoomModal').modal('show');
+
+
+
+});
+
+    $(document).on('click', '.confirmDeleteRoom', e=>{
+        e.preventDefault();
+        let room_id = $('.deleteRoomForm').attr('id');
+
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -44,6 +58,19 @@ $(document).ready(() =>{
         });
 
 
+        $.ajax({
+            method: "DELETE",
+            url: "{{url('/rooms')}}",
+            data: {
+                "room_id" :room_id},
+            success: (res) => {
+
+                window.location.href = "/rooms";
+            },
+            error: (err) =>{
+                console.log(err);
+            }
+        })
     })
 
 

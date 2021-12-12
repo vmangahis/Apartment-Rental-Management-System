@@ -73,14 +73,11 @@ $(document).on('change input','.search-input',e => {
                 console.log(data);
             }
         })
-
-
 })
 
-
-    $(document).on('click','.clickable-row', (e) => {
-        var tenant_data = {!! json_encode($tenant->toArray(), JSON_HEX_TAG) !!}
-        console.log(e.currentTarget.id);
+$(document).on('click','.clickable-row', (e) => {
+        let tenant_data = {!! json_encode($tenant->toArray(), JSON_HEX_TAG) !!};
+        let room_data = {!! json_encode($allroom->toArray(), JSON_HEX_TAG) !!};
 
         tenant_data.forEach(dat => {
             if(e.target.id == dat.id)
@@ -94,8 +91,16 @@ $(document).on('change input','.search-input',e => {
                 $('.ten-date').html(dat.rent_date);
                 $('.ten-status').html(dat.rental_status);
                 $('.ten-due').html(dat.balance_due);
+
                 $('.tenant-photo').attr('src', '{{asset("storage/tenantimages")}}'+'/'+dat.image_name);
-                $('.ten-room').html(dat.room_id);
+                room_data.forEach(rm =>{
+                    if(rm.room_id == dat.room_id)
+                    {
+                        $('.ten-room').html(rm.room_number);
+                    }
+                });
+
+
                 $('.monthly-due').html(dat.monthly);
             }
         })
@@ -184,8 +189,7 @@ $(document).on('click','.deleteEntry', (e) => {
 
     });
 
-
-    $('.confirmDelete').on('click',(e) => {
+$('.confirmDelete').on('click',(e) => {
 
         $.ajaxSetup({
             headers: {
@@ -215,11 +219,11 @@ $(document).on('click','.deleteEntry', (e) => {
     })
 
 
-// PUT REQUEST
+// Clicking edit button
 $(document).on('click','.editEntry' ,(e) =>{
 
-    var data = {!! json_encode($tenant->toArray(), JSON_HEX_TAG) !!}
-    console.log(e.currentTarget.id);
+    let data = {!! json_encode($tenant->toArray(), JSON_HEX_TAG) !!}
+    let room ={!! json_encode($allroom->toArray(), JSON_HEX_TAG) !!}
     data.forEach(dat => {
         if(e.target.id == dat.id){
 
@@ -229,13 +233,23 @@ $(document).on('click','.editEntry' ,(e) =>{
             $('#tenantAgeEdit').val(parseInt(dat.age));
             $('#mobile').val(dat.mobile);
             $('#rent-date').val(dat.rent_date);
-            $('.editform').attr('id',dat.id);
+            $('.confirmEdit').attr('id', dat.id);
+            $('#tenantMobile').val(dat.mobile);
             $('#rental_status_edit').val(dat.rental_status);
             $('#tenantMiddlenameEdit').val(dat.middle_name);
             $('#monthly-edit').val(dat.monthly);
+            room.forEach(rm =>{
+                console.log(rm);
+                console.log(dat.room_id);
+                if(e.target.id == rm.tenant_id){
+                    $('.room-num').html(rm.room_number);
+                }
+
+            });
 
         }
     })
+
 });
 
 
@@ -244,18 +258,8 @@ $(document).on('click','.editEntry' ,(e) =>{
 // Confirm Edit
 $('.confirmEdit').on('click', (ev) => {
     ev.preventDefault();
-    var id = $('.editform').attr('id');
-    var surname = $('#tenantSurnameEdit').val();
-    var firstname = $('#tenantFirstnameEdit').val();
-    var email = $('#tenantEmailEdit').val();
-    var age = $('#tenantAgeEdit').val();
-    var mobile = $('#mobile').val();
-    var rent_date = $('#rent-date').val();
-    var rent_stat = $('#rental_status_edit option:selected').text();
-    var middle = $('#tenantMiddlenameEdit').val();
-    var monthly = $('#monthly-edit').val();
-
-
+    let form = new FormData(document.getElementById('tenantEditForm'));
+    let id = $('.confirmEdit').attr('id');
 
 
     $.ajaxSetup({
@@ -266,16 +270,23 @@ $('.confirmEdit').on('click', (ev) => {
 
 
     $.ajax({
-        url:  "{{url('/edittenants')}}",
+        url:  "/edittenants/"+id,
         method: "POST",
-        data:{"id" : id, "surname": surname, "firstname" : firstname,
-            "email": email, "age": age, "mobileNum" : mobile,
-            "rent_date": rent_date, "rental_status": rent_stat, "middle_n" : middle, "monthly" : monthly},
+        contentType: false,
+        processData: false,
+        data: form,
+        beforeSend: () => {
+            $('#tenantEditForm').find('div.error').text('');
+        },
         success: (resp) => {
-            if (resp.errors)
+            console.log(resp);
+            if(resp.code == 1)
             {
-                console.log('Error in confirmEdit');
+                $.each(resp.error, (index, val) => {
+                    $('#tenantEditForm').find('div.'+index+'-error').text(val);
+                })
             }
+
 
             else{
                 window.location = window.location.pathname;

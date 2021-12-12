@@ -43,7 +43,7 @@ Route::group(['middleware' => ['adminAuth']],  function() {
     Route::get('/tenants/archived', [TenantController::class, 'filter'])->name('archived-tenants');
     Route::get('/searchtenant', [TenantController::class, 'search_tenants']);
     Route::post('/tenants', [TenantController::class, 'register']);
-    Route::post('/edittenants', [TenantController::class, 'edit']);
+    Route::post('/edittenants/{id}', [TenantController::class, 'edit']);
     Route::delete('/tenants', [TenantController::class, 'destroy']);
 
 //Landlord Profile
@@ -57,6 +57,7 @@ Route::group(['middleware' => ['adminAuth']],  function() {
     Route::post('/rooms', [RoomController::class, 'addroom']);
     Route::get('/rooms/occupied',[RoomController::class, 'occupied'])->name('occupied_room'); // Occupied Room
     Route::get('/report',[ReportsController::class, 'index'])->name('report');
+    Route::delete('/rooms', [RoomController::class, 'deleteRoom']);
 
 });
 

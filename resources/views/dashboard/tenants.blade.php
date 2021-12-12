@@ -34,8 +34,10 @@
 
             </div>
 
-            <button type="button" class="btn btn-primary fs-5 add-tenant" data-bs-toggle="modal" data-bs-target="#tenantForm">Add Tenant</button>
+    <button type="button" class="btn btn-primary fs-5 add-tenant" data-bs-toggle="modal" data-bs-target="#tenantForm">Add Tenant</button>
         </div>
+
+
 
 
 
@@ -214,7 +216,7 @@
                                     @if(count($rooms) > 0)
 
                                     @foreach($rooms as $roomnum)
-                                    <option value="{{$roomnum->room_id}}">{{$roomnum->room_id}}</option>
+                                    <option value="{{$roomnum->room_id}}">{{$roomnum->room_number}}</option>
                                     @endforeach
 
                                     @else
@@ -252,8 +254,6 @@
                 </div>
             </div>
 
-
-
 <!--- Modal Dialog for Deletion -->
 <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteTenantLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -276,7 +276,7 @@
     </div>
 
 <!--- Edit Modal --->
-<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editTenantLabel" aria-hidden="true">
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editTenantLabel" aria-hidden="true" >
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -286,67 +286,79 @@
 
                 <!--- Edit info form tab ---->
                 <div class="modal-body">
-                    <form class="d-flex flex-column align-items-center mt-5 editform"  method="POST">
+                    <form class="d-flex flex-column align-items-center mt-5 editform"  method="POST" enctype="multipart/form-data" id="tenantEditForm">
                         @csrf
                         <div class="mb-3 text-center">
                             <label for="tenant-photo">Current Tenant Image: </label>
                             <img class =" mx-auto d-block tenant-photo" src="">
                             </div>
 
+                        <!---- Edit Tenant Image ---->
+                        <div class="mb-3 text-center w-50">
+                            <label for="imageupload">New Tenant Image:</label>
+                            <input type="file" class="form-control" id="editTenantImage" name="editTenantImage">
+                        </div>
+                        <div class='text-danger align-self-center mb-2 editTenantImage-error error'></div>
+
+
+
                             <div class="mb-3 text-center">
                             <label for="inputTenant" class="form-label mr-3 text-center">Tenant Surname: </label>
                             <!--- Surname Input --->
                             <input type="text"
-                                   class="form-control ml-5 @error('tenantSurname')border border-danger @enderror "
+                                   class="form-control ml-5"
                                    aria-describedby="emailHelp" name="tenantSurnameEdit" id="tenantSurnameEdit">
                              </div>
+                            <div class='text-danger align-self-center mb-2 tenantSurnameEdit-error error'></div>
 
 
                         <!--- Firstname Input --->
                         <div class="mb-3 text-center">
                             <label for="" class="mr-3 text-center">Tenant First Name: </label>
                             <input type="text"
-                                   class="form-control @error('tenantFirstname')border border-danger @enderror"  id="tenantFirstnameEdit" name="tenantFirstnameEdit">
+                                   class="form-control"  id="tenantFirstnameEdit" name="tenantFirstnameEdit">
                         </div>
+                        <div class='text-danger align-self-center mb-2 tenantFirstnameEdit-error error'></div>
 
                         <div class="mb-3 text-center">
                             <label for="" class="mr-3 text-center">Tenant Middle Name: </label>
                             <!--- Firstname Input --->
                             <input type="text"
-                                   class="form-control @error('tenantMiddlename')border border-danger @enderror"  id="tenantMiddlenameEdit" name="tenantMiddlenameEdit">
+                                   class="form-control"  id="tenantMiddlenameEdit" name="tenantMiddlenameEdit">
                         </div>
+                        <div class='text-danger align-self-center mb-2 tenantMiddlenameEdit-error error'></div>
 
 
-                        <div class='text-danger align-self-center mb-2 error-firstname'></div>
+
 
                         <div class="mb-3 text-center">
-                            <label for="email" class="">Email Address</label>
+                            <label for="email" class="">Email Address:</label>
 
                             <!--- Email Input --->
                             <input type="email"
-                                   class="ml-3 form-control align-self-center  @error('tenantEmail')border border-danger @enderror"
+                                   class="ml-3 form-control align-self-center"
                                    id="tenantEmailEdit" name="tenantEmailEdit" value="{{old('tenantEmail')}}">
 
                         </div>
-                        @error('tenantEmail')
-                        <div class='text-danger align-self-center mb-2 error-email'>{{$message}}</div>
-                        @enderror
+                        <div class='text-danger align-self-center mb-2 tenantEmailEdit-error error'></div>
+
                         <div class="mb-3 text-center">
                             <label for="age" class="">Age: </label>
 
                         <!--- Age Input Edit--->
                             <input type="number"
-                                   class="ml-3 form-control align-self-center @error('tenantAge')border border-danger @enderror"
+                                   class="ml-3 form-control align-self-center "
                                    id="tenantAgeEdit" name="tenantAgeEdit">
                         </div>
-                        @error('tenantAge')
-                        <div class='text-danger align-self-center mb-2 error-age'>{{$message}}</div>
-                        @enderror
+                        <div class='text-danger align-self-center mb-2 tenantAgeEdit-error error'></div>
+
+                        <!--- Mobile Number Edit --->
                         <div class="mb-3 text-center">
                             <label for="mobile" class="">Mobile Number: </label>
-                            <input type="text" class="ml-3 form-control align-self-center" id="mobile" name="tenantMobile"
+                            <input type="text" class="ml-3 form-control align-self-center" id="tenantMobile" name="tenantMobile"
                                    value="{{old('tenantMobile')}}">
                         </div>
+                        <div class='text-danger align-self-center mb-2 tenantMobile-error error'></div>
 
                         <!--- Monthly Edit ---->
                         <div class="mb-3 text-center">
@@ -354,6 +366,11 @@
                             <input type="number"
                                    class="ml-3 form-control align-self-center"
                                    id="monthly-edit" name="monthly-edit" step="0.01" min="1" value="0.00">
+                        </div>
+
+
+                        <div class="mb-3 text-center">
+                            <label for="room-num" class="">Room Assigned: <span class="room-num"></span></label>
                         </div>
 
                          <!--- Room Assignment Edit---->
@@ -364,7 +381,7 @@
 
                                 @foreach($rooms as $roomnum)
 
-                                <option value="{{$roomnum->room_id}}">{{$roomnum->room_id}}</option>
+                                <option value="{{$roomnum->room_id}}">{{$roomnum->room_number}}</option>
                                 @endforeach
 
                                 @else

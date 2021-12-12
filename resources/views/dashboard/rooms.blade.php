@@ -26,12 +26,32 @@
       <div class="col-auto">
       <input type="text" class="form-control room-search-input">
       </div>
-
   </div>
 
 
 
   <button type="button" class='btn btn-primary fs-5 addroombutton'>Add Room</button>
+</div>
+
+<!---- Delete Room --->
+<div class="modal fade" id="deleteRoomModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteRoom">Delete Room</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to remove this room?
+            </div>
+            <div class="modal-footer">
+                <form class="deleteRoomForm">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary confirmDeleteRoom">Remove Room</button>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
 
 
@@ -40,25 +60,35 @@
     <tr class = "room-table-header">
       <th scope="col">Room ID</th>
       <th scope="col">Occupant ID</th>
+      <th scope="col">Occupant Surname</th>
+        <th scope="col">Occupant First Name</th>
       <th scope="col">Status</th>
+        @if(Route::is('room'))
       <th scope="col">Actions</th>
+            @endif
     </tr>
   </thead>
   <tbody class = "room-body" id="room-body">
     @if(count($room)>0)
     @foreach($room as $rm)
-    <tr id = "{{$rm->room_id}}">
-      <th scope="row">{{$rm->room_id}}</th>
+    <tr id = "{{$rm->room_number}}">
+      <th scope="row">{{$rm->room_number}}</th>
 
 
       <td>@if($rm->tenant_id != 0){{$rm->tenant_id}}@else No Occupant @endif</td>
-
+        <td>@if($rm->tenant_id != 0){{$rm->tenant->surname}} @else - @endif</td>
+        <td>@if($rm->tenant_id != 0){{$rm->tenant->firstname}} @else - @endif</td>
 
 
       <td>{{$rm->status}}</td>
-      <td class = "">
-        <button class="btn btn-primary fs-4">Remove Room</button>
+        @if($rm->room_number == $allRoom && Route::is('room'))
+      <td>
+        <button class="btn btn-primary fs-4 deleteRoom" id="{{$rm->room_id}}">Remove Room</button>
       </td>
+
+        @else
+            <td></td>
+            @endif
     </tr>
     @endforeach
 
