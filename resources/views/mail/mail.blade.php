@@ -6,60 +6,106 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Apartment Rental Management System</title>
     <style>
-        *{
-            text-align:center;
-            box-sizing: border-box;
-            padding:0;
-            margin:0;
-        }
-
         body{
-            margin:0;
+            Margin:0;
+            padding:0;
+            background-color: #FFFFCC;
+        }
+
+        table{
+            border-spacing:0;
+
+        }
+
+        td{
             padding:0;
         }
-
-        .main-container{
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height:100vh;
-            width:100vw;
+        img{
+            border:0;
         }
 
-        .header-container{
-            display:flex;
-            justify-content: center;
-            align-items:center;
+        .wrapper{
+            width:100%;
+            table-layout: fixed;
+            background-color: #FFFFCC;
+            padding-bottom:40px;
+        }
+
+        .webkit{
+            max-width:600px;
             background-color:#EAAA00;
-            height:20%;
-            width:100%;
         }
 
-        .body-container{
+        .outer{
+            Margin:0 auto;
+            width:100%;
+            max-width:600px;
+            border-spacing:0;
+            font-family: sans-serif;
+
+        }
+
+        .message{
             background-color:#FFFFCC;
-            height:80%;
-            width:100%;
         }
 
+        @media screen and(max-width:600px) {
+
+
+        }
+
+        @media screen and(max-width:400px) {
+
+        }
 
 
     </style>
 </head>
 <body>
 
-<div class="main-container">
-    <div class = "header-container">
-        <h1 class = "header">
-            Apartment Rental Management System
-        </h1>
-    </div>
+<center class="wrapper">
+    <div class="webkit">
+        <table class="outer" align="center">
+            <tr>
+                <td>
+                    <table width="100%" style ="border-spacing:0;">
 
-    <div class= "body-container">
-        <p class= "mail-body">Hi {{$surname}}, {{$first}} {{$middle}}</p>
-    </div>
+                        <tr>
+                            <td>
+                                <h1>Apartment Rental Management System</h1>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
 
-</div>
+
+            <tr class="message">
+                <td>
+                    <h3>Hi <span class="tenant-name"></span>,</h3>
+                    <h4 class="message-body">This email serves as confirmation of your rent to <span class="owner-name"></span> apartment dated <span class="rent-date"></span> and your room number is Your room number is <span class="room-number"></span>.
+                        Your monthly payment is <span class="monthly"></span>. If you don't recognize this activity, please feel free to disregard this message.
+                    </h4>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <table width="100%" style ="border-spacing:0;">
+
+                        <tr>
+                            <td>
+                                <h3>- APT Project</h3>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+
+        </table>
+
+    </div>
+</center>
 
 
 </body>

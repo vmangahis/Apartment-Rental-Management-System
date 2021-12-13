@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Mail\TenantRegister;
+use App\Models\Landlord;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\Tenants;
@@ -21,7 +23,7 @@ class TenantController extends Controller
     public function index(Request $rq)
     {
         $tenant = DB::table('tenants')->where('rental_status','ACTIVE')->get();
-        $rooms = DB::table('rooms')->where('status', 'VACANT')->get();
+        $rooms = DB::table('rooms')->get();
         $allroom = DB::table('rooms')->get();
         $roomCount = Rooms::where('status', 'VACANT')->count();
         return view('dashboard.tenants', compact('tenant', 'rooms','allroom', 'roomCount'));
@@ -239,6 +241,8 @@ class TenantController extends Controller
             $room_status="VACANT";
         }
 
+
+
         //storing tenants to database
         Tenants::create([
             'surname' => $req->tenantSurname,
@@ -254,10 +258,13 @@ class TenantController extends Controller
             'monthly' => $req->get('monthly')
         ]);
         $info = [
-            'title' => 'Confirmation Email from APT',
-            'body' => 'Test Body '
+            'title' => 'Confirmation Email',
+            'body' => ''
         ];
-        Mail::to($req->tenantEmail)->send(new TestMail($info,$req->tenantFirstname, $req->tenantMiddlename, $req->tenantSurname));
+        $landlord_info = Landlord::orderBy('id', 'DESC')->first();
+        $roomnum = Rooms::where('room_id', $req->get('room_number'))->first();
+
+        Mail::to($req->tenantEmail)->send(new TenantRegister($info,$req->tenantFirstname,$landlord_info->surname, $req->tenantRentdate, $req->monthly,$roomnum->room_number));
 
         //Getting te last tenant ID upon creation
         $latest_tenant_id = DB::table('tenants')->orderBy('id', 'DESC')->value('id');
@@ -313,10 +320,10 @@ class TenantController extends Controller
         }
 
 
-
+        $prev_tenantImage = Tenants::where('id', $id)->first();
         if($rq->file('editTenantImage') == '')
         {
-            $hashed_file = "blankimage.png";
+            $hashed_file = $prev_tenantImage->image_name;
         }
 
         else{
@@ -324,20 +331,29 @@ class TenantController extends Controller
             $previous_image = Tenants::where('id', $id)->first();
             if($previous_image->image_name != "blankimage.png")
             {
-                Storage::disk('public')->delete('tenantimages/'.$previous_image->image_name);
+                error_log('deleting previous image');
+                error_log(public_path());
+                $path = public_path()."/storage/tenantimages/".$previous_image->image_name;
+                //Storage::disk('public')->delete('tenantimages/'.$previous_image->image_name);
+
+                unlink($path);
+                error_log('hashed');
             }
 
             $origFile = $rq->file('editTenantImage');
+            $path = "/tenantimages";
 
 
             $hashed_file = time().'_'.$origFile->getclientOriginalName();
+
+
 
            $upload =  $origFile->storeAs($path, $hashed_file, 'public');
         }
 
 
 
-        error_log('adding');
+
         Tenants::where('id', $id)
             ->update(['surname' => $rq->get('tenantSurnameEdit'),
                 'firstname' => $rq->get('tenantFirstnameEdit'),
@@ -355,8 +371,21 @@ class TenantController extends Controller
 
     public function destroy(Request $req)
     {
+        $rooms = Rooms::all();
 
-       Tenants::destroy($req->id);
+        //Make the room available upon deletion
+        foreach($rooms as $rm)
+        {
+            error_log($rm->tenant_id);
+
+            if($rm->tenant_id == $req->id)
+            {
+                Rooms::where('tenant_id', $req->id)->update(['status' => 'VACANT', 'tenant_id' => 0]);
+            }
+        }
+
+
+        Tenants::destroy($req->id);
 
     }
 

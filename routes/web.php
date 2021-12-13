@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProfileController;
+use App\Mail\TenantRegister;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TenantController;
 use App\Http\Controllers\ExpenseController;
@@ -13,8 +14,15 @@ use App\Http\Controllers\MailController;
 
 
 //Login
-Route::get('/login', [LoginController::class, 'authenticate'])->name('login');
-Route::post('/login/check', [LoginController::class, 'checkLogin']);
+Route::group(['middleware' => ['guestAuth']], function() {
+    Route::get('/login', [LoginController::class, 'authenticate'])->name('login');
+    Route::post('/login/check', [LoginController::class, 'checkLogin']);
+    Route::get('/logout', [LoginController::class, 'logout']);
+});
+
+
+
+
 
 
 

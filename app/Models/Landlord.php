@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Landlord extends Model
 {
     use HasFactory;
-
+    public $table = 'landlord_table';
     public $timestamps = false;
 
     protected $fillable = ['id', 'surname', 'firstname', 'middlename',

@@ -376,12 +376,13 @@
                          <!--- Room Assignment Edit---->
                          <div class="mb-3 text-center d-flex flex-row align-items-center">
                             <label for="room" class="">Room Assignment:</label>
-                             <select for='room' class="ms-4 w-35" name="room_number" class="" @if($roomCount == 0) disabled @endif>
+                             <select for='room' class="ms-4 w-35" name="room_number" id="room_number" class="" @if($roomCount == 0) disabled @endif>
                                 @if(count($rooms) > 0)
 
                                 @foreach($rooms as $roomnum)
-
-                                <option value="{{$roomnum->room_id}}">{{$roomnum->room_number}}</option>
+                                    @if($roomnum->status == "VACANT")
+                                <option value="{{$roomnum->room_number}}">{{$roomnum->room_number}}</option>
+                                         @endif
                                 @endforeach
 
                                 @else

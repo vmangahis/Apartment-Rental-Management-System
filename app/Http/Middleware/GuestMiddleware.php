@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
-class LandlordMiddleware
+class GuestMiddleware
 {
     /**
      * Handle an incoming request.
@@ -15,15 +15,12 @@ class LandlordMiddleware
      * @param  \Closure  $next
      * @return mixed
      */
-
-
     public function handle(Request $request, Closure $next)
     {
-        if(!Session::has('loginID'))
+        if(Session::has('loginID'))
         {
-            return redirect()->route('login');
+            return redirect()->route('main');
         }
-
         return $next($request);
     }
 }

@@ -38,7 +38,7 @@
 
 
 
-
+@include('script.dashboard')
 </body>
 </html>
 

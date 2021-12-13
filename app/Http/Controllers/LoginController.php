@@ -7,6 +7,7 @@ use App\Models\LandlordLogin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 
 class LoginController extends Controller
@@ -61,6 +62,15 @@ class LoginController extends Controller
         }
 
         return response()->json(['resp' => 'login success']);
+    }
+
+
+    public function logout()
+    {
+        Session::forget('loginID');
+        if(!Session::has('loginID')){
+            return response()->json(['response' => 'Logged out']);
+        }
     }
 
 }

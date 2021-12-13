@@ -243,6 +243,9 @@ $(document).on('click','.editEntry' ,(e) =>{
                 console.log(dat.room_id);
                 if(e.target.id == rm.tenant_id){
                     $('.room-num').html(rm.room_number);
+                    $('#room_number').append(`<option value = ${rm.room_number}>${rm.room_number}</option>`);
+                    $('#room_number').val(rm.room_number);
+
                 }
 
             });
