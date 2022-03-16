@@ -93,6 +93,44 @@ $(document).ready(() => {
 
     })
 
+    $(document).on('click', '.deletePayment', e => {
+
+        $('.deletePaymentModal').modal('show');
+        $('.deletePaymentButton').attr('id', e.target.id);
+
+    });
+
+    $(document).on('click', '.deletePaymentButton', e =>{
+
+        $.ajaxSetup({
+            headers:{
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $.ajax({
+            method: "DELETE",
+            url: '/payment/delete/'+$('.deletePaymentButton').attr('id'),
+            contentType: false,
+            dataType: false,
+            success: () => {
+                window.location.href = "/payment"
+            }
+        })
+    })
+
+
+    $(document).on('click', '.printPaymentReport', e => {
+        let printArea = document.getElementById('print-area');
+        let windowArea = window.open("", "", "width=900, height=700");
+
+        windowArea.document.write(printArea.outerHTML);
+        windowArea.document.close();
+        windowArea.focus();
+        windowArea.print();
+        windowArea.close();
+    });
+
 
 })
 </script>

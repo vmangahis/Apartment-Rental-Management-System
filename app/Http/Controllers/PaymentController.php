@@ -41,8 +41,8 @@ class PaymentController extends Controller
         '<td class="text-center">'.$dat->amount_paid.'</td>'.
         '<td class="text-center">'.$dat->transaction_date.'</td>'.
         '<td class ="d-flex flex-column align-items-center">'.
-            '<button type="button" class="btn btn-primary" id='.$dat->transaction_id.'>Edit</button>'.
-            '<button type="button" class="btn btn-primary mt-2 "id='.$dat->transaction_id.'>Delete</button>
+            //'<button type="button" class="btn btn-primary" id='.$dat->transaction_id.'>Edit</button>'.
+            '<button type="button" class="btn btn-primary mt-2 fs-4"id='.$dat->transaction_id.'>Delete</button>
         </td>'.
     '</tr>';
         }
@@ -51,9 +51,9 @@ class PaymentController extends Controller
         return response()->json(['html' => $html, 'response' => 'Successfully added record']);
     }
 
-    public function delete()
+    public function deleteRecord($id)
     {
-
+            Payment::where('transaction_id', $id)->delete();
     }
 
     public function edit()

@@ -9,7 +9,7 @@
 
 
             <!--- Landlord Image ---->
-            <img src="{{asset('/storage/landlord_image/blankimage.png')}}" class="rounded mx-auto d-block landlord-photo mb-2">
+            <img src='{{asset("/storage/landlord_image/{$landlord[0]->image}")}}' class="rounded mx-auto d-block landlord-photo mb-2">
 
             <!---- Landlord Name ----->
             <p class="landlord-name fs-1 text-center mt-2  border-dark border-bottom text-information">
@@ -28,11 +28,11 @@
             <!---- Apartment Address ----->
             <div class="landlord-address fs-1 text-center mt-2 d-inline-block  ">
                 <div class="border-dark border-bottom">
-                <span class="landlord-address-1">{{$landlord[0]->address_1}}, </span>
-                <span class="landlord-address-2">{{$landlord[0]->address_2}}, </span>
+                <span class="landlord-address-1">{{$landlord[0]->address_1}}</span>,
+                <span class="landlord-address-2">{{$landlord[0]->address_2}}</span>,
                 </div>
                 <div class="border-dark border-bottom w-auto d-inline-block">
-                    <span class="landlord-address-city text-information fs-1 text-center mt-2">{{$landlord[0]->city}}, </span>
+                    <span class="landlord-address-city text-information fs-1 text-center mt-2">{{$landlord[0]->city}}</span>,
                 <span class="landlord-address-state fs-1 text-center text-information">{{$landlord[0]->state}}</span>
                 </div>
             </div>
@@ -133,11 +133,16 @@
 
                     <!-- Modal Body for profile info change --->
                 <div class="tab-pane fade show active" role="tabpanel" id="edit-tab-landlord" aria-labelledby="edit-form-landlord-tab">
-                <form class="d-flex flex-column justify-content-center align-items-center edit-landlord-form" id="edit-form-landlord">
+                <form class="d-flex flex-column justify-content-center align-items-center edit-landlord-form" id="edit-form-landlord" enctype="multipart/form-data">
                     @csrf
 
                     <label class = "fs-3">Current Image</label>
                     <img src="{{asset('storage/landlord_image/'.$landlord[0]->image)}}" class="text-center landlord-photo mb-3">
+
+                    <div class="mb-3 text-center w-50">
+                        <label for="imageupload">Landlord Image:</label>
+                        <input type="file" class="form-control" id="landlordImage" name="landlordImage">
+                    </div>
 
                     <div class="mb-3 text-center">
                         <label for="inputsurname" class="form-label">Surname</label>
@@ -205,5 +210,5 @@
 
 
 
-@include('dashboard.profilescript')
+@include('script.profilescript')
 @endsection

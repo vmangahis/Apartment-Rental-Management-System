@@ -11,14 +11,16 @@
 </div>
 
 <!---- Search Room ------>
-<div class="search-add">
+<!---<div class="search-add">
   <div class="row g-3 ms-3">
       <h3>Search By:</h3>
       <div class="col-auto fs-4">
           <select name="search-option" id="room-search-option" @if(!$room->count())disabled value="none" @endif>
               <option value="none">None</option>
               <option value="room_id">Room ID</option>
+              @if(Route::is('rooms/occupied'))
               <option value="occupant_id">Occupant ID</option>
+                  @endif
           </select>
       </div>
 
@@ -26,12 +28,13 @@
       <div class="col-auto">
       <input type="text" class="form-control room-search-input">
       </div>
-  </div>
+  </div> --->
 
-
-
-  <button type="button" class='btn btn-primary fs-5 addroombutton'>Add Room</button>
+@if(Route::is('room'))
+<div class="search-add">
+  <button type="button" class='btn btn-primary fs-5 addroombutton d-block mx-auto mr-2'>Add Room</button>
 </div>
+@endif
 
 <!---- Delete Room --->
 <div class="modal fade" id="deleteRoomModal" tabindex="-1" aria-hidden="true">

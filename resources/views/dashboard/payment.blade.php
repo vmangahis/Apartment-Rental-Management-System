@@ -5,11 +5,7 @@
 
 
 <div class="expenses-payments-header d-flex justify-content-center">
-        <h1 class="text-center main-header m-4">Expenses & Payments</h1>
-        <div class="tab-nav d-flex flex-column align-items-center justify-content-around">
-            <button class="btn btn-primary" onClick="location.href = '/expenses'">Expenses</button>
-            <button class="btn btn-primary" onClick="location.href = '/payment/'">Payments</button>
-        </div>
+        <h1 class="text-center main-header m-4">Rent Payments</h1>
 </div>
 
 <!--- Report Modal (where actual report pops up) --->
@@ -21,6 +17,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
+                <div id="print-area">
                 <table class="payment-table table mt-5">
                     <div class="table-header d-flex flex-column justify-content-center text-center">
                         <h1 class="text-center ">Payments Table</h1>
@@ -43,14 +40,34 @@
                     <h2>Total Payments:</h2>
                     <h2>P <span class="total-payments"></span></h2>
                 </div>
+                </div>
             </div>
             <div class="modal-footer">
+                <button type="button" class="btn btn-primary printPaymentReport" data-bs-dismiss="modal">Print Report</button>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
 </div>
 
+<!--- Delete Payment ---->
+<div class="modal fade deletePaymentModal"  tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Delete Record</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Delete this record?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary deletePaymentButton">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 <!-- Monthly Report Modal -->
@@ -178,9 +195,7 @@
     <thead>
     <tr class="payment-table-header">
         <th scope="col" class="text-center">Transaction ID</th>
-        <th scope="col" class="text-center">Surname</th>
-        <th scope="col" class="text-center">First Name</th>
-        <th scope="col" class="text-center">Middle Name</th>
+        <th scope="col" class="text-center">Name</th>
         <th scope="col" class="text-center">Amount Paid</th>
         <th scope="col" class="text-center">Date Paid</th>
         <th scope="col" class="text-center">Actions</th>
@@ -191,14 +206,12 @@
         @foreach($payments as $pay)
     <tr>
         <th scope="row" class="text-center">{{$pay->transaction_id}}</th>
-        <td class="text-center">{{$pay->tenant->surname}}</td>
-        <td class="text-center">{{$pay->tenant->firstname}}</td>
-        <td class="text-center">{{$pay->tenant->middle_name}}</td>
+        <td class="text-center">{{$pay->tenant->surname}}, {{$pay->tenant->firstname}} {{$pay->tenant->middle_name}}</td>
         <td class="text-center">{{$pay->amount_paid}}</td>
         <td class="text-center">{{$pay->transaction_date}}</td>
         <td class ="d-flex flex-column align-items-center">
             <button type="button" class="btn btn-primary fs-4" id="{{$pay->transaction_id}}">Edit</button>
-            <button type="button" class="btn btn-primary mt-2 fs-4 " id="{{$pay->transaction_id}}">Delete</button>
+            <button type="button" class="btn btn-primary mt-2 fs-4 deletePayment" id="{{$pay->transaction_id}}">Delete</button>
         </td>
     </tr>
         @endforeach

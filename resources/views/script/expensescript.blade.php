@@ -108,11 +108,45 @@ $('.getAnnualReport').on('click', e => {
 });
 
 
+$(document).on('click', '.deleteExpenseButton', e => {
+    console.log('delete');
+    $('.deleteExpenseModal').attr('id', e.target.id);
+    $('.deleteExpenseModal').modal('show');
+});
+
+$(document).on('click', '.confirmDeleteExpense', e => {
+    e.preventDefault();
+
+    $.ajaxSetup({
+        headers:{
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr('content')
+        }
+    })
+
+    $.ajax({
+        method: "DELETE",
+        url: '/expenses/delete/'+ $('.deleteExpenseModal').attr('id'),
+        contentType: false,
+        dataType: false,
+        success: res =>{
+            window.location.href="/expenses";
+        }
+
+    })
+})
 
 
 
+$(document).on('click', '.printExpenseReport', e => {
+   let printArea = document.getElementById('print-area');
+   let windowArea = window.open("", "", "width=900, height=700");
 
-
+   windowArea.document.write(printArea.outerHTML);
+   windowArea.document.close();
+   windowArea.focus();
+    windowArea.print();
+    windowArea.close();
+});
 
 
 

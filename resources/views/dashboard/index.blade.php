@@ -1,6 +1,22 @@
 @extends('layouts.app')
 
 @section('content')
+
+
+<div class="dropdown admin">
+    <button class="btn btn-primary dropdown-toggle admin-button" type="button" id="admin-dropdown" data-bs-toggle="dropdown">
+        Admin
+    </button>
+
+    <ul class="dropdown-menu" aria-labelledby="admin-dropdown">
+        <li><a href="#" class="dropdown-item">Edit Profile</a></li>
+        <li><a href="#" class="dropdown-item">A</a></li>
+        <li><a href="#" class="dropdown-item">A</a></li>
+        <li><hr class="dropdown-divider"></li>
+        <li><a href="#" class="dropdown-item">Log out</a></li>
+    </ul>
+</div>
+
     <h1 class="text-center m-4 main-header">Apartment Rental Management System (Dashboard)</h1>
 
 
@@ -24,14 +40,14 @@
 
         <div class="box last-box">
             <a href="{{route('tenants')}}" class="box-header"> <span class ="tenant-count">{{$tenantcount}}</span>
-                <p>Total Tenants</p> </a>
+                <p>Total Active Tenants</p> </a>
                 <a href="{{route('tenants')}}" class="direct-button">To Tenants</a>
         </div>
 
         <div class="box last-box">
-            <a href="{{route('tenants')}}" class="box-header"> <span class ="tenant-count">{{$vacantcount}}</span>
+            <a href="{{route('room')}}" class="box-header"> <span class ="tenant-count">{{$vacantcount}}</span>
                 <p>Vacant Rooms</p> </a>
-            <a href="{{route('tenants')}}" class="direct-button">To Rooms</a>
+            <a href="{{route('room')}}" class="direct-button">To Rooms</a>
         </div>
 
     </div>

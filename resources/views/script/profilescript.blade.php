@@ -48,12 +48,16 @@
                 },
 
                 success: (res) => {
+
+                    // missing field
                     if (res.code == 1) {
                         $.each(res.error, (prefix, value) => {
                             $('#edit-form-landlord').find('div.' + prefix + '-error').text(value[0]);
                         });
-                    } else {
+                    }
 
+                    else {
+                        console.log(res.value[8]);
                         $('#editlandlord').modal('toggle');
                         $('.landlord-surname-info').html(res.value[0]);
                         $('.landlord-firstname-info').html(res.value[1]);
@@ -64,7 +68,7 @@
                         $('.landlord-address-2').html(res.value[5]);
                         $('.landlord-address-city').html(res.value[6]);
                         $('.landlord-address-state').html(res.value[7]);
-
+                        $('.landlord-photo').attr('src', res.value[8]);
 
 
                     }

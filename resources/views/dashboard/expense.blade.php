@@ -4,11 +4,7 @@
 
 
 <div class="expenses-payments-header d-flex justify-content-center">
-    <h1 class="text-center main-header m-4">Expenses & Payments</h1>
-    <div class="tab-nav d-flex flex-column align-items-center justify-content-around">
-        <button class="btn btn-primary" onClick="location.href = '/expenses'">Expenses</button>
-        <button class="btn btn-primary" onClick="location.href = '/payment'">Payments</button>
-    </div>
+    <h1 class="text-center main-header m-4">Landlord Expenses</h1>
 </div>
 
 
@@ -24,8 +20,9 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body d-block mx-auto">
+            <div id="print-area">
                 <table class="table mt-5 report-expense-table">
-                    <div class="table-header ">
+                    <div class="table-header">
                         <h1 class="text-center">Expenses Table</h1>
                     </div>
                     <thead>
@@ -47,8 +44,10 @@
                 <h2>P <span class="total-expenses"></span></h2>
                 </div>
             </div>
+            </div>
 
             <div class="modal-footer">
+                <button type ="button" class="btn btn-primary printExpenseReport">Print Report</button>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             </div>
         </div>
@@ -122,6 +121,31 @@
     </div>
 </div>
 
+<!--- Delete Dialog ---->
+<div class="modal fade deleteExpenseModal"  id="deleteExpenseModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Delete Report</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <form>
+                    <p>Delete this record?</p>
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary confirmDeleteExpense">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 <!--- Annual report modal --->
 <div class="modal fade" id="annual-expense-modal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
@@ -178,7 +202,7 @@
             <td class="text-center">{{$exp->transaction_date}}</td>
                 <td class="d-flex flex-column justify-content-center align-items-center">
                     <button id="{{$exp->transaction_id}}" type="button" class="btn btn-primary fs-4">Edit</button>
-                    <button id="{{$exp->transaction_id}}" type="button" class="btn btn-primary fs-4 mt-2">Delete</button>
+                    <button id="{{$exp->transaction_id}}" type="button" class="btn btn-primary fs-4 mt-2 deleteExpenseButton">Delete</button>
                 </td>
             </tr>
             @endforeach

@@ -23,10 +23,11 @@ class TenantController extends Controller
     public function index(Request $rq)
     {
         $tenant = DB::table('tenants')->where('rental_status','ACTIVE')->get();
-        $rooms = DB::table('rooms')->get();
+        $alltenant = Tenants::all();
+        $rooms = DB::table('rooms')->where('status', 'VACANT')->get();
         $allroom = DB::table('rooms')->get();
         $roomCount = Rooms::where('status', 'VACANT')->count();
-        return view('dashboard.tenants', compact('tenant', 'rooms','allroom', 'roomCount'));
+        return view('dashboard.tenants', compact('tenant', 'rooms','allroom', 'roomCount', 'alltenant'));
 
     }
 
@@ -37,8 +38,9 @@ class TenantController extends Controller
         $tenant = DB::table('tenants')->where('rental_status', 'ARCHIVED')->get();
         $rooms = DB::table('rooms')->get();
         $allroom = DB::table('rooms')->get();
-        $roomCount = Rooms::where('status', 'ARCHIVED')->count();
-        return view('dashboard.tenants', compact('tenant', 'rooms', 'allroom', 'roomCount'));
+        $roomCount = Rooms::all()->count();
+        $alltenant = Tenants::all();
+        return view('dashboard.tenants', compact('tenant', 'rooms', 'allroom', 'roomCount', 'alltenant'));
     }
 
     public function search_tenants(Request $rq)
@@ -186,10 +188,6 @@ class TenantController extends Controller
 
     public function register(Request $req)
     {
-
-
-
-
         $validator = Validator::make($req->all(), ['tenantSurname' => 'required|alpha',
             'tenantFirstname'=>'required|alpha|max:255',
             'tenantEmail'=>'required',
@@ -271,7 +269,7 @@ class TenantController extends Controller
 
 
         //Update vacant room
-        Rooms::where('room_id', $req->get('room_number'))
+        Rooms::where('room_number', $req->get('room_number'))
         ->update(['tenant_id' => $latest_tenant_id,
         'status' => $room_status]
         );
@@ -310,13 +308,13 @@ class TenantController extends Controller
 
 
         //Make the room available upon change to archived status of tenants
-        if($rq->get('rental_status') == "ARCHIVED")
+        if($rq->get('rent_status') == "ARCHIVED")
         {
-                Rooms::where('room_id', $rq->get('room_id'))->update(['tenant_id' => 0, 'status' => "VACANT"]);
+                Rooms::where('room_number', $rq->get('room_number'))->update(['tenant_id' => 0, 'status' => "VACANT"]);
         }
-        else if($rq->get('rental_status') == "ACTIVE")
+        else if($rq->get('rent_status') == "ACTIVE")
         {
-            Rooms::where('room_id', $rq->get('room_id'))->update(['tenant_id' => $rq->get('id') , 'status' => "OCCUPIED"]);
+            Rooms::where('room_number', $rq->get('room_number'))->update(['tenant_id' => $id , 'status' => "OCCUPIED"]);
         }
 
 
@@ -327,17 +325,16 @@ class TenantController extends Controller
         }
 
         else{
-            $path = "tenantimages/";
             $previous_image = Tenants::where('id', $id)->first();
+
+            // If previous image is blank
             if($previous_image->image_name != "blankimage.png")
             {
-                error_log('deleting previous image');
-                error_log(public_path());
+
                 $path = public_path()."/storage/tenantimages/".$previous_image->image_name;
                 //Storage::disk('public')->delete('tenantimages/'.$previous_image->image_name);
 
                 unlink($path);
-                error_log('hashed');
             }
 
             $origFile = $rq->file('editTenantImage');
@@ -353,6 +350,20 @@ class TenantController extends Controller
 
 
 
+        if($rq->get('currentRoom') != $rq->get('room_number') && $rq->get('rent_status') != "ARCHIVED")
+        {
+            error_log('Updating room number');
+            Rooms::where('room_number', $rq->get('room_number'))->update(['status' => "OCCUPIED",
+                'tenant_id' => $id
+            ]);
+
+            Rooms::where('room_number', $rq->get('currentRoom'))->update(['status' => 'VACANT',
+                    'tenant_id' => 0
+                ]);
+
+        }
+
+
 
         Tenants::where('id', $id)
             ->update(['surname' => $rq->get('tenantSurnameEdit'),
@@ -364,7 +375,8 @@ class TenantController extends Controller
                 'rental_status' => $rq->get('rent_status'),
                 'middle_name' => $rq->get('tenantMiddlenameEdit'),
                 'monthly' => $rq->get('monthly-edit'),
-                'image_name' => $hashed_file
+                'image_name' => $hashed_file,
+                'room_id' => $rq->get('room_number')
         ]);
 
     }

@@ -25,7 +25,7 @@ class DashboardController extends Controller
             $totalpayments+=$pay->amount_paid;
         }
 
-        $tenantcount = count(DB::table('tenants')->get());
+        $tenantcount = count(DB::table('tenants')->where('rental_status', 'ACTIVE')->get());
         $vacantcount = count(DB::table('rooms')->where('status', 'VACANT')->get());
         return view('dashboard.index', compact('totalexpenses','totalpayments','tenantcount', 'vacantcount'));
     }

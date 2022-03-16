@@ -46,7 +46,7 @@ class ExpenseController extends Controller
             '<td class="text-center" id='.$tab->transaction_id.'>'.$tab->amount.'</td>'.
             '<td class="text-center" id='.$tab->transaction_id.'>'.$tab->transaction_date.'</td>'.
                 '<td class="d-flex flex-column justify-content-center align-items-center" id='.$tab->transaction_id.'>'.
-                '<button type="button" class="btn btn-primary editExpense fs-4" id='.$tab->transaction_id.'>'.'Edit'.'</button>'.
+ //               '<button type="button" class="btn btn-primary editExpense fs-4" id='.$tab->transaction_id.'>'.'Edit'.'</button>'.
                 '<button type="button" class="btn btn-primary deleteExpense fs-4 mt-2" id='.$tab->transaction_id.'>'.'Delete'.'</button>'.
                 '</td>'.
             '</tr>';
@@ -119,5 +119,13 @@ class ExpenseController extends Controller
 
 
     }
+
+    public function deleteRecord($id)
+    {
+        Expenses::where('transaction_id', $id)->delete();
+
+
+    }
+
 
 }

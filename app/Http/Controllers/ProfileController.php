@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Landlord;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -131,7 +132,7 @@ class ProfileController extends Controller
             ],
 
         // Customized Error messages
-        // Add more
+
             ['landlordSurname.required' => 'Surname cannot be left empty',
                 'landlordSurname.alpha' => 'Surname cannot contain special characters/numbers']
         );
@@ -141,22 +142,52 @@ class ProfileController extends Controller
         {
             return response()->json(['code'=> 1, 'error' => $val->errors()->toArray()]);
         }
+
+        $previous_image = Landlord::all();
+
+
+
+        // no upload
+        if($rq->file('landlordImage') == '')
+        {
+            $timestamped = $previous_image[0]->image;
+        }
+
+        else{
+                    $path = "landlord_image/";
+                    if($previous_image[0]->image != 'blankimage.png')
+                    {
+                        $path = public_path()."/storage/landlord_image"."/".$previous_image[0]->image;
+                        unlink($path);
+                    }
+
+                    $newImage = $rq->file('landlordImage');
+                    $path = "/landlord_image";
+
+                    $timestamped = time()."_".$newImage->getClientOriginalName();
+
+                    $upload = $newImage->storeAs($path, $timestamped, 'public');
+
+
+        }
+
+
         $landlord = DB::table('landlord_table')->update(['surname' => $rq->get('landlordSurname'),
             'firstname' => $rq->get('landlordFirstname'),
             'middlename' => $rq->get('landlordMiddlename'),
             'age' => $rq->get('landlordAge'),
-
             'address_1' => $rq->get('landlordAddress-1'),
             'address_2' => $rq->get('landlordAddress-2'),
             'city' => $rq->get('landlordCity'),
             'state' => $rq->get('landlordState'),
+            'image' => $timestamped
             ]);
 
 
             return response()->json(['value' => [$rq->get('landlordSurname'), $rq->get('landlordFirstname'),
                 $rq->get('landlordMiddlename'), $rq->get('landlordAge'),
                 $rq->get('landlordAddress-1'),$rq->get('landlordAddress-2'),
-                $rq->get('landlordCity'), $rq->get('landlordState')
+                $rq->get('landlordCity'), $rq->get('landlordState'), asset('/storage/landlord_image').'/'.$timestamped
             ]]);
 
 

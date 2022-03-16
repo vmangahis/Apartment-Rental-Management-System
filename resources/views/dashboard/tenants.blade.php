@@ -216,7 +216,7 @@
                                     @if(count($rooms) > 0)
 
                                     @foreach($rooms as $roomnum)
-                                    <option value="{{$roomnum->room_id}}">{{$roomnum->room_number}}</option>
+                                    <option value="{{$roomnum->room_number}}">{{$roomnum->room_number}}</option>
                                     @endforeach
 
                                     @else

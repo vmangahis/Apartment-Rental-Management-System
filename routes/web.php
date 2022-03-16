@@ -39,12 +39,14 @@ Route::group(['middleware' => ['adminAuth']],  function() {
     Route::get('/expenses/monthly/report/{year}/{month}', [ExpenseController::class, 'getMonthlyReport']);
     Route::get('/expenses/annual/report/{year}', [ExpenseController::class, 'getAnnualReport']);
     Route::post('/expenses', [ExpenseController::class, 'addrecord']);
+    Route::delete('/expenses/delete/{id}', [ExpenseController::class, 'deleteRecord']);
 
 //Payment
     Route::get('/payment/',[PaymentController::class, 'index'])->name('payment');
     Route::post('/payment/tenant',[PaymentController::class, 'addPayment']);
     Route::get('/payment/report/{year}/{month}',[PaymentController::class, 'getMonthly']);
     Route::get('/payment/report/{year}',[PaymentController::class, 'getAnnual']);
+    Route::delete('/payment/delete/{id}', [PaymentController::class, 'deleteRecord']);
 
 //Tenants
     Route::get('/tenants', [TenantController::class, 'index'])->name('tenants'); // Tenant
@@ -66,6 +68,10 @@ Route::group(['middleware' => ['adminAuth']],  function() {
     Route::get('/rooms/occupied',[RoomController::class, 'occupied'])->name('occupied_room'); // Occupied Room
     Route::get('/report',[ReportsController::class, 'index'])->name('report');
     Route::delete('/rooms', [RoomController::class, 'deleteRoom']);
+
+
+// Report
+    Route::get('/report', [ReportsController::class, 'index'])->name('report');
 
 });
 

@@ -78,7 +78,8 @@ $(document).on('change input','.search-input',e => {
 $(document).on('click','.clickable-row', (e) => {
         let tenant_data = {!! json_encode($tenant->toArray(), JSON_HEX_TAG) !!};
         let room_data = {!! json_encode($allroom->toArray(), JSON_HEX_TAG) !!};
-
+        console.log(room_data);
+        console.log(tenant_data);
         tenant_data.forEach(dat => {
             if(e.target.id == dat.id)
             {
@@ -168,9 +169,9 @@ $(document).on('change','#rental_status', e =>{
 
 $(document).on('change','#rental_status_edit', e =>{
     e.preventDefault();
-    var rooms = {!! json_encode($allroom->toArray(), JSON_HEX_TAG) !!}
+    var rooms = {!! json_encode($allroom->toArray(), JSON_HEX_TAG) !!};
     console.log(rooms.length);
-})
+});
 
 
 
@@ -222,33 +223,52 @@ $('.confirmDelete').on('click',(e) => {
 // Clicking edit button
 $(document).on('click','.editEntry' ,(e) =>{
 
-    let data = {!! json_encode($tenant->toArray(), JSON_HEX_TAG) !!}
+    let data = {!! json_encode($alltenant->toArray(), JSON_HEX_TAG) !!}
     let room ={!! json_encode($allroom->toArray(), JSON_HEX_TAG) !!}
+        console.log(e.target.id);
     data.forEach(dat => {
         if(e.target.id == dat.id){
 
+            console.log('hello');
             $('#tenantSurnameEdit').val(dat.surname);
             $('#tenantFirstnameEdit').val(dat.firstname);
             $('#tenantEmailEdit').val(dat.email);
             $('#tenantAgeEdit').val(parseInt(dat.age));
             $('#mobile').val(dat.mobile);
             $('#rent-date').val(dat.rent_date);
-            $('.confirmEdit').attr('id', dat.id);
+            $('.confirmEdit').attr('id', e.target.id);
             $('#tenantMobile').val(dat.mobile);
             $('#rental_status_edit').val(dat.rental_status);
             $('#tenantMiddlenameEdit').val(dat.middle_name);
             $('#monthly-edit').val(dat.monthly);
-            room.forEach(rm =>{
-                console.log(rm);
-                console.log(dat.room_id);
-                if(e.target.id == rm.tenant_id){
-                    $('.room-num').html(rm.room_number);
-                    $('#room_number').append(`<option value = ${rm.room_number}>${rm.room_number}</option>`);
-                    $('#room_number').val(rm.room_number);
 
-                }
+                room.forEach(rm =>{
+                    console.log(rm);
+                    if(dat.rental_status == "ACTIVE") {
+                        console.log('editing active tenant');
+                        if (dat.id == rm.tenant_id) {
 
-            });
+                            $('.room-num').html(rm.room_number);
+                            $('#room_number').append(`<option value = ${rm.room_number}>${rm.room_number}</option>`);
+                            $('#room_number').val(rm.room_number);
+                        }
+                    }
+
+                    else if(dat.rental_status == "ARCHIVED")
+                    {
+                        if(rm.room_number ==  dat.room_id)
+                        {
+                            $('.room-num').html(rm.room_number);
+                            $('#room_number').val(rm.room_number);
+                        }
+                    }
+
+                });
+
+
+
+
+
 
         }
     })
@@ -263,8 +283,9 @@ $('.confirmEdit').on('click', (ev) => {
     ev.preventDefault();
     let form = new FormData(document.getElementById('tenantEditForm'));
     let id = $('.confirmEdit').attr('id');
+    form.append('currentRoom', $('.room-num').text());
 
-
+    console.log(form.get('currentRoom'));
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -282,7 +303,7 @@ $('.confirmEdit').on('click', (ev) => {
             $('#tenantEditForm').find('div.error').text('');
         },
         success: (resp) => {
-            console.log(resp);
+
             if(resp.code == 1)
             {
                 $.each(resp.error, (index, val) => {
