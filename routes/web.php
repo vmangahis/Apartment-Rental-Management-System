@@ -72,6 +72,7 @@ Route::group(['middleware' => ['adminAuth']],  function() {
 
 // Report
     Route::get('/report', [ReportsController::class, 'index'])->name('report');
+    Route::get('/logout', [LoginController::class, 'logout']);
 
 });
 

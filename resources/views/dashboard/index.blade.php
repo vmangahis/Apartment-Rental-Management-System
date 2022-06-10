@@ -9,11 +9,7 @@
     </button>
 
     <ul class="dropdown-menu" aria-labelledby="admin-dropdown">
-        <li><a href="#" class="dropdown-item">Edit Profile</a></li>
-        <li><a href="#" class="dropdown-item">A</a></li>
-        <li><a href="#" class="dropdown-item">A</a></li>
-        <li><hr class="dropdown-divider"></li>
-        <li><a href="#" class="dropdown-item">Log out</a></li>
+        <li><a class="dropdown-item log-out" >Log out</a></li>
     </ul>
 </div>
 

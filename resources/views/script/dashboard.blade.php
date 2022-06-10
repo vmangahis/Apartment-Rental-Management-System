@@ -4,7 +4,7 @@
 
 
 
-        $('.logout').on('click' , e => {
+        $('.log-out').on('click' , e => {
             console.log('logged out');
 
             $.ajaxSetup({

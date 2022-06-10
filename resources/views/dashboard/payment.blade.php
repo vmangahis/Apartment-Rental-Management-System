@@ -99,10 +99,7 @@
 <table class="payment-table table mt-5">
     <div class="table-header d-flex flex-column justify-content-center text-center">
     <h1 class="text-center">Payments Table</h1>
-        <div class="d-inline-block">
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#monthly-payments-modal">Monthly Report</button>
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#annual-payments-modal">Annual Report</button>
-        </div>
+      
     </div>
     <thead>
     <tr class="payment-table-header">
@@ -122,7 +119,6 @@
         <td class="text-center">{{$pay->amount_paid}}</td>
         <td class="text-center">{{$pay->transaction_date}}</td>
         <td class ="d-flex flex-column align-items-center">
-            <button type="button" class="btn btn-primary fs-4" id="{{$pay->transaction_id}}">Edit</button>
             <button type="button" class="btn btn-primary mt-2 fs-4 deletePayment" id="{{$pay->transaction_id}}">Delete</button>
         </td>
     </tr>

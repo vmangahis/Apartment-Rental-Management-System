@@ -89,10 +89,6 @@
 <table class="table mt-5 expense-table">
         <div class="table-header d-flex flex-column justify-content-center text-center">
             <h1 class="text-center">Expenses Table</h1>
-            <div class="d-inline-block">
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#monthly-expense-modal">Monthly Report</button>
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#annual-expense-modal">Annual Report</button>
-            </div>
         </div>
         <thead>
         <tr class="expense-table-header">
@@ -112,7 +108,7 @@
             <td class="text-center">{{$exp->amount}}</td>
             <td class="text-center">{{$exp->transaction_date}}</td>
                 <td class="d-flex flex-column justify-content-center align-items-center">
-                    <button id="{{$exp->transaction_id}}" type="button" class="btn btn-primary fs-4">Edit</button>
+                    
                     <button id="{{$exp->transaction_id}}" type="button" class="btn btn-primary fs-4 mt-2 deleteExpenseButton">Delete</button>
                 </td>
             </tr>

@@ -67,10 +67,18 @@ class LoginController extends Controller
 
     public function logout()
     {
+        error_log('log');
         Session::forget('loginID');
+        error_log('log1');
+        Session::flush();
+        error_log('log2');
+        Auth::logout();
+        error_log('log3');
         if(!Session::has('loginID')){
+            error_log('heelo');
             return response()->json(['response' => 'Logged out']);
         }
+        error_log('log');
     }
 
 }

@@ -1,6 +1,8 @@
 <script type="text/javascript">
     $(document).ready(() => {
 
+        
+
         $(document).on('click', '.edit-landlord', e => {
             $.ajaxSetup({
                 headers: {
